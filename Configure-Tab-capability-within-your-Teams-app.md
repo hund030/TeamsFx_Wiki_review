@@ -1,4 +1,4 @@
-# How to configure Tab capability within your Teams app
+# Configure Tab capability within your Teams app
 
 ## Introduction
 
