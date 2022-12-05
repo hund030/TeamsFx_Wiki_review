@@ -43,6 +43,34 @@ To fix this error: find the id of `access_as_user` scope for your application in
 
 ![image](https://user-images.githubusercontent.com/16605901/204182487-8eb46f6d-cee6-4d97-9cd4-68db59d4a572.png)
 
+# teamsApp/create
+This action will create a new Teams app for you if TEAMS_APP_ID environment variable is empty or the app with TEAMS_APP_ID is not found from Teams Developer Portal.
+
+## Syntax:
+```
+  - uses: teamsApp/create
+    with:
+      name: ${{TEAMS_APP_NAME}} # This is the environment variable defined in teamsfx/.env.<environment> file.
+```
+
+## Output:
+* TEAMS_APP_ID: The id for Teams app
+* TEAMS_APP_TENANT_ID: The tenant id for M365 account.
+
+# teamsApp/update
+Apply the Teams app manifest to an existing Teams app. Will use the app id in manifest.json file to determine which Teams app to update.
+
+## Syntax:
+```
+  - uses: teamsApp/update # 
+    with:
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
+```
+
+## Output:
+* TEAMS_APP_ID: The id for Teams app
+* TEAMS_APP_TENANT_ID: The tenant id for M365 account.
+* TEAMS_APP_UPDATE_TIME: The latest update time for syncing local manifest file to Teams Developer Portal.
 
 # azureStorage/enableStaticWebsite
 This action will enable static website setting in Azure Stroage.
