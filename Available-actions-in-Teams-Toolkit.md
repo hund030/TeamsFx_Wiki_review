@@ -298,3 +298,19 @@ ALL_RESOURCE_IDS__AZUREWEBAPP__APIRESOURCEID=web app id 1
 ALL_RESOURCE_IDS__AZUREWEBAPP__FRONTENDRESOURCEID=web app id 2
 ALL_RESOURCE_IDS__AZURESTORAGEID=storage id
 ```
+# botAadApp/create
+This action will create a new AAD app for Bot Registration if either BOT_ID or BOT_PASSWORD is empty.
+
+## Syntax:
+```
+  - uses: botAadApp/create # Creates a new AAD app for Bot Registration.
+    with:
+      name: bot # The display name of bot.
+    # Output: following environment variable will be persisted in current environment's .env file.
+    # BOT_ID: the AAD app client id created for Bot Registration.
+    # SECRET_BOT_PASSWORD: the AAD app client secret created for Bot Registration.
+```
+
+## Output:
+* BOT_ID: the AAD app client id created for Bot Registration.
+* SECRET_BOT_PASSWORD: the AAD app client secret created for Bot Registration.
