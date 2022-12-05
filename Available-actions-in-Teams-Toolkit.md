@@ -164,6 +164,11 @@ This action will execute `npm` commands under specified directory with parameter
 ## Output:
 NA
 
+## Troubleshooting:
+### Error message "Failed to run command"
+Please check if the command exists in your system path and try to run this command manually in your working directory.
+
+
 # dotnet/command
 This action will execute `dotnet` commands under specified directory with parameters. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
 
@@ -181,6 +186,10 @@ This action will execute `dotnet` commands under specified directory with parame
 ## Output:
 NA
 
+## Troubleshooting:
+### Error message "Failed to run command"
+Please check if the command exists in your system path and try to run this command manually in your working directory.
+
 # azureAppService/deploy
 This action will upload and deploy the project to Azure APP Service. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
 
@@ -196,6 +205,22 @@ This action will upload and deploy the project to Azure APP Service. The paramet
 
 ## Output:
 NA
+
+## Troubleshooting:
+### Error message: No file is found in distribution folder
+Please make sure the distribution path is not empty.
+
+### Error message: Failed to list publishing credentials.
+Please retry first, if it does not work, please check your Azure account and make sure this account can use [this api](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list-publishing-credentials#code-try-0). You can test it in the right side of the page.
+
+### Error message: Remote service error, upload failed.
+Please wait for a while before retrying.
+
+### Error message: Failed to deploy zip file.
+Please check the log output and try to upload the files located in your .deployment folder which is in your distribution folder according to the guidelines in [this link](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=kudu-ui).
+
+### Error message: Failed to check deployment status.
+This error can be ignored if the deployment is already successful. You can check the deploy status by visiting `Deployment - Deployment center - Logs` in the Azure portal.
 
 # azureFunctions/deploy
 This action will upload and deploy the project to Azure Functions. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
@@ -213,6 +238,23 @@ This action will upload and deploy the project to Azure Functions. The parameter
 ## Output:
 NA
 
+## Troubleshooting:
+### Error message: No file is found in distribution folder
+Please make sure the distribution path is not empty.
+
+### Error message: Failed to list publishing credentials.
+Please retry first, if it does not work, please check your Azure account and make sure this account can use [this api](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list-publishing-credentials#code-try-0). You can test it in the right side of the page.
+
+### Error message: Remote service error, upload failed.
+Please wait for a while before retrying.
+
+### Error message: Failed to deploy zip file.
+Please check the log output and try to upload the files located in your .deployment folder which is in your distribution folder according to the guidelines in [this link](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=kudu-ui).
+
+### Error message: Failed to check deployment status.
+This error can be ignored if the deployment is already successful. You can check the deploy status by visiting `Deployment - Deployment center - Logs` in the Azure portal.
+
+
 # azureStorage/deploy
 This action will upload and deploy the project to Azure Storage. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
 
@@ -228,6 +270,13 @@ This action will upload and deploy the project to Azure Storage. The parameter `
 
 ## Output:
 NA
+
+## Troubleshooting:
+### Error message: Failed to clear Azure Storage Account.
+Please retry later or you can clear all files in your $web container and retry the deployment action.
+
+### Error message: Failed to upload local path xxxx to Azure Storage Account.
+Please retry this action later.
 
 
 # spfx/deploy
