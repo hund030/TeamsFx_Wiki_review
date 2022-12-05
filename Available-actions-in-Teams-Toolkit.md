@@ -299,10 +299,10 @@ ALL_RESOURCE_IDS__AZUREWEBAPP__FRONTENDRESOURCEID=web app id 2
 ALL_RESOURCE_IDS__AZURESTORAGEID=storage id
 ```
 # botAadApp/create
-This action will create a new AAD app for Bot Registration if either BOT_ID or BOT_PASSWORD is empty.
+This action will create a new AAD app for Bot Registration if either environment variable BOT_ID or BOT_PASSWORD is empty.
 
 ## Syntax:
-```
+```yaml
   - uses: botAadApp/create # Creates a new AAD app for Bot Registration.
     with:
       name: bot # The display name of bot.
