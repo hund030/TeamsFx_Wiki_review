@@ -72,6 +72,47 @@ Apply the Teams app manifest to an existing Teams app. Will use the app id in ma
 * TEAMS_APP_TENANT_ID: The tenant id for M365 account.
 * TEAMS_APP_UPDATE_TIME: The latest update time for syncing local manifest file to Teams Developer Portal.
 
+# teamsApp/validate
+This action will render Teams app manifest template with environment variables, validate Teams app manifest file against its schema.
+
+## Syntax:
+```
+  - uses: teamsApp/validate
+    with:
+      manifestTemplatePath: ./appPackage/manifest.template.json # Required. Path to manifest template
+```
+
+## Output:
+* NONE
+
+# teamsApp/createAppPackage
+This action will render Teams app manifest template with environment variables, and zip manifest file with two icons.
+
+## Syntax:
+```
+  - uses: teamsApp/createAppPackage
+    with:
+      manifestTemplatePath: ./appPackage/manifest.template.json # Required. Relative path to teamsfx folder. This is the path for Teams app manifest template.
+      outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
+      outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to teamsfx folder. This is the path for built manifest json file.
+```
+
+## Output:
+* NONE
+
+# teamsApp/publishAppPackage
+This action will publish built Teams app zip file to tenant app catalog.
+
+## Syntax:
+```
+  - uses: teamsApp/publishAppPackage
+    with:
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
+```
+
+## Output:
+* TEAMS_APP_PUBLISHED_APP_ID: The Teams app id in tenant app catalog. It is different from the app id in Teams developer Portal.
+
 # azureStorage/enableStaticWebsite
 This action will enable static website setting in Azure Stroage.
 
