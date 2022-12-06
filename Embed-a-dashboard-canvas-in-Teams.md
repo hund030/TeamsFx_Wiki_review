@@ -64,6 +64,7 @@ This app also supported teams different themes, including dark theme and high co
 | :----------------------------: | :--------------------------: |
 | <img src="https://user-images.githubusercontent.com/11220663/205836054-52777c73-7598-4f30-9284-62917fab865d.png" width="500" height="300" /> | <img src="https://user-images.githubusercontent.com/11220663/205836124-ffc16d63-0148-4b72-bb70-c304174ef5e7.png" width="500" height="300" /> |
 
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## Take a tour of your app source code
 
@@ -104,6 +105,7 @@ The following files are project-related files. You generally will not need to cu
 | `src/internal/login.ts`            | Implementation of login                          |
 | `src/internal/singletonContext.ts` | Implementation of the TeamsFx instance singleton |
 
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## How to add a new widget
 
@@ -228,6 +230,7 @@ protected dashboardLayout(): void | JSX.Element {
   );
 }
 ```
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## How to add a new dashboard
 
@@ -311,6 +314,7 @@ Open the [`templates/appPackage/manifest.template.json`](templates/appPackage/ma
   "scopes": ["personal"]
 }
 ```
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## How to add a new Graph API call
 
@@ -494,3 +498,5 @@ async function callFunction(teamsfx?: TeamsFx) {
 ```
 
 Refer to [this sample](https://github.com/OfficeDev/TeamsFx-Samples/blob/dev/hello-world-tab-with-backend/tabs/src/components/sample/AzureFunctions.tsx) for some helps. And you can read [this doc](https://learn.microsoft.com/en-us/azure/azure-functions/functions-reference?tabs=blob) for more details.
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
