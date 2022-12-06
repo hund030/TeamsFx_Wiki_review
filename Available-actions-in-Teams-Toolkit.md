@@ -286,7 +286,7 @@ This action will upload and deploy generated sppkg to SharePoint app catalog. Yo
 ```
   - uses: spfx/deploy
     with:
-      createAppCatalogIfNotExist: false # If the value is true, this action will create tenant app catalog first if not exist, default value is `false`.
+      createAppCatalogIfNotExist: false # Required. If the value is true, this action will create tenant app catalog first if not exist, default value is `false`.
       packageSolutionPath: ./src/config/package-solution.json # Required. Path to package-solution.json in SPFx project. This action will honor the configuration to get target sppkg.
 ```
 
@@ -416,20 +416,6 @@ ALL_RESOURCE_IDS__AZUREWEBAPP__APIRESOURCEID=web app id 1
 ALL_RESOURCE_IDS__AZUREWEBAPP__FRONTENDRESOURCEID=web app id 2
 ALL_RESOURCE_IDS__AZURESTORAGEID=storage id
 ```
-
-# spfx/deploy
-This action will deploy the SPFx package to SharePoint app catalog.
-
-## Syntax
-``` yaml
-  - uses: arm/deploy
-    with:
-      - createAppCatalogIfNotExist: true # Required. Create app catalog if there is no valid one in the current Microsoft 365 tenant, default to 'false'
-      - packageSolutionPath: ./SPFx/config/package-solution.json # Required. The 'package-solution.json' path of the SPFx project, will be used to get the bundled zipped file path.
-```
-
-## Output:
-NA
 
 # botAadApp/create
 This action will create a new AAD app for Bot Registration if either environment variable BOT_ID or BOT_PASSWORD is empty.
