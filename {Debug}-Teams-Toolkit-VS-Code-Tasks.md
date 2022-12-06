@@ -180,6 +180,7 @@ This task is to start local tunnel service (ngrok) to make your local bot messag
 | tunnelInspection | string  | optional | Teams Toolkit tries to get tunnel public URL from ngrok log first, then the first PublicURL via default inspection "http://127.0.0.1:4040/api/tunnels". If you specify your own `ngrokArgs` with different log format or inspection, set this arg to provide your own inspection location. |
 
 #### Sample
+**1. The default one used by TeamsFx templates.** Teams Toolkit installs its own ngrok binary and start tunnel with command `ngrok http 3978 --log=stdout --log-format=logfmt`.
 ```json
 {
     "label": "Start local tunnel",
@@ -190,6 +191,86 @@ This task is to start local tunnel service (ngrok) to make your local bot messag
     },
     "isBackground": true,
     "problemMatcher": "$teamsfx-local-tunnel-watch"
+},
+```
+
+**2. Change port.** To use another port for local bot service (e.g., 3922), you can change the one in `ngrokArgs`. Note that you also need to change the port in bot code (`index.js` or `index.ts`).
+```json
+{
+    "label": "Start local tunnel",
+    "type": "teamsfx",
+    "command": "debug-start-local-tunnel",
+    "args": {
+        // change port here
+        "ngrokArgs": "http 3922 --log=stdout --log-format=logfmt",
+    },
+    "isBackground": true,
+    "problemMatcher": "$teamsfx-local-tunnel-watch"
+},
+```
+
+**3. Use your own ngrok command or config.** If you'd like to use your own ngork command (e.g., `ngrok start`) or config (e.g., `any-ngrok.yml`) for advances usages. Note that if you change the log format or set your own inspect path, you need to provide `tunnelInspection` as well.
+```json
+{
+    "label": "Start local tunnel",
+    "type": "teamsfx",
+    "command": "debug-start-local-tunnel",
+    "args": {
+        // change the command here
+        "ngrokArgs": "start --config any-ngrok.yml",
+        // to let Teams Toolkit know your ngrok endpoint
+        "tunnelInspection": "http://127.0.0.1:4040/api/tunnels",
+    },
+    "isBackground": true,
+    "problemMatcher": "$teamsfx-local-tunnel-watch"
+},
+```
+
+**4. Use your own ngrok binary.** If Teams Toolkit has issue on installing ngrok or you'd like to use your own ngrok binary, set `ngrokPath`.
+```json
+{
+    "label": "Start local tunnel",
+    "type": "teamsfx",
+    "command": "debug-start-local-tunnel",
+    "args": {
+        "ngrokArgs": "http 3978 --log=stdout --log-format=logfmt",
+        // set ngrok path
+        "ngrokPath": "/path/to/your/ngrok"
+    },
+    "isBackground": true,
+    "problemMatcher": "$teamsfx-local-tunnel-watch"
+},
+```
+
+**5. Totally get rid of ngrok.** If your dev environment does not support ngrok or you'd like to use your own tunnel solution, you can skip/remove this tunnel task and just let Teams Toolkit know your message endpoint.
+
+|Alternative|Description|
+|-|-|
+|Cloud VM|Develop your project on cloud VM (e.g., [Azure VMs](https://azure.microsoft.com/products/virtual-machines/) or [Azure DevTest Labs](https://azure.microsoft.com/products/devtest-lab/)). You can choose either to still use ngrok on your cloud VM, or to directly expose your bot service via VM's public hostname and port.|
+|[localtunnel](https://localtunnel.me/)|An alternative tunnel solution. You can install and run `localtunnel` instead of `ngrok`.|
+
+```json
+{
+    "label": "Start Teams App Locally",
+    "dependsOn": [
+        ...
+        // Remove/Comment out tunnel task
+        //"Start local tunnel",
+        "Set up bot",
+        ...
+    ],
+    "dependsOrder": "sequence"
+},
+...
+{
+    "label": "Set up bot",
+    "type": "teamsfx",
+    "command": "debug-set-up-bot",
+    "args": {
+        ...
+        // tell Teams Toolkit your message endpoint
+        "botMessagingEndpoint": "https://you-bot-host/api/messages",
+    }
 },
 ```
 
