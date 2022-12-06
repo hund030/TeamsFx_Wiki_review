@@ -1,6 +1,6 @@
 > We appreciate your feedback, please report any issues to us [here](https://github.com/OfficeDev/TeamsFx/issues/new/choose).
 
-The dashboard tab template from Teams Toolkit enables you to quickly get started with Embed a canvas containing multiple cards that provide an overview of data or content in Microsoft Teams while worrying less about dashboard layout.
+The dashboard tab template from Teams Toolkit enables you to quickly get started with embedding a canvas containing multiple cards that provide an overview of data or content in Microsoft Teams while worrying less about dashboard layout.
 
 ## In this tutorial, you will learn
 
