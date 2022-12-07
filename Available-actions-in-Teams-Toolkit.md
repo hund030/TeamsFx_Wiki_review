@@ -323,12 +323,12 @@ This action will override or add environment viriables to target file (e.g., app
 ## Output:
 NA
 
-# botFramework/createOrUpdateBot
+# botFramework/create
 This action will create or update the bot registration on [dev.botframework.com](https://dev.botframework.com/bots). If the bot registraion specified by `botId` does not exist, this action will create a new one; otherwise, this action will update it.
 
 ## Syntax:
 ```yml
-  - uses: botFramework/createOrUpdateBot
+  - uses: botFramework/create
     with: 
       botId: <your-microsoft-app-id> # Required. Microsoft App Id for the bot registration.
       name: <your-bot-name> # Required. The name of the bot registration.
