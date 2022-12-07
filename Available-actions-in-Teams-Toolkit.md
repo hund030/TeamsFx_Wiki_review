@@ -307,12 +307,12 @@ This action will copy the Teams App zipped package to `teams` folder in SPFx dir
 ## Output:
 NA
 
-# appsettings/generate
+# file/updateAppSettings
 This action will override or add environment viriables to target file (e.g., appsettings.Development.json)
 
 ## Syntax:
 ```
-  - uses: appsettings/generate
+  - uses: file/updateAppSettings
     with:
       target: ./appsettings.Development.json # Required. The relative path of project configuration file
       appsettings: # Required.
