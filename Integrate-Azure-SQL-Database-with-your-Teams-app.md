@@ -105,19 +105,19 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
       appSettings: [
         // other app settings...
         {
-          name: 'sqlServerEndpoint'
+          name: 'SQL_SERVER_ENDPOINT'
           value: sqlServer.properties.fullyQualifiedDomainName
         }
         {
-          name: 'sqlDatabaseName'
+          name: 'SQL_DATABASE_NAME'
           value: sqlDBName
         }
         {
-          name: 'sqlUserName'
+          name: 'SQL_USERNAME'
           value: administratorLogin // this is only used for demonstration purpose. DO NOT use admin credential to connect your SQL databases
         }
         {
-          name: 'sqlPassword'
+          name: 'SQL_PASSWORD'
           value: administratorLoginPassword // this is only used for demonstration purpose. DO NOT use admin credential to connect your SQL databases
         }
       ]
@@ -137,13 +137,17 @@ You can refer this document to understand how to connect to Azure SQL Database u
 
 ## Step 4: Add code to connect to Azure SQL Database
 
-After you included Azure SQL Database related app settings in bicep file, you can follow this tutorial to connect your app to Azure SQL Database: https://learn.microsoft.com/en-us/azure/azure-sql/database/connect-query-nodejs?view=azuresql&tabs=windows. This tutorial is for nodejs, you can find tutorials for other programming language in the website's table of content.
+After you included Azure SQL Database related app settings in bicep file, you can follow this tutorial to connect your app to Azure SQL Database: https://learn.microsoft.com/en-us/azure/azure-sql/database/connect-query-nodejs?view=azuresql&tabs=windows. This tutorial is for nodejs, you can use `process.env.SQL_SERVER_ENDPOINT`, `process.env.SQL_DATABASE_NAME`, `process.env.SQL_USERNAME` and `process.env.SQL_PASSWORD` to reference the app settings configured to your Azure App Service in step 3.
+
+If you are using other programming language, you can find tutorials for your programming language in the website's table of content.
 
 <p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
 
 ## Step 5: Update your cloud infrastructure and deploy your app
 
-After you updated bicep file for your project, you need to run `Teams: Provision in the cloud` command in VS Code extension to apply your changes.
+After you updated bicep file for your project, you need to run `Teams: Provision in the cloud` command in VS Code extension to apply your changes to bicep file.
+
+After you updated your source code, you need to run `Teams: Deploy to the cloud` command in VS Code extension to deploy your code to cloud.
 
 <p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
 
