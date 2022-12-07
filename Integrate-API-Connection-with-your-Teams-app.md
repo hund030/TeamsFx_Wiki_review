@@ -7,7 +7,7 @@ Make sure that your project contains backend service, such as Azure Function or 
 The following steps help you to add API connection using Visual Studio Code:
 It is recommended to use an alias to distinguish multiple different api connections, the alias will be used in both sample code and env variables.
 1. Add a reference to the `@microsoft/teamsfx` package to package.json.
-1. Give an alias for API connection(such as `kudos`) and refer to the sample code to your projects.
+1. Give a unique alias for API connection and modify your project with reference to the sample code.
 1. Refer to the sample code to add application settings for your API in `./teamsfx/.env.local` that configures local debugging.
 ---
 ## Sample Code and Application Settings
