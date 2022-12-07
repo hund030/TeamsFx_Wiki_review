@@ -8,7 +8,8 @@ You can follow these steps to add Azure SQL Database to your app with bicep:
 1. Step 1: [Add Azure SQL Database declaration to your bicep file](#step-1-add-azure-sql-database-declaration-to-your-bicep-file)
 2. Step 2: [Add parameters for Azure SQL Database bicep snippet](#step-2-add-parameters-for-azure-sql-database-bicep-snippet)
 3. Step 3: [Connect your computing resource to Azure SQL Database](#step-3-connect-your-computing-resource-to-azure-sql-database)
-4. Step 4: [Update your cloud infrastructure](#step-4-update-your-cloud-infrastructure)
+4. Step 4: [Add code to connect to Azure SQL Database](#step-4-add-code-to-connect-to-azure-sql-database)
+4. Step 5: [Update your cloud infrastructure](#step-5-update-your-cloud-infrastructure)
 
 ## Step 1: Add Azure SQL Database declaration to your bicep file
 
@@ -104,8 +105,20 @@ resource webApp 'Microsoft.Web/sites@2021-02-01' = {
       appSettings: [
         // other app settings...
         {
-          name: 'your_app_setting_name' // the name to reference your SQL connection string
-          value: 'Data Source=${sqlServer.properties.fullyQualifiedDomainName};Initial Catalog=${sqlDBName};User ID=${administratorLogin};Password=${administratorLoginPassword}' // sample connection string for C#, this is only used for demonstration purpose. DO NOT use admin credential to connect your SQL databases
+          name: 'sqlServerEndpoint'
+          value: sqlServer.properties.fullyQualifiedDomainName
+        }
+        {
+          name: 'sqlDatabaseName'
+          value: sqlDBName
+        }
+        {
+          name: 'sqlUserName'
+          value: administratorLogin // this is only used for demonstration purpose. DO NOT use admin credential to connect your SQL databases
+        }
+        {
+          name: 'sqlPassword'
+          value: administratorLoginPassword // this is only used for demonstration purpose. DO NOT use admin credential to connect your SQL databases
         }
       ]
     // other site configs...
@@ -122,7 +135,13 @@ You can refer this document to understand how to connect to Azure SQL Database u
 
 <p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
 
-## Step 4: Update your cloud infrastructure
+## Step 4: Add code to connect to Azure SQL Database
+
+After you included Azure SQL Database related app settings in bicep file, you can follow this tutorial to connect your app to Azure SQL Database: https://learn.microsoft.com/en-us/azure/azure-sql/database/connect-query-nodejs?view=azuresql&tabs=windows. This tutorial is for nodejs, you can find tutorials for other programming language in the website's table of content.
+
+<p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
+
+## Step 5: Update your cloud infrastructure and deploy your app
 
 After you updated bicep file for your project, you need to run `Teams: Provision in the cloud` command in VS Code extension to apply your changes.
 
