@@ -128,16 +128,16 @@ This action will enable static website setting in Azure Stroage.
 ## Output:
 NA
 
-# npx/command
+# cli/runNpxCommand
 This action will execute `npx` commands under specified directory with parameters. It can be used to run `gulp` commands to bundle and package sppkg.
 
 ## Syntax:
 ```
-  - uses: npx/command
+  - uses: cli/runNpxCommand
     with:
       workingDirectory: ./src
       args: gulp bundle --ship --no-color
-  - uses: npx/command
+  - uses: cli/runNpxCommand
     with:
       workingDirectory: ./src
       args: gulp package-solution --ship --no-color
@@ -147,15 +147,15 @@ This action will execute `npx` commands under specified directory with parameter
 * A client-side solution package that is located in `{workingDirectory}`/sharepoint/solution/*.sppkg
 
 
-# npm/command
+# cli/runNpmCommand
 This action will execute `npm` commands under specified directory with parameters. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
 
 ## Syntax:
 ```
-  - uses: npm/command
+  - uses: cli/runNpmCommand
     with:
       args: run build
-  - uses: npx/command
+  - uses: cli/runNpmCommand
     with:
       workingDirectory: ./src
       args: install
@@ -169,18 +169,19 @@ NA
 Please check if the command exists in your system path and try to run this command manually in your working directory.
 
 
-# dotnet/command
+# cli/runDotnetCommand
 This action will execute `dotnet` commands under specified directory with parameters. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
 
 ## Syntax:
 ```
-  - uses: dotnet/command
+  - uses: cli/runDotnetCommand
     with:
       args: publish
-  - uses: dotnet/command
+  - uses: cli/runDotnetCommand
     with:
       workingDirectory: ./src
-      args: install
+      execPath: /YOU_DOTNET_INSTALL_PATH
+      args: publish --configuration Release --runtime win-x86 --self-contained
 ```
 
 ## Output:
