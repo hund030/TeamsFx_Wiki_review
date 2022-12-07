@@ -340,12 +340,12 @@ This action will create or update the bot registration on [dev.botframework.com]
 ## Output:
 NA
 
-# env/generate
+# file/updateEnv
 This action will generate environment variables to `.env` file.
 
 ## Syntax:
 ```yml
-  - uses: env/generate
+  - uses: file/updateEnv
     with: 
       target: /path/to/your/.env/file # Optional. The path of a `.env` file. The default value is `./teamsfx/.env.${TEAMSFX_ENV}`.
       envs: 
