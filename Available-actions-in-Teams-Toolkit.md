@@ -85,12 +85,12 @@ This action will render Teams app manifest template with environment variables, 
 ## Output:
 * NONE
 
-# teamsApp/createAppPackage
+# teamsApp/zipAppPackage
 This action will render Teams app manifest template with environment variables, and zip manifest file with two icons.
 
 ## Syntax:
 ```
-  - uses: teamsApp/createAppPackage
+  - uses: teamsApp/zipAppPackage
     with:
       manifestTemplatePath: ./appPackage/manifest.template.json # Required. Relative path to teamsfx folder. This is the path for Teams app manifest template.
       outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
