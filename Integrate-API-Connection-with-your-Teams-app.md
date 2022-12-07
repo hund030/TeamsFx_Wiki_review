@@ -72,7 +72,10 @@ TEAMSFX_API_KUDOS_ENDPOINT=
 <summary><b>Azure Active Directory
 </b></summary>
 
-Sample code with Azure Active Directory app.
+There are 2 scenarios here, please choose one of them. 
+- Scenario 1 is reusing the project AAD app, make sure your project contains an existing AAD app.
+- Scenario 2 is using an existing AAD App.
+
 ```javascript
 const teamsfxSdk = require("@microsoft/teamsfx");
 // There are 2 scenarios here, please choose one of them. This sample uses the client credential flow to acquire a token for your API.
@@ -106,7 +109,7 @@ module.exports.kudosClient = kudosClient;
 ```
 Add application settings for your API to `teamsfx/.dev.local`
 ```
-// must have
+// Must have
 TEAMSFX_API_KUDOS_ENDPOINT=
 // Scenario 2
 TEAMSFX_API_KUDOS_TENANT_ID=
