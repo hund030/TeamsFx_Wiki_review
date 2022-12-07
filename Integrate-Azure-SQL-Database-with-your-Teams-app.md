@@ -5,6 +5,10 @@ Azure SQL Database is an always-up-to-date, fully managed relational database se
 Teams Toolkit orchestrates cloud service provision and configuration with an infrastructure as code approach using a Domain Specific Language called [Bicep](https://learn.microsoft.com/en-us/azure/azure-resource-manager/bicep/overview?tabs=bicep).
 
 You can follow these steps to add Azure SQL Database to your app with bicep:
+1. Step 1: [Add Azure SQL Database declaration to your bicep file](#step-1-add-azure-sql-database-declaration-to-your-bicep-file)
+2. Step 2: [Add parameters for Azure SQL Database bicep snippet](#step-2-add-parameters-for-azure-sql-database-bicep-snippet)
+3. Step 3: [Connect your computing resource to Azure SQL Database](#step-3-connect-your-computing-resource-to-azure-sql-database)
+4. Step 4: [Update your cloud infrastructure](#step-4-update-your-cloud-infrastructure)
 
 ## Step 1: Add Azure SQL Database declaration to your bicep file
 
@@ -60,6 +64,8 @@ resource sqlFirewallRules 'Microsoft.Sql/servers/firewallRules@2021-08-01-previe
 
 > Note: above content generates a server name based on your resource group name and sets database name to `SampleDB` by default. If you want to change the names, you can set additional parameters `serverName` and `sqlDBName` in step 2.
 
+<p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
+
 ## Step 2: Add parameters for Azure SQL Database bicep snippet
 
 We need to add some required parameters for the bicep snippet in step 1.
@@ -78,7 +84,9 @@ We need to add some required parameters for the bicep snippet in step 1.
    ```
 > Note: ${{ENV_NAME}} is a special placeholder supported by Teams Toolkit, which references the value of an environment variable. You can replace the real values in `azure.parameters.json` with this placeholder and set the environment variable values in `teamsfx/.env.{env_name}` or set to your machine's environment variable directly.
 
-## Step 2: connect your computing resource to Azure SQL Database
+<p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
+
+## Step 3: Connect your computing resource to Azure SQL Database
 
 There are 2 ways to connect to your Azure SQL Database in Azure: using username/password and using Azure Managed Identity.
 
@@ -112,9 +120,12 @@ Managed identities provide an automatically managed identity in Azure Active Dir
 
 You can refer this document to understand how to connect to Azure SQL Database using Managed Identity: https://learn.microsoft.com/en-us/azure/app-service/tutorial-connect-msi-azure-database
 
-## Step 3: Update your cloud infrastructure
+<p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
+
+## Step 4: Update your cloud infrastructure
 
 After you updated bicep file for your project, you need to run `Teams: Provision in the cloud` command in VS Code extension to apply your changes.
 
+<p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
 
 
