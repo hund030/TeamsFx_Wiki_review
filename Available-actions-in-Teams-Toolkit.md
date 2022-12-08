@@ -294,12 +294,16 @@ This action will upload and deploy generated sppkg to SharePoint app catalog. Yo
 ## Output:
 NA
 
-# teamsApp/copyAppPackageForSPFx
+## Troubleshooting:
+### Error message: Failed to create tenant app catalog.
+Please retry later or create SharePoint app catalog manually.
+
+# teamsApp/copyAppPackageToSPFx
 This action will copy the Teams App zipped package to `teams` folder in SPFx directory to keep it updated. This is to ensure user will have aligned experience whether to publish Teams App from Teams Toolkit or manually sync to Teams in SharePoint app catalog.
 
 ## Syntax:
 ```
-  - uses: teamsApp/copyAppPackageForSPFx
+  - uses: teamsApp/copyAppPackageToSPFx
     with:
       appPackagePath: ${{TEAMS_APP_PACKAGE_PATH}}
       spfxFolder: ./src # Path to SPFx solution.
