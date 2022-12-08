@@ -32,7 +32,7 @@ Or create repository secrets by follow the path of `Settings` > `Security` > `Se
 
 > Note: Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
 
-# How to create Azure service principals for use?
+## How to create Azure service principals for use?
 To provision and deploy resources targeting Azure inside CI/CD, you must create an Azure service principal for use.
 
 Briefly, the steps include:
@@ -43,7 +43,7 @@ Briefly, the steps include:
 
 For detailed guidelines, refer to [the official document](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal). There're three ways to create service principal, [Azure portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-authenticate-service-principal-powershell), [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli), and you can choose the way you like.
 
-# Additional Notes
+## Additional Notes
 * [Quick Start for GitHub Actions](https://docs.github.com/en/actions/quickstart#creating-your-first-workflow)
 * [Manage your apps with the Developer Portal for Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/teams-developer-portal)
 
@@ -81,7 +81,7 @@ Steps to create Pipeline variables in Azure DevOps:
 
 > Note: Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
 
-# How to create Azure service principals for use?
+## How to create Azure service principals for use?
 To provision and deploy resources targeting Azure inside CI/CD, you must create an Azure service principal for use.
 
 Briefly, the steps include:
@@ -92,7 +92,7 @@ Briefly, the steps include:
 
 For detailed guidelines, refer to [the official document](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal). There're three ways to create service principal, [Azure portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-authenticate-service-principal-powershell), [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli), and you can choose the way you like.
 
-# Additional Notes
+## Additional Notes
 * [Create your first Azure DevOps Pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser)
 * [Manage your apps with the Developer Portal for Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/teams-developer-portal)
 
@@ -127,7 +127,7 @@ Please follow [using-credentials](https://www.jenkins.io/doc/book/using/using-cr
 
 > Note: Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
 
-# How to create Azure service principals for use?
+## How to create Azure service principals for use?
 To provision and deploy resources targeting Azure inside CI/CD, you must create an Azure service principal for use.
 
 Briefly, the steps include:
@@ -138,6 +138,6 @@ Briefly, the steps include:
 
 For detailed guidelines, refer to [the official document](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal). There're three ways to create service principal, [Azure portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-authenticate-service-principal-powershell), [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli), and you can choose the way you like.
 
-# Additional Notes
+## Additional Notes
 * [Create your first Jenkins Pipeline](https://www.jenkins.io/doc/pipeline/tour/hello-world/)
 * [Manage your apps with the Developer Portal for Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/teams-developer-portal)
