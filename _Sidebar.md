@@ -20,3 +20,4 @@ How To Guides
 * [How to customize debug tasks](https://github.com/OfficeDev/TeamsFx/wiki/%7BDebug%7D-Teams-Toolkit-VS-Code-Tasks)
 * [How to enable Single Sign-on in Teams Toolkit for Visual Studio](https://github.com/OfficeDev/TeamsFx/wiki/How-to-enable-Single-Sign-on-in-Teams-Toolkit-for-Visual-Studio)
 * [How to configure Tab capability within your Teams app](https://github.com/OfficeDev/TeamsFx/wiki/How-to-configure-Tab-capability-within-your-Teams-app)
+* [How to automate ci/cd pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
