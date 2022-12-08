@@ -361,12 +361,12 @@ This action will generate environment variables to `.env` file.
 ## Output:
 NA
 
-# tools/install
+# prerequisite/install
 This action will install the developing tools that are required to debug a Teams app.
 
 ## Syntax:
 ```yml
-  - uses: tools/install
+  - uses: prerequisite/install
     with:
       devCert: # Optional. The SSL certificate for Teams Tab app. This action will generate a SSL certificate and install it to the system certificate management center.
         trust: true # Required. Whether to trust the SSL certificate.
