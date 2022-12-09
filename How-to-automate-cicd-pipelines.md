@@ -1,143 +1,246 @@
-# How to use pre-cooked workflows on GitHub
+---
+title: CI/CD templates
+author: MuyangAmigo
+description:  In this module, learn how to use CI/CD pipeline templates in GitHub, Azure DevOps, and Jenkins for Teams Application DevelopersCI/CD templates
+ms.author: ruhe
+ms.localizationpriority: medium
+ms.topic: overview
+ms.date: 04/20/2022
+---
 
-## Prerequisites
-- Teams app projects are version controlled by GitHub.
-- (Optional) An Microsoft 365 account. If you do not have Microsoft 365 account, apply one from [Microsoft 365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program). The Microsoft 365 account credentials are required for steps of provision, publish and deployment for SPFx projects. Any extra interactive verification steps should be disabled for the Microsoft 365 account, and please check details in sections below.
-- (Optional) An Azure service principal with necessary permissions. The Azure service principal credentials are required for steps of provision and deploy for Azure based projects.
+# Set up CI/CD pipelines
 
-## Steps
-After the pre-cooked workflows are scaffolded successfully, the following steps are expected to be performed:
-1. Commit and push your project source code to GitHub remote repository, including the CI/CD yml files.
-1. Configure necessary GitHub secrets if your workflows require credentials by checking into the yml files.
-1. Trigger your workflows automatically, manually or do customization (Check the `on:` section in yml files to find the triggers). More about triggers in GitHub, refer to [trigger a workflow](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow).
+TeamsFx helps to automate your development workflow while building Teams application. The following are the tools and templates you can use to set up CI/CD pipelines, create workflow templates, and customize CI/CD workflow with GitHub, Azure DevOps, Jenkins, and other platforms. To provision and deploy resources, you can create Azure service principals and publish the Teams app using Teams Developer Portal. To publish Teams app manually, you may leverage [Developer Portal for Teams](https://dev.teams.microsoft.com/home).
 
-## GitHub Secrets 
-Steps to create secrets by environment in GitHub (Environment feature is not available in Private repositories.):
-1. In the project `Settings` page, navigate to `Environments` section and click `New environment`.
-1. Enter a name for your environment. The default environment name provided in the template is `test_environment`. Click `Configure environment` to proceed.
-1. In the next page, click `Add Secret` to add secrets for each of the items listed in the table below.
-
-Or create repository secrets by follow the path of `Settings` > `Security` > `Secrets` > `Actions` > `New repository secret`.
-
-|Name|Description|
+|Tools and Templates | Description |
 |---|---|
-|AZURE_SERVICE_PRINCIPAL_NAME|The service principal name of Azure used to provision resources.|
-|AZURE_SERVICE_PRINCIPAL_PASSWORD|The password of Azure service principal.|
-|AZURE_SUBSCRIPTION_ID|To identify the subscription in which the resources will be provisioned.|
-|AZURE_TENANT_ID|To identify the tenant in which the subscription resides.|
-|M365_ACCOUNT_NAME|The Microsoft 365 account for creating and publishing the Teams App.|
-|M365_ACCOUNT_PASSWORD|The password of the Microsoft 365 account.|
-|M365_TENANT_ID|To identify the tenant in which the Teams App will be created/published. This value is optional unless you have a multi-tenant account and you want to use another tenant. Read more on [how to find your Microsoft 365 tenant ID](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant).|
-> Note: Currently, a non-interactive authentication style for Microsoft 365 is used in CI/CD workflows, so please ensure that your Microsoft 365 account has sufficient privileges in your tenant and doesn't have multi-factor authentication or other advanced security features enabled. Please refer to the [Configure Microsoft 365 Credentials](https://github.com/OfficeDev/teamsfx-cli-action/blob/main/README.md#configure-m365azure-credentials-as-github-secret) to make sure you have disabled Multi-factor Authentication and Security Defaults for the credentials used in the workflow.
+|[TeamsFx-CLI-Action](https://github.com/OfficeDev/teamsfx-cli-action)|GitHub action that integrates with TeamsFx CLI.|
+|[Teams Toolkit in Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=TeamsDevApp.ms-teams-vscode-extension)| Visual Studio Code extension that helps you to develop Teams app and automation workflows for GitHub, Azure DevOps, and Jenkins. |
+|[TeamsFx CLI](https://www.npmjs.com/package/@microsoft/teamsfx-cli) | Command Line tool that helps you to develop Teams app and automation workflows for GitHub, Azure DevOps, and Jenkins.|
+|[script-ci-template.sh](https://github.com/OfficeDev/TeamsFx/blob/main/docs/cicd_insider/others-script-ci-template.sh) and [script-cd-template.sh](https://github.com/OfficeDev/TeamsFx/blob/main/docs/cicd_insider/others-script-cd-template.sh)| Script templates for automation outside of GitHub, Azure DevOps, or Jenkins. |
 
-> Note: Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
+## Set up pipelines
 
-## How to create Azure service principals for use?
+You can set up pipelines with the following platforms:
+
+1. [Set up pipelines with GitHub](#set-up-pipelines-with-github)
+1. [Set up pipelines with Azure DevOps](#set-up-pipelines-with-azure-devops)
+1. [Set up pipelines with Jenkins](#set-up-pipelines-with-jenkins)
+1. [Set up pipelines for other platforms](#set-up-pipelines-for-other-platforms)
+
+## Set up pipelines with GitHub
+
+To set up pipelines with GitHub for CI/CD:
+
+* Create workflow templates.
+
+  * Visual Studio Code
+  * TeamsFx CLI
+
+* Customize CI/CD workflow.
+
+### Create workflow templates
+
+You can create the following workflow templates with GitHub:
+
+**Teams Toolkit in Visual Studio Code**
+
+1. Create a new Teams app project using Teams Toolkit.
+
+1. Select **Teams Toolkit** icon :::image type="icon" source="../assets/images/teams-toolkit-v2/add-API/api-add-icon.png"::: from the left pane.
+
+1. Select **Add features**
+
+   :::image type="content" source="../assets/images/teams-toolkit-v2/add-feature.png" alt-text="Adding feature":::
+
+1. Select **Add CI/CD Workflows**.
+
+   :::image type="content" source="../assets/images/teams-toolkit-v2/toolkit-ci-cd-workflow.png" alt-text="Select CI/CD workflow":::
+
+1. Select an environment from the command prompt.
+1. Select **GitHub** as the CI/CD provider.
+1. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
+1. Open the template and customize the workflows that fit into your scenarios.
+1. Follow the README files under `.github/workflows` to set up the workflow in GitHub.
+
+**TeamsFx CLI**
+
+1. Enter `cd` to your Teams app project directory.
+2. Enter `teamsfx add cicd` command to start the interactive command process.
+3. Select an environment from the command prompt.
+4. Select **GitHub** as the CI/CD provider.
+5. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
+7. Open the template and customize the workflows that fit into your scenarios.
+8. Follow the README files under `.github/workflows` to set up the workflow in GitHub.
+
+> [!NOTE]
+> If you need to add additional workflow templates, you can follow the same procedure to create workflow template in Visual Studio Code or TeamsFx CLI.
+
+### Customize CI/CD workflow
+
+You can change or remove the test scripts to customize CI/CD workflow:
+
+1. By default, the CD workflow is triggered, when new commits are made to the `main` branch.
+1. Change the build scripts if necessary.
+1. Remove the test scripts as required.
+
+## Set up pipelines with Azure DevOps
+
+To set up pipelines with Azure DevOps for CI/CD:
+
+* Create workflow templates.
+
+  * Visual Studio Code
+  * TeamsFx CLI
+
+* Customize CI/CD workflow.
+
+### Create workflow templates
+
+You can create the following workflow templates with Azure DevOps:
+
+**Teams Toolkit in Visual Studio Code**
+
+1. Create a new Teams app project using Teams Toolkit.
+2. Select **Teams Toolkit** icon :::image type="icon" source="../assets/images/teams-toolkit-v2/add-API/api-add-icon.png"::: from the left pane.
+1. Select **Add CI/CD Workflows**.
+1. Select an environment from the command prompt.
+1. Select **Azure DevOps** as CI/CD provider.
+1. Select at least one template from these options: CI, CD, Provision, and Publish to Teams.
+1. Open the template and customize the workflows that fit into your scenarios.
+1. Follow the README files under `.azure/pipelines` to set up the workflow in Azure DevOps.
+
+**TeamsFx CLI**
+
+1. Enter `cd` to your Teams app project directory.
+2. Enter `teamsfx add cicd` command to start the interactive command process.
+3. Select an environment from the command prompt.
+4. Select **Azure DevOps** as CI/CD provider.
+5. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
+7. Open the template and customize the workflows that fit into your scenarios.
+8. Follow the README files under `.azure/pipelines` to set up the workflow in Azure DevOps.
+
+> [!NOTE]
+> If you need to add additional workflow templates, you can follow the same procedure to create workflow template in Visual Studio Code or TeamsFx CLI.
+
+### Customize CI workflow
+
+You can make the following changes for the script or workflow definition:
+
+1. Use npm build script or customize the way you build in the automation code.
+1. Use npm test script, which returns zero for success, and change the test commands.
+
+### Customize CD workflow
+
+You can make the following changes for the script or workflow definition:
+
+1. Ensure you have an npm build script or customize the way you build in the automation code.
+1. Ensure you have an npm test script, which returns zero for success or change the test commands.
+
+## Set up pipelines with Jenkins
+
+To set up pipelines with Jenkins for CI/CD:
+
+* Create workflow templates.
+
+  * Visual Studio Code
+  * TeamsFx CLI
+
+* Customize CI/CD workflow.
+
+### Create workflow templates
+
+You can create the following workflow templates with Jenkins:
+
+**Teams Toolkit in Visual Studio Code**
+
+1. Create a new Teams app project using Teams Toolkit.
+2. Select **Teams Toolkit** icon :::image type="icon" source="../assets/images/teams-toolkit-v2/add-API/api-add-icon.png"::: from the left pane.
+3. Select **Add CI/CD Workflows**.
+4. Select an environment from the command prompt.
+5. Select **Jenkins** as CI/CD provider.
+6. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
+7. Open the template and customize the workflows that fit into your scenarios.
+8. Follow the README files under `.jenkins/pipelines` to set up the workflow with Jenkins.
+
+**TeamsFx CLI**
+
+1. Enter `cd` to your Teams app project directory.
+2. Enter `teamsfx add cicd` command to start the interactive command process.
+3. Select an environment from the command prompt.
+4. Select **Jenkins** as CI/CD provider.
+5. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
+7. Open the template and customize the workflows that fit into your scenarios.
+8. Follow the README files under `.jenkins/pipelines` to set up the workflow with Jenkins.
+
+> [!NOTE]
+> If you need to add additional workflow templates, you can follow the same procedure to create workflow template in Visual Studio Code or TeamsFx CLI.
+
+### Customize CI workflow
+
+You can make the following changes to your project:
+
+1. Change how the CI flow is triggered. The default is to use the triggers of **pollSCM** when a new change is pushed into the **dev** branch.
+1. Ensure you have an npm build script or customize the way you build in the automation code.
+1. Ensure you have an npm test script, which returns zero for success or change the test commands.
+
+### Customize CD workflow
+
+Perform the following steps to customize the CD pipeline:
+
+1. Change the CD flow. The default is to use the triggers of `pollSCM` when a new change is pushed into the `main` branch.
+1. Change the build scripts if necessary.
+1. Remove the test scripts if you don't have tests.
+
+## Set up pipelines for other platforms
+
+You can follow the predefined listed example bash scripts to build and customize CI/CD pipelines on the other platforms:
+
+* [CI Scripts](https://github.com/OfficeDev/TeamsFx/blob/main/docs/cicd_insider/others-script-ci-template.sh)
+* [CD Scripts](https://github.com/OfficeDev/TeamsFx/blob/main/docs/cicd_insider/others-script-cd-template.sh)
+
+The scripts are based on a cross-platform TeamsFx command line tool [TeamsFx-CLI](https://www.npmjs.com/package/@microsoft/teamsfx-cli). You can install it with `npm install -g @microsoft/teamsfx-cli` and follow the [documentation](https://github.com/OfficeDev/TeamsFx/blob/dev/docs/cli/user-manual.md) to customize the scripts.
+
+> [!NOTE]
+>
+> * To enable `@microsoft/teamsfx-cli` running in CI mode, turn on `CI_ENABLED` by `export CI_ENABLED=true`. In CI mode, `@microsoft/teamsfx-cli` is friendly for CI/CD.
+> * To enable `@microsoft/teamsfx-cli` running in the non-interactive mode, set a global config with command: `teamsfx config set -g interactive false`. In the non-interactive mode, `@microsoft/teamsfx-cli` does not prompt for inputs.
+
+Ensure to set up Azure and Microsoft 365 credentials in your environment variables safely. For example, if you're using GitHub as your source code repository, see [GitHub Secrets](https://docs.github.com/en/actions/reference/encrypted-secrets).
+
+## Provision and deploy resources
+
 To provision and deploy resources targeting Azure inside CI/CD, you must create an Azure service principal for use.
 
-Briefly, the steps include:
-1. Register an Azure AD application in single tenant, and it requires sufficient permissions in your Azure AD tenant.
-1. Assign a role to your Azure AD application to access your Azure subscription, and `Contributor` role is recommended. 
-1. Create a new Azure AD application secret.
-1. Grab your tenant id, application id(AZURE_SERVICE_PRINCIPAL_NAME), and the secret(AZURE_SERVICE_PRINCIPAL_PASSWORD) for use.
+Perform the following steps to create Azure service principals:
 
-For detailed guidelines, refer to [the official document](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal). There're three ways to create service principal, [Azure portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-authenticate-service-principal-powershell), [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli), and you can choose the way you like.
+1. Register an Microsoft Azure Active Directory (Azure AD) application in single tenant.
+2. Assign a role to your Azure AD application to access your Azure subscription. The `Contributor` role is recommended.
+3. Create a new Azure AD application secret.
 
-## Additional Notes
+> [!TIP]
+> Save your tenant id, application id (AZURE_SERVICE_PRINCIPAL_NAME), and the secret (AZURE_SERVICE_PRINCIPAL_PASSWORD) for future use.
+
+For more information, see [Azure service principals guidelines](/azure/active-directory/develop/howto-create-service-principal-portal). The following are the three ways to create service principals:
+
+* [Microsoft Azure portal](/azure/active-directory/develop/howto-create-service-principal-portal)
+* [Windows PowerShell](/azure/active-directory/develop/howto-authenticate-service-principal-powershell)
+* [Microsoft Azure CLI](/cli/azure/create-an-azure-service-principal-azure-cli)
+
+## Publish Teams app using Teams Developer Portal
+
+If there are any changes related to Teams app's manifest file, you can update the manifest and publish the Teams app again. To publish Teams app manually, you may leverage [Developer Portal for Teams](https://dev.teams.microsoft.com/home).
+
+Perform the following steps to publish your app:
+
+1. Sign-in to [Developer portal for Teams](https://dev.teams.microsoft.com) using the corresponding account.
+2. Import your app package in zip, select `App -> Import app -> Replace`.
+3. Select the target app in app list.
+4. Publish your app, select `Publish -> Publish to your org`.
+
+## See also
+
 * [Quick Start for GitHub Actions](https://docs.github.com/en/actions/quickstart#creating-your-first-workflow)
-* [Manage your apps with the Developer Portal for Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/teams-developer-portal)
-
-# How to use pre-cooked pipelines on Azure DevOps
-
-## Prerequisites
-- Teams app projects are version controlled by Azure DevOps.
-- (Optional) An Microsoft 365 account. If you do not have Microsoft 365 account, apply one from [Microsoft 365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program). The Microsoft 365 account credentials are required for steps of provision, publish and deployment for SPFx projects. Any extra interactive verification steps should be disabled for the Microsoft 365 account, and please check details in sections below.
-- (Optional) An Azure service principal with necessary permissions. The Azure service principal credentials are required for steps of provision and deploy for Azure based projects.
-
-## Steps
-After the pre-cooked pipelines are scaffolded successfully, the following steps are expected to be performed:
-1. Commit and push your project source code to Azure DevOps remote repository, including the CI/CD yml files.
-1. Create corresponding Azure DevOps pipelines by following [Create your first Azure DevOps Pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser).
-1. Configure necessary Azure DevOps Pipeline variables if your pipelines require credentials by checking into the yml files.
-1. Trigger your pipelines automatically, manually or do customization (Check the `trigger:` or `pr:` section in yml files to find the triggers). More about triggers in Azure DevOps, refer to [Triggers in Azure pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops).
-
-## Azure DevOps Pipeline Variables 
-Steps to create Pipeline variables in Azure DevOps:
-1. In the Pipeline editing page, click `Variables` on top right and click `New variable`.
-1. Enter Name/Value pair for your variable.
-1. Toggle the checkbox of `Keep this value secret` if necessary.
-1. Click `OK` to create the variable. 
-
-|Name|Description|
-|---|---|
-|AZURE_SERVICE_PRINCIPAL_NAME|The service principal name of Azure used to provision resources.|
-|AZURE_SERVICE_PRINCIPAL_PASSWORD|The password of Azure service principal.|
-|AZURE_SUBSCRIPTION_ID|To identify the subscription in which the resources will be provisioned.|
-|AZURE_TENANT_ID|To identify the tenant in which the subscription resides.|
-|M365_ACCOUNT_NAME|The Microsoft 365 account for creating and publishing the Teams App.|
-|M365_ACCOUNT_PASSWORD|The password of the Microsoft 365 account.|
-|M365_TENANT_ID|To identify the tenant in which the Teams App will be created/published. This value is optional unless you have a multi-tenant account and you want to use another tenant. Read more on [how to find your Microsoft 365 tenant ID](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant).|
-> Note: Currently, a non-interactive authentication style for Microsoft 365 is used in CI/CD workflows, so please ensure that your Microsoft 365 account has sufficient privileges in your tenant and doesn't have multi-factor authentication or other advanced security features enabled. Please refer to the [Configure Microsoft 365 Credentials](https://github.com/OfficeDev/teamsfx-cli-action/blob/main/README.md#configure-m365azure-credentials-as-github-secret) to make sure you have disabled Multi-factor Authentication and Security Defaults for the credentials used in the workflow.
-
-> Note: Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
-
-## How to create Azure service principals for use?
-To provision and deploy resources targeting Azure inside CI/CD, you must create an Azure service principal for use.
-
-Briefly, the steps include:
-1. Register an Azure AD application in single tenant, and it requires sufficient permissions in your Azure AD tenant.
-2. Assign a role to your Azure AD application to access your Azure subscription, and `Contributor` role is recommended. 
-3. Create a new Azure AD application secret.
-4. Grab your tenant id, application id(AZURE_SERVICE_PRINCIPAL_NAME), and the secret(AZURE_SERVICE_PRINCIPAL_PASSWORD) for use.
-
-For detailed guidelines, refer to [the official document](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal). There're three ways to create service principal, [Azure portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-authenticate-service-principal-powershell), [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli), and you can choose the way you like.
-
-## Additional Notes
-* [Create your first Azure DevOps Pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser)
-* [Manage your apps with the Developer Portal for Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/teams-developer-portal)
-
-# How to use pre-cooked pipelines on Jenkins
-
-## Prerequisites
-- Teams app projects are version controlled.
-- (Optional) An Microsoft 365 account. If you do not have Microsoft 365 account, apply one from [Microsoft 365 developer program](https://developer.microsoft.com/en-us/microsoft-365/dev-program). The Microsoft 365 account credentials are required for steps of provision, publish and deployment for SPFx projects. Any extra interactive verification steps should be disabled for the Microsoft 365 account, and please check details in sections below.
-- (Optional) An Azure service principal with necessary permissions. The Azure service principal credentials are required for steps of provision and deploy for Azure based projects.
-
-## Steps
-After the pre-cooked pipelines are scaffolded successfully, the following steps are expected to be performed:
-1. Commit and push your project source code to your remote repository, including the CI/CD Jenkinsfiles.
-1. Create corresponding Jenkins pipelines by following [Create your first Jenkins Pipeline](https://www.jenkins.io/doc/pipeline/tour/hello-world/).
-1. Configure necessary Jenkins credentials if your projects require credentials by checking into the Jenkinsfiles.
-1. Trigger your pipeline automatically, manually or do customization (Check the `triggers` section in Jenkinsfiles to find the triggers). More about triggers in Jenkins, refer to [Jenkins triggers](https://www.jenkins.io/doc/book/pipeline/syntax/#triggers).
-
-
-## Jenkins Credentials 
-Please follow [using-credentials](https://www.jenkins.io/doc/book/using/using-credentials/) to create credentials on Jenkins.
-
-|Name|Description|
-|---|---|
-|AZURE_SERVICE_PRINCIPAL_NAME|The service principal name of Azure used to provision resources.|
-|AZURE_SERVICE_PRINCIPAL_PASSWORD|The password of Azure service principal.|
-|AZURE_SUBSCRIPTION_ID|To identify the subscription in which the resources will be provisioned.|
-|AZURE_TENANT_ID|To identify the tenant in which the subscription resides.|
-|M365_ACCOUNT_NAME|The Microsoft 365 account for creating and publishing the Teams App.|
-|M365_ACCOUNT_PASSWORD|The password of the Microsoft 365 account.|
-|M365_TENANT_ID|To identify the tenant in which the Teams App will be created/published. This value is optional unless you have a multi-tenant account and you want to use another tenant. Read more on [how to find your Microsoft 365 tenant ID](https://docs.microsoft.com/en-us/azure/active-directory/fundamentals/active-directory-how-to-find-tenant).|
-> Note: Currently, a non-interactive authentication style for Microsoft 365 is used in CI/CD workflows, so please ensure that your Microsoft 365 account has sufficient privileges in your tenant and doesn't have multi-factor authentication or other advanced security features enabled. Please refer to the [Configure Microsoft 365 Credentials](https://github.com/OfficeDev/teamsfx-cli-action/blob/main/README.md#configure-m365azure-credentials-as-github-secret) to make sure you have disabled Multi-factor Authentication and Security Defaults for the credentials used in the workflow.
-
-> Note: Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
-
-## How to create Azure service principals for use?
-To provision and deploy resources targeting Azure inside CI/CD, you must create an Azure service principal for use.
-
-Briefly, the steps include:
-1. Register an Azure AD application in single tenant, and it requires sufficient permissions in your Azure AD tenant.
-2. Assign a role to your Azure AD application to access your Azure subscription, and `Contributor` role is recommended. 
-3. Create a new Azure AD application secret.
-4. Grab your tenant id, application id(AZURE_SERVICE_PRINCIPAL_NAME), and the secret(AZURE_SERVICE_PRINCIPAL_PASSWORD) for use.
-
-For detailed guidelines, refer to [the official document](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal). There're three ways to create service principal, [Azure portal](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-create-service-principal-portal), [PowerShell](https://docs.microsoft.com/en-us/azure/active-directory/develop/howto-authenticate-service-principal-powershell), [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/create-an-azure-service-principal-azure-cli), and you can choose the way you like.
-
-## Additional Notes
+* [Create your first Azure DevOps Pipeline](/azure/devops/pipelines/create-first-pipeline)
 * [Create your first Jenkins Pipeline](https://www.jenkins.io/doc/pipeline/tour/hello-world/)
-* [Manage your apps with the Developer Portal for Microsoft Teams](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/teams-developer-portal)
+* [Manage your apps with the Developer Portal for Microsoft Teams](../concepts/build-and-test/teams-developer-portal.md)
