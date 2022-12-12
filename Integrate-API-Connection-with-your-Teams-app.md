@@ -170,7 +170,7 @@ const apiClient = teamsfxSdk.createApiClient(
 module.exports.apiClient = apiClient;
 ```
 </details>
-
+You can import the API client (an Axios instance) in another file and call kudos APIs and authentication is now handled for you automatically.
 Here is an example for a GET request to "relative_path_of_target_api":
 ```javascript
 const { apiClient } = require("relative_path_to_this_file");
