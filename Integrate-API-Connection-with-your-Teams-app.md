@@ -171,7 +171,7 @@ module.exports.apiClient = apiClient;
 ```
 </details>
 
-You can import the apiClient (an Axios instance) in another file and call the APIs and authentication is now handled for you automatically.
+You can import the `apiClient` (an Axios instance) in another file and call the APIs and authentication is now handled for you automatically.
 
 Here is an example for a GET request to "relative_path_of_target_api":
 ```javascript
