@@ -10,11 +10,11 @@ It is recommended to use an alias to distinguish multiple different api connecti
 1. [Step 2: Provide ApiClient for project](#step-2-provide-apiclient-for-project)
 1. [Step 3: Add Configuration for local debugging](#step-3-add-configuration-for-local-debugging)
 
----
+
 ## Step 1: Add SDK to project
 Add a reference to the `@microsoft/teamsfx` package to `package.json`.
 
----
+
 ## Step 2: Provide ApiClient for project
 Create a module to connect your API, and export the `apiClient` to provide for the project.
 
@@ -181,7 +181,7 @@ const response = await apiClient.get("relative_path_of_target_api");
 
 const responseBody = response.data;
 ```
----
+
 
 ## Step 3: Add Configuration for local debugging
 Add configuration of your API in `teamsfx/script/run.js` for local debugging.
