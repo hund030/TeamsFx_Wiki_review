@@ -25,11 +25,11 @@ const authProvider = new teamsfxSdk.BasicAuthProvider(
   process.env.TEAMSFX_API_USERNAME,
   process.env.TEAMSFX_API_PASSWORD
 );
-const yourApiClient = teamsfxSdk.createApiClient(
+const apiClient = teamsfxSdk.createApiClient(
   process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.yourAPIClient = yourApiClient;
+module.exports.apiClient = apiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
@@ -58,11 +58,11 @@ const authProvider = new teamsfxSdk.CertificateAuthProvider(
   // If you have a .pfx certificate, you can use the `createPfxCertOption` function to initialize your certificate
   teamsfxSdk.createPemCertOption("<your-cert>", "<your-private-key>")
 );
-const yourApiClient = teamsfxSdk.createApiClient(
+const apiClient = teamsfxSdk.createApiClient(
   process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.yourApiClient = yourApiClient;
+module.exports.apiClient = apiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
@@ -104,11 +104,11 @@ const authProvider = new teamsfxSdk.BearerTokenAuthProvider(
   // TODO: Replace '<your-api-scope>' with your required API scope
   async () => (await appCredential.getToken("<your-api-scope>")).token
 );
-const yourApiClient = teamsfxSdk.createApiClient(
+const apiClient= teamsfxSdk.createApiClient(
   process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.yourApiClient = yourApiClient;
+module.exports.apiClient= apiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
@@ -142,11 +142,11 @@ const authProvider = new teamsfxSdk.ApiKeyProvider(
   process.env.TEAMSFX_API_API_KEY,
   teamsfxSdk.ApiKeyLocation.QueryParams
 );
-const yourApiClient = teamsfxSdk.createApiClient(
+const apiClient = teamsfxSdk.createApiClient(
   process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.yourApiClient = yourApiClient;
+module.exports.apiClient = apiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
@@ -194,11 +194,11 @@ const authProvider = new CustomAuthProvider(
   "customValue"
 );
 // Initialize a new axios instance to call your API
-const yourApiClient = teamsfxSdk.createApiClient(
+const apiClient = teamsfxSdk.createApiClient(
   process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.yourApiClient = yourApiClient;
+module.exports.apiClient = apiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
