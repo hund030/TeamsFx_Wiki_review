@@ -33,6 +33,7 @@ module.exports.yourAPIClient = yourApiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
+...
 const envs = await utils.loadEnv(args[0], args[1]);
 
 // set up environment variables required by teamsfx
@@ -65,6 +66,7 @@ module.exports.yourApiClient = yourApiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
+...
 const envs = await utils.loadEnv(args[0], args[1]);
 
 // set up environment variables required by teamsfx
@@ -110,6 +112,7 @@ module.exports.yourApiClient = yourApiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
+...
 const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
 process.env.TEAMSFX_API_ENDPOINT =
@@ -147,6 +150,7 @@ module.exports.yourApiClient = yourApiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
+...
 const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
 process.env.TEAMSFX_API_ENDPOINT =
@@ -198,6 +202,7 @@ module.exports.yourApiClient = yourApiClient;
 ```
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
+...
 const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
 process.env.TEAMSFX_API_ENDPOINT=
