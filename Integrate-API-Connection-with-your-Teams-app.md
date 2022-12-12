@@ -6,12 +6,18 @@ Make sure that your project contains backend service, such as Azure Function or 
 # Steps to add Api Connction
 The following steps help you to add API connection using Visual Studio Code:
 It is recommended to use an alias to distinguish multiple different api connections, the alias will be used in both sample code and env variables.
-1. Add a reference to the `@microsoft/teamsfx` package to `package.json`.
-1. Modify your service project with reference to the sample code to leverage `yourApiClient` to connect API.
-1. Refer to the sample code to add configuration of your API in `teamsfx/script/run.js` for local debugging.
+1. [Step 1: Add SDK to project](#step-1-add-sdk-to-project)
+1. [Step 2: Provide ApiClient for project](#step-2-provide-apiclient-for-project)
+1. [Step 3: Add Configuration for local debugging](#step-3-add-configuration-for-local-debugging)
+
 ---
-## Sample Code and Application Settings
-TeamsFx supports common 5 ways to help developers connect APIs.
+## Step 1: Add SDK to project
+Add a reference to the `@microsoft/teamsfx` package to `package.json`.
+
+---
+## Step 2: Provide ApiClient for project
+Create a module to connect your API, and export the `apiClient` to provide for the project.
+
 <details>
 <summary><b>Basic Auth
 </b></summary>
@@ -30,16 +36,6 @@ const apiClient = teamsfxSdk.createApiClient(
   authProvider
 );
 module.exports.apiClient = apiClient;
-```
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
-...
-const envs = await utils.loadEnv(args[0], args[1]);
-
-// set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
-process.env.TEAMSFX_API_USERNAME =
-process.env.TEAMSFX_API_PASSWORD =
 ```
 </details>
 <details>
@@ -63,14 +59,6 @@ const apiClient = teamsfxSdk.createApiClient(
   authProvider
 );
 module.exports.apiClient = apiClient;
-```
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
-...
-const envs = await utils.loadEnv(args[0], args[1]);
-
-// set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
 ```
 </details>
 <details>
@@ -110,17 +98,6 @@ const apiClient= teamsfxSdk.createApiClient(
 );
 module.exports.apiClient= apiClient;
 ```
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
-...
-const envs = await utils.loadEnv(args[0], args[1]);
-// set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
-// Scenario 2
-process.env.TEAMSFX_API_TENANT_ID=
-process.env.TEAMSFX_API_CLIENT_ID=
-SECRET_TEAMSFX_API_CLIENT_SECRET=
-```
 </details>
 <details>
 <summary><b>API Key
@@ -147,14 +124,6 @@ const apiClient = teamsfxSdk.createApiClient(
   authProvider
 );
 module.exports.apiClient = apiClient;
-```
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
-...
-const envs = await utils.loadEnv(args[0], args[1]);
-// set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
-process.env.TEAMSFX_API_API_KEY =
 ```
 </details>
 <details>
@@ -200,6 +169,88 @@ const apiClient = teamsfxSdk.createApiClient(
 );
 module.exports.apiClient = apiClient;
 ```
+</details>
+
+Here is an example for a GET request to "relative_path_of_target_api":
+```javascript
+const { apiClient } = require("relative_path_to_this_file");
+const response = await apiClient.get("relative_path_of_target_api");
+// You only need to enter the relative path for your API.
+// For example, if you want to call api https://my-api-endpoint/test and you configured https://my-api-endpoint as the API endpoint,
+// your code will be: const response = await kudosClient.get("test");
+
+const responseBody = response.data;
+```
+---
+
+## Step 3: Add Configuration for local debugging
+Add configuration of your API in `teamsfx/script/run.js` for local debugging.
+
+<details>
+<summary><b>Basic Auth
+</b></summary>
+
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+...
+const envs = await utils.loadEnv(args[0], args[1]);
+
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
+process.env.TEAMSFX_API_USERNAME =
+process.env.TEAMSFX_API_PASSWORD =
+```
+</details>
+<details>
+<summary><b>Certification
+</b></summary>
+
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+...
+const envs = await utils.loadEnv(args[0], args[1]);
+
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
+```
+</details>
+<details>
+<summary><b>Azure Active Directory
+</b></summary>
+
+There are 2 scenarios here, please choose one of them. 
+- Scenario 1 is reusing the project AAD app, make sure your project contains an existing AAD app.
+- Scenario 2 is using an existing AAD App.
+
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+...
+const envs = await utils.loadEnv(args[0], args[1]);
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
+// Scenario 2
+process.env.TEAMSFX_API_TENANT_ID=
+process.env.TEAMSFX_API_CLIENT_ID=
+SECRET_TEAMSFX_API_CLIENT_SECRET=
+```
+</details>
+<details>
+<summary><b>API Key
+</b></summary>
+
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+...
+const envs = await utils.loadEnv(args[0], args[1]);
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
+process.env.TEAMSFX_API_API_KEY =
+```
+</details>
+<details>
+<summary><b>Custom Auth Implementation
+</b></summary>
+
 Add your Api connection configuration to `teamsfx/script/run.js`
 ```javascript
 ...
