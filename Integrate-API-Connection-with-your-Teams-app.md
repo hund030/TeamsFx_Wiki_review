@@ -230,10 +230,14 @@ Add your Api connection configuration to `teamsfx/script/run.js`
 const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
 process.env.TEAMSFX_API_ENDPOINT =
+// Scenario 1
+process.env.TEAMSFX_API_TENANT_ID = envs.AAD_APP_TENANT_ID
+process.env.TEAMSFX_API_CLIENT_ID = envs.AAD_APP_CLIENT_ID
+process.env.TEAMSFX_API_CLIENT_SECRET = envs.SECRET_AAD_APP_CLIENT_SECRET
 // Scenario 2
-process.env.TEAMSFX_API_TENANT_ID=
-process.env.TEAMSFX_API_CLIENT_ID=
-SECRET_TEAMSFX_API_CLIENT_SECRET=
+process.env.TEAMSFX_API_TENANT_ID =
+process.env.TEAMSFX_API_CLIENT_ID =
+process.env.TEAMSFX_API_CLIENT_SECRET =
 ```
 </details>
 <details>
