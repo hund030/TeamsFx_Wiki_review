@@ -11,7 +11,7 @@ It is recommended to use an alias to distinguish multiple different api connecti
 1. Refer to the sample code to add application settings for your API in `./teamsfx/.env.local` that configures local debugging.
 ---
 ## Sample Code and Application Settings
-The following sample code and settings assume the alias for API connection is `kudos`. Please replace the alias in your code.
+TeamsFx supports common 5 ways to help developers connect APIs.
 <details>
 <summary><b>Basic Auth
 </b></summary>
@@ -21,22 +21,25 @@ Sample code for Basic Auth
 const teamsfxSdk = require("@microsoft/teamsfx");
 // Load application configuration
 const teamsFx = new teamsfxSdk.TeamsFx();
-// Initialize a new axios instance to call kudos
+// Initialize a new axios instance to call your API
 const authProvider = new teamsfxSdk.BasicAuthProvider(
-  process.env.TEAMSFX_API_KUDOS_USERNAME,
-  process.env.TEAMSFX_API_KUDOS_PASSWORD
+  process.env.TEAMSFX_API_USERNAME,
+  process.env.TEAMSFX_API_PASSWORD
 );
-const kudosClient = teamsfxSdk.createApiClient(
-  process.env.TEAMSFX_API_KUDOS_ENDPOINT,
+const yourApiClient = teamsfxSdk.createApiClient(
+  process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.kudosClient = kudosClient;
+module.exports.yourAPIClient = yourApiClient;
 ```
-Add application settings for your API to `teamsfx/.dev.local`
-```
-TEAMSFX_API_KUDOS_ENDPOINT=
-TEAMSFX_API_KUDOS_USERNAME=
-TEAMSFX_API_KUDOS_PASSWORD=
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+const envs = await utils.loadEnv(args[0], args[1]);
+
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
+process.env.TEAMSFX_API_USERNAME =
+process.env.TEAMSFX_API_PASSWORD =
 ```
 </details>
 <details>
@@ -49,7 +52,7 @@ const teamsfxSdk = require("@microsoft/teamsfx");
 
 // Load application configuration
 const teamsFx = new teamsfxSdk.TeamsFx();
-// Initialize a new axios instance to call kudos
+// Initialize a new axios instance to call your API
 const authProvider = new teamsfxSdk.CertificateAuthProvider(
   // TODO: 
   // 1. Add code to read your certificate and private key.
@@ -57,15 +60,18 @@ const authProvider = new teamsfxSdk.CertificateAuthProvider(
   // If you have a .pfx certificate, you can use the `createPfxCertOption` function to initialize your certificate
   teamsfxSdk.createPemCertOption("<your-cert>", "<your-private-key>")
 );
-const kudosClient = teamsfxSdk.createApiClient(
-  process.env.TEAMSFX_API_KUDOS_ENDPOINT,
+const yourApiClient = teamsfxSdk.createApiClient(
+  process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.kudosClient = kudosClient;
+module.exports.yourApiClient = yourApiClient;
 ```
-Add application settings for your API to `teamsfx/.dev.local`
-```
-TEAMSFX_API_KUDOS_ENDPOINT=
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+const envs = await utils.loadEnv(args[0], args[1]);
+
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
 ```
 </details>
 <details>
@@ -84,37 +90,38 @@ const teamsFx = new teamsfxSdk.TeamsFx(teamsfxSdk.IdentityType.App, {
   authorityHost: process.env.AAD_APP_OAUTH_AUTHORITY_HOST,
   tenantId: process.env.AAD_APP_TENANT_ID,
   clientId: process.env.AAD_APP_CLIENT_ID,
-  clientSecret: process.env.SECRET_AAD_APP_CLIENT_SECRET,
+  clientSecret: process.env.AAD_APP_CLIENT_SECRET,
 });
 // Scenario 2. use an existing AAD App.
 const teamsFx = new teamsfxSdk.TeamsFx(teamsfxSdk.IdentityType.App, {
   // You can replace the default authorityHost URL
   authorityHost: "https://login.microsoftonline.com",
-  tenantId: process.env.TEAMSFX_API_KUDOS_TENANT_ID,
-  clientId: process.env.TEAMSFX_API_KUDOS_CLIENT_ID,
+  tenantId: process.env.TEAMSFX_API_TENANT_ID,
+  clientId: process.env.TEAMSFX_API_CLIENT_ID,
   // This references the client secret that you must add in the file `.env.teamsfx.local`.
-  clientSecret: process.env.TEAMSFX_API_KUDOS_CLIENT_SECRET,
+  clientSecret: process.env.TEAMSFX_API_CLIENT_SECRET,
 });
-// Initialize a new axios instance to call kudos
+// Initialize a new axios instance to call your API
 const appCredential = teamsFx.getCredential();
 const authProvider = new teamsfxSdk.BearerTokenAuthProvider(
   // TODO: Replace '<your-api-scope>' with your required API scope
   async () => (await appCredential.getToken("<your-api-scope>")).token
 );
-const kudosClient = teamsfxSdk.createApiClient(
-  process.env.TEAMSFX_API_KUDOS_ENDPOINT,
+const yourApiClient = teamsfxSdk.createApiClient(
+  process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.kudosClient = kudosClient;
+module.exports.yourApiClient = yourApiClient;
 ```
-Add application settings for your API to `teamsfx/.dev.local`
-```
-// Must have
-TEAMSFX_API_KUDOS_ENDPOINT=
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+const envs = await utils.loadEnv(args[0], args[1]);
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
 // Scenario 2
-TEAMSFX_API_KUDOS_TENANT_ID=
-TEAMSFX_API_KUDOS_CLIENT_ID=
-TEAMSFX_API_KUDOS_CLIENT_SECRET=
+process.env.TEAMSFX_API_TENANT_ID=
+process.env.TEAMSFX_API_CLIENT_ID=
+SECRET_TEAMSFX_API_CLIENT_SECRET=
 ```
 </details>
 <details>
@@ -130,25 +137,27 @@ const teamsFx = new teamsfxSdk.TeamsFx();
 // Initialize a new axios instance to call kudos, store API key in request header.
 const authProvider = new teamsfxSdk.ApiKeyProvider(
   "{API-KEY-name}",
-  process.env.TEAMSFX_API_KUDOS_API_KEY,
+  process.env.TEAMSFX_API_API_KEY,
   teamsfxSdk.ApiKeyLocation.Header
 );
 // or store API key in request params.
 const authProvider = new teamsfxSdk.ApiKeyProvider(
   "{API-KEY-name}",
-  process.env.TEAMSFX_API_KUDOS_API_KEY,
+  process.env.TEAMSFX_API_API_KEY,
   teamsfxSdk.ApiKeyLocation.QueryParams
 );
-const kudosClient = teamsfxSdk.createApiClient(
-  process.env.TEAMSFX_API_KUDOS_ENDPOINT,
+const yourApiClient = teamsfxSdk.createApiClient(
+  process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.kudosClient = kudosClient;
+module.exports.yourApiClient = yourApiClient;
 ```
-Add application settings for your API to `teamsfx/.dev.local`
-```
-TEAMSFX_API_KUDOS_ENDPOINT=
-TEAMSFX_API_KUDOS_API_KEY=
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+const envs = await utils.loadEnv(args[0], args[1]);
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT =
+process.env.TEAMSFX_API_API_KEY =
 ```
 </details>
 <details>
@@ -185,20 +194,22 @@ const teamsFx = new teamsfxSdk.TeamsFx();
 
 const authProvider = new CustomAuthProvider(
   // You can also add configuration to the file `.env.teamsfx.local` and use `process.env.{setting_name}` to read the configuration. For example:
-  //  process.env.TEAMSFX_API_KUDOS_CUSTOM_PROPERTY,
-  //  process.env.TEAMSFX_API_KUDOS_CUSTOM_VALUE
+  //  process.env.TEAMSFX_API_CUSTOM_PROPERTY,
+  //  process.env.TEAMSFX_API_CUSTOM_VALUE
   "customPropery",
   "customValue"
 );
-// Initialize a new axios instance to call kudos
-const kudosClient = teamsfxSdk.createApiClient(
-  process.env.TEAMSFX_API_KUDOS_ENDPOINT,
+// Initialize a new axios instance to call your API
+const yourApiClient = teamsfxSdk.createApiClient(
+  process.env.TEAMSFX_API_ENDPOINT,
   authProvider
 );
-module.exports.kudosClient = kudosClient;
+module.exports.yourApiClient = yourApiClient;
 ```
-Add application settings for your API to `teamsfx/.dev.local`
-```
-TEAMSFX_API_KUDOS_ENDPOINT=
+Add your Api connection configuration to `teamsfx/script/run.js`
+```javascript
+const envs = await utils.loadEnv(args[0], args[1]);
+// set up environment variables required by teamsfx
+process.env.TEAMSFX_API_ENDPOINT=
 ```
 </details>
