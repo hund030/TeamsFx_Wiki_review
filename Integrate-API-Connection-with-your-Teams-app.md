@@ -74,17 +74,17 @@ const teamsfxSdk = require("@microsoft/teamsfx");
 // There are 2 scenarios here, please choose one of them. This sample uses the client credential flow to acquire a token for your API.
 // Scenario 1. reuse the project AAD app.
 const appAuthConfig: AppCredentialAuthConfig = {
-  authorityHost: process.env.M365_AUTHORITY_HOST,
-  clientId: process.env.M365_CLIENT_ID,
-  tenantId: process.env.M365_TENANT_ID,
-  clientSecret: process.env.M365_CLIENT_SECRET,
+  authorityHost: process.env.AAD_APP_OAUTH_AUTHORITY_HOST,
+  clientId: process.env.TEAMSFX_API_CLIENT_ID,
+  tenantId: process.env.TEAMSFX_API_TENANT_ID,
+  clientSecret: process.env.TEAMSFX_API_CLIENT_SECRET,
 };
 // Scenario 2. use an existing AAD App.
 const appAuthConfig: AppCredentialAuthConfig = {
   authorityHost: "https://login.microsoftonline.com",
-  clientId: process.env.M365_CLIENT_ID,
-  tenantId: process.env.M365_TENANT_ID,
-  clientSecret: process.env.M365_CLIENT_SECRET,
+  clientId: process.env.TEAMSFX_API_CLIENT_ID,
+  tenantId: process.env.TEAMSFX_API_TENANT_ID,
+  clientSecret: process.env.TEAMSFX_API_CLIENT_SECRET,
 };
 const appCredential = new AppCredential(appAuthConfig);
 // Initialize a new axios instance to call your API
@@ -234,6 +234,7 @@ process.env.TEAMSFX_API_ENDPOINT =
 process.env.TEAMSFX_API_TENANT_ID = envs.AAD_APP_TENANT_ID
 process.env.TEAMSFX_API_CLIENT_ID = envs.AAD_APP_CLIENT_ID
 process.env.TEAMSFX_API_CLIENT_SECRET = envs.SECRET_AAD_APP_CLIENT_SECRET
+process.env.AAD_APP_OAUTH_AUTHORITY_HOST = envs.AAD_APP_OAUTH_AUTHORITY_HOST
 // Scenario 2
 process.env.TEAMSFX_API_TENANT_ID =
 process.env.TEAMSFX_API_CLIENT_ID =
