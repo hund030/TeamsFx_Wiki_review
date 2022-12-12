@@ -19,8 +19,7 @@ TeamsFx supports common 5 ways to help developers connect APIs.
 Sample code for Basic Auth
 ```javascript
 const teamsfxSdk = require("@microsoft/teamsfx");
-// Load application configuration
-const teamsFx = new teamsfxSdk.TeamsFx();
+
 // Initialize a new axios instance to call your API
 const authProvider = new teamsfxSdk.BasicAuthProvider(
   process.env.TEAMSFX_API_USERNAME,
@@ -50,8 +49,6 @@ Sample code for Certification
 ```javascript
 const teamsfxSdk = require("@microsoft/teamsfx");
 
-// Load application configuration
-const teamsFx = new teamsfxSdk.TeamsFx();
 // Initialize a new axios instance to call your API
 const authProvider = new teamsfxSdk.CertificateAuthProvider(
   // TODO: 
@@ -132,8 +129,6 @@ Sample code for API Key
 ```javascript
 const teamsfxSdk = require("@microsoft/teamsfx");
 
-// Load application configuration
-const teamsFx = new teamsfxSdk.TeamsFx();
 // Initialize a new axios instance to call kudos, store API key in request header.
 const authProvider = new teamsfxSdk.ApiKeyProvider(
   "{API-KEY-name}",
@@ -188,9 +183,6 @@ class CustomAuthProvider {
     return config;
   };
 }
-
-// Load application configuration
-const teamsFx = new teamsfxSdk.TeamsFx();
 
 const authProvider = new CustomAuthProvider(
   // You can also add configuration to the file `.env.teamsfx.local` and use `process.env.{setting_name}` to read the configuration. For example:
