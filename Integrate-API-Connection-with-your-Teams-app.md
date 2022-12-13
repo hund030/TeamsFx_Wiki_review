@@ -4,8 +4,7 @@ Teams Toolkit helps you to access existing APIs for building Teams applications.
 Make sure that your project contains backend service, such as Azure Function or Azure bot service.
 
 # Steps to add API Connection
-The following steps help you to add API connection using Visual Studio Code:
-It is recommended to use an alias to distinguish multiple different api connections, the alias will be used in both sample code and env variables.
+The following steps help you to add API connection manually:
 - [Step 1: Add SDK to project](#step-1-add-sdk-to-project)
 - [Step 2: Provide ApiClient for project](#step-2-provide-apiclient-for-project)
 - [Step 3: Add Configuration for local debugging](#step-3-add-configuration-for-local-debugging)
