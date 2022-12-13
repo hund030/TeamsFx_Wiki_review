@@ -185,7 +185,7 @@ const responseBody = response.data;
 
 
 ## Step 3: Add Configuration for local debugging
-Add configuration of your API in `teamsfx/script/run.js` for local debugging.
+According to the `apiClient` created in Step 2, select the corresponding type to configure your API for local debugging.
 
 <details>
 <summary><b>Basic Auth
