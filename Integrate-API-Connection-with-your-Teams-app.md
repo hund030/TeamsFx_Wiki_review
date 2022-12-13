@@ -15,7 +15,7 @@ Add a reference to the `@microsoft/teamsfx` package to `package.json`.
 
 
 ## Step 2: Provide ApiClient for project
-The TeamsFx SDK supports 5 different ways to connect to the API. You can create a module to connect your API, and export the `apiClient` to provide for the project.
+The TeamsFx SDK supports 5 different ways to connect to the API. You can create a module to connect your API and export the `apiClient` to provide for the project.
 
 <details>
 <summary><b>Basic Auth
