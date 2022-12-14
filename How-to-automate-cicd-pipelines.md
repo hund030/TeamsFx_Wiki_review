@@ -1,7 +1,7 @@
 # Set up CI/CD pipelines
 
 TeamsFx helps to automate your development workflow while building Teams applications. The following are the tools and templates you can use to set up CI/CD pipelines, create workflow templates, and customize CI/CD workflow with GitHub, Azure DevOps, Jenkins, and other platforms. To provision resources, you can create Azure service principals and use the Provision pipeline or do it mannually by leveraging bicep files. To publish Teams app, you can use the Publish pipeline or do it mannually by leveraging [Developer Portal for Teams](https://dev.teams.microsoft.com/home).
-## Tools and Templates
+### Tools and Templates
 |Tools and Templates| Description |
 |---|---|
 |[TeamsFx-CLI-Action](https://github.com/OfficeDev/teamsfx-cli-action)|GitHub action that integrates with TeamsFx CLI.|
