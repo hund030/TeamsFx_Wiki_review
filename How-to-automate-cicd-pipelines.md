@@ -2,17 +2,15 @@
 
 TeamsFx helps to automate your development workflow while building Teams applications. The following are the tools and templates you can use to set up CI/CD pipelines, create workflow templates, and customize CI/CD workflow with GitHub, Azure DevOps, Jenkins, and other platforms. To provision resources, you can create Azure service principals and use the Provision pipeline or do it mannually by leveraging bicep files. To publish Teams app, you can use the Publish pipeline or do it mannually by leveraging [Developer Portal for Teams](https://dev.teams.microsoft.com/home).
 
-|Tools | Description |
+|Tools and Templates| Description |
 |---|---|
 |[TeamsFx-CLI-Action](https://github.com/OfficeDev/teamsfx-cli-action)|GitHub action that integrates with TeamsFx CLI.|
 |[Teams Toolkit for Visual Studio Code](https://marketplace.visualstudio.com/items?itemName=TeamsDevApp.ms-teams-vscode-extension)| Visual Studio Code extension that helps you to develop Teams app and automation workflows for GitHub, Azure DevOps, and Jenkins. |
 |[Teams Toolkit for CLI](https://www.npmjs.com/package/@microsoft/teamsfx-cli) | Command Line tool that helps you to develop Teams app and automation workflows for GitHub, Azure DevOps, and Jenkins.|
-
-|Templates|Description|
-|---|---|
-|||
-
-
+|[docs/cicd/github](https://github.com/OfficeDev/TeamsFx/tree/main/docs/cicd/github)|Templates for automation on GitHub|
+|[docs/cicd/azdo](https://github.com/OfficeDev/TeamsFx/tree/main/docs/cicd/azdo)|Templates for automation on Azure DevOps|
+|[docs/cicd/jenkins](https://github.com/OfficeDev/TeamsFx/tree/main/docs/cicd/jenkins)|Templates for automation on Jenkins|
+|[docs/cicd/others](https://github.com/OfficeDev/TeamsFx/tree/main/docs/cicd/others)|Script templates for automation outside of GitHub, Azure DevOps or Jenkins|
 
 ## Set up pipelines
 
@@ -28,50 +26,15 @@ You can set up pipelines with the following platforms:
 To set up pipelines with GitHub for CI/CD:
 
 * Create workflow templates.
-
-  * Visual Studio Code
-  * TeamsFx CLI
-
-* Customize CI/CD workflow.
+* Customize CI/CD workflows.
 
 ### Create workflow templates
 
 You can create the following workflow templates with GitHub:
 
-**Teams Toolkit in Visual Studio Code**
 
-1. Create a new Teams app project using Teams Toolkit.
 
-1. Select **Teams Toolkit** icon :::image type="icon" source="../assets/images/teams-toolkit-v2/add-API/api-add-icon.png"::: from the left pane.
-
-1. Select **Add features**
-
-   :::image type="content" source="../assets/images/teams-toolkit-v2/add-feature.png" alt-text="Adding feature":::
-
-1. Select **Add CI/CD Workflows**.
-
-   :::image type="content" source="../assets/images/teams-toolkit-v2/toolkit-ci-cd-workflow.png" alt-text="Select CI/CD workflow":::
-
-1. Select an environment from the command prompt.
-1. Select **GitHub** as the CI/CD provider.
-1. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
-1. Open the template and customize the workflows that fit into your scenarios.
-1. Follow the README files under `.github/workflows` to set up the workflow in GitHub.
-
-**TeamsFx CLI**
-
-1. Enter `cd` to your Teams app project directory.
-2. Enter `teamsfx add cicd` command to start the interactive command process.
-3. Select an environment from the command prompt.
-4. Select **GitHub** as the CI/CD provider.
-5. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
-7. Open the template and customize the workflows that fit into your scenarios.
-8. Follow the README files under `.github/workflows` to set up the workflow in GitHub.
-
-> [!NOTE]
-> If you need to add additional workflow templates, you can follow the same procedure to create workflow template in Visual Studio Code or TeamsFx CLI.
-
-### Customize CI/CD workflow
+### Customize CI/CD workflows
 
 You can change or remove the test scripts to customize CI/CD workflow:
 
@@ -84,39 +47,12 @@ You can change or remove the test scripts to customize CI/CD workflow:
 To set up pipelines with Azure DevOps for CI/CD:
 
 * Create workflow templates.
-
-  * Visual Studio Code
-  * TeamsFx CLI
-
-* Customize CI/CD workflow.
+* Customize CI/CD workflows.
 
 ### Create workflow templates
 
 You can create the following workflow templates with Azure DevOps:
 
-**Teams Toolkit in Visual Studio Code**
-
-1. Create a new Teams app project using Teams Toolkit.
-2. Select **Teams Toolkit** icon :::image type="icon" source="../assets/images/teams-toolkit-v2/add-API/api-add-icon.png"::: from the left pane.
-1. Select **Add CI/CD Workflows**.
-1. Select an environment from the command prompt.
-1. Select **Azure DevOps** as CI/CD provider.
-1. Select at least one template from these options: CI, CD, Provision, and Publish to Teams.
-1. Open the template and customize the workflows that fit into your scenarios.
-1. Follow the README files under `.azure/pipelines` to set up the workflow in Azure DevOps.
-
-**TeamsFx CLI**
-
-1. Enter `cd` to your Teams app project directory.
-2. Enter `teamsfx add cicd` command to start the interactive command process.
-3. Select an environment from the command prompt.
-4. Select **Azure DevOps** as CI/CD provider.
-5. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
-7. Open the template and customize the workflows that fit into your scenarios.
-8. Follow the README files under `.azure/pipelines` to set up the workflow in Azure DevOps.
-
-> [!NOTE]
-> If you need to add additional workflow templates, you can follow the same procedure to create workflow template in Visual Studio Code or TeamsFx CLI.
 
 ### Customize CI workflow
 
@@ -137,39 +73,11 @@ You can make the following changes for the script or workflow definition:
 To set up pipelines with Jenkins for CI/CD:
 
 * Create workflow templates.
-
-  * Visual Studio Code
-  * TeamsFx CLI
-
-* Customize CI/CD workflow.
+* Customize CI/CD workflows.
 
 ### Create workflow templates
 
 You can create the following workflow templates with Jenkins:
-
-**Teams Toolkit in Visual Studio Code**
-
-1. Create a new Teams app project using Teams Toolkit.
-2. Select **Teams Toolkit** icon :::image type="icon" source="../assets/images/teams-toolkit-v2/add-API/api-add-icon.png"::: from the left pane.
-3. Select **Add CI/CD Workflows**.
-4. Select an environment from the command prompt.
-5. Select **Jenkins** as CI/CD provider.
-6. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
-7. Open the template and customize the workflows that fit into your scenarios.
-8. Follow the README files under `.jenkins/pipelines` to set up the workflow with Jenkins.
-
-**TeamsFx CLI**
-
-1. Enter `cd` to your Teams app project directory.
-2. Enter `teamsfx add cicd` command to start the interactive command process.
-3. Select an environment from the command prompt.
-4. Select **Jenkins** as CI/CD provider.
-5. Select at least one template from these options: CI, CD, Provision, or Publish to Teams.
-7. Open the template and customize the workflows that fit into your scenarios.
-8. Follow the README files under `.jenkins/pipelines` to set up the workflow with Jenkins.
-
-> [!NOTE]
-> If you need to add additional workflow templates, you can follow the same procedure to create workflow template in Visual Studio Code or TeamsFx CLI.
 
 ### Customize CI workflow
 
