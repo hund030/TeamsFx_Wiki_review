@@ -9,3 +9,19 @@ When you enable this functionality in your Azure App Service, the files in the p
 * Can be deployed to a production app (with restart).
 * Improves the performance of Azure Resource Manager deployments.
 * May reduce cold-start times, particularly for JavaScript functions with large npm package trees.
+
+There are also some limitations to running from a package:
+* The wwwroot folder becomes read-only and you'll receive an error when writing files to this directory. Files are also read-only in the Azure portal.
+* The maximum size for a deployment package file is currently 1 GB.
+* Can't use local cache or local DB when running from a deployment package.
+* Can't use remote build
+
+You can find more details in the following links:
+https://learn.microsoft.com/en-us/azure/app-service/deploy-run-package
+https://github.com/projectkudu/kudu/wiki/WEBSITE_RUN_FROM_PACKAGE-and-WEBSITE_CONTENTAZUREFILECONNECTIONSTRING-Best-Practices
+
+# How to enable run from package
+1. Enable `WEBSITE_RUN_FROM_PACKAGE` app setting in your Azure App Service
+   * Add WEBSITE_RUN_FROM_PACKAGE falg to your bicep file.
+   * Follow [the documentation](https://learn.microsoft.com/en-us/azure/app-service/deploy-run-package#enable-running-from-package) do it manually.
+1. **Make sure there is no `SCM_SCRIPT_GENERATOR_ARGS` setting in your Azure App Service**. If your project is upgraded from old version, this setting may set to `--node`. Remove this setting before deploy your project.
