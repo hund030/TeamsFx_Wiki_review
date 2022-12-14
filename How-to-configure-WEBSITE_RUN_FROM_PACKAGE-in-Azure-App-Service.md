@@ -26,4 +26,5 @@ https://github.com/projectkudu/kudu/wiki/WEBSITE_RUN_FROM_PACKAGE-and-WEBSITE_CO
 1. Enable `WEBSITE_RUN_FROM_PACKAGE` app setting in your Azure App Service
    * Add WEBSITE_RUN_FROM_PACKAGE falg to your bicep file.
    * Follow [the documentation](https://learn.microsoft.com/en-us/azure/app-service/deploy-run-package#enable-running-from-package) do it manually.
-1. **Make sure there is no `SCM_SCRIPT_GENERATOR_ARGS` setting in your Azure App Service**. If your project is upgraded from old version, this setting may set to `--node`. Remove this setting before deploy your project.
+1. **Make sure there is no `SCM_SCRIPT_GENERATOR_ARGS` setting in your Azure App Service**. If your project is upgraded from the old version, this setting may be set to `--node`. Remove this setting before deploying your project.
+1. Put the `web.config` file if your project using nodeJS. You can find the template file from [here](https://github.com/projectkudu/kudu/blob/master/Kudu.Core/Scripts/iisnode.config.template) and example from [here](https://github.com/Azure-Samples/nodejs-docs-hello-world/blob/master/web.config)
