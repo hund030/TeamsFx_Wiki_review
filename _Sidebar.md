@@ -18,3 +18,6 @@ How To Guides
 * [How to connect to existing APIs](https://aka.ms/teamsfx-connect-api)
 * [How to add single sign on in Teams Toolkit for Visual Studio Code](https://aka.ms/teamsfx-add-sso)
 * [How to enable Single Sign-on in Teams Toolkit for Visual Studio](https://github.com/OfficeDev/TeamsFx/wiki/How-to-enable-Single-Sign-on-in-Teams-Toolkit-for-Visual-Studio)
+* [How to configure Tab capability within your Teams app](https://aka.ms/teamsfx-add-tab)
+* [How to configure Bot capability within your Teams app](https://aka.ms/teamsfx-add-bot)
+* [How to configure Message Extension capability within your Teams app](https://aka.ms/teamsfx-add-message-extension)
