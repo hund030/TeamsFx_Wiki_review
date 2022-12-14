@@ -14,7 +14,7 @@ Learn more from [Azure Functions Overview](https://learn.microsoft.com/azure/azu
 
 ## Add your first Function to your Teams app
 
-1. Create a function app project with HTTP trigger in the `api` folder with Azure Function Core Tools.
+Create a function app project with HTTP trigger in the `api` folder with Azure Function Core Tools.
 
     ```
     > mkdir api
@@ -22,7 +22,8 @@ Learn more from [Azure Functions Overview](https://learn.microsoft.com/azure/azu
     > func new --template "Http Trigger" --name getUserProfile
     ```
 
-    After adding function app project, your folder structure may be like:
+After adding function app project, your folder structure may be like:
+    
     ```
     .
     |-- .vscode/
@@ -40,68 +41,68 @@ Learn more from [Azure Functions Overview](https://learn.microsoft.com/azure/azu
 
 ## Setup local debug environment in VSC
 
-Here is an [example](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-tab-with-backend/.vscode) debug profile for VSC.
+You can find a complete sample debug profile for VSC. [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-tab-with-backend/.vscode).
 
-- In `launch.json` file, add `Attach to Backend` configuration and ensure the it is cascaded by `Attach to Frontend` and be depended by `Debug` compounds.
+1. In `launch.json` file, add `Attach to Backend` configuration and ensure the it is cascaded by `Attach to Frontend` and be depended by `Debug` compounds.
 
-  ```json
-  "configurations": [
-    ...
-    {
-      "name": "Attach to Frontend (Edge)",
-      "cascadeTerminateToConfigurations": [
-        "Attach to Backend"
-      ],
-      ...
-    },
-    {
-      "name": "Attach to Backend",
-      "type": "node",
-      "request": "attach",
-      "port": 9229,
-      "restart": true,
-      "presentation": {
-        "group": "all",
-        "hidden": true
-      },
-      "internalConsoleOptions": "neverOpen"
-    }
-  ],
-  "compounds": [
-    {
-      "name": "Debug (Edge)",
+      ```json
       "configurations": [
-        "Attach to Frontend (Edge)",
-        "Attach to Backend"
+        ...
+        {
+          "name": "Attach to Frontend (Edge)",
+          "cascadeTerminateToConfigurations": [
+            "Attach to Backend"
+          ],
+          ...
+        },
+        {
+          "name": "Attach to Backend",
+          "type": "node",
+          "request": "attach",
+          "port": 9229,
+          "restart": true,
+          "presentation": {
+            "group": "all",
+            "hidden": true
+          },
+          "internalConsoleOptions": "neverOpen"
+        }
       ],
-    },
-    ...
-  ]
-  ```
+      "compounds": [
+        {
+          "name": "Debug (Edge)",
+          "configurations": [
+            "Attach to Frontend (Edge)",
+            "Attach to Backend"
+          ],
+        },
+        ...
+      ]
+      ```
 
-- Find `Start backend` and `Watch backend` tasks from the [example](TODO), and copy them to your `tasks.json` file. Ensure `Start backend` is depended by `Start services` task. `Install Azure Functions binding extensions` is optional for now, you can add it [later](#call-graph-api-with-teamsfx-sdk).
+1. Find `Start backend` and `Watch backend` tasks from the [example](TODO), and copy them to your `tasks.json` file. Ensure `Start backend` is depended by `Start services` task. `Install Azure Functions binding extensions` is optional for now, you can add it after [adding authorization](#add-authorization-for-http-trigger).
 
-- Add the script `run.api.js` to `./teamsfx/script` folder, and add NPM scripts for the function app start.
+1. Add the script `run.api.js` to `./teamsfx/script` folder, and add NPM scripts for the function app start.
 
-  ```json
-  "scripts": {
-    "dev:teamsfx": "node ../teamsfx/script/run.api.js ../ ../teamsfx/.env.local",
-    "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
-    ...
-  }
-  ```
+      ```json
+      "scripts": {
+        "dev:teamsfx": "node ../teamsfx/script/run.api.js ../ ../teamsfx/.env.local",
+        "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
+        ...
+      }
+      ```
 
-- Add a cli/runNpmCommand action in deploy stage in `./teamsfx/app.local.yml` file. This action trigger `npm install` before launching your function app.
+1. Add a cli/runNpmCommand action in deploy stage in `./teamsfx/app.local.yml` file. This action trigger `npm install` before launching your function app.
 
-  ```yml
-  deploy:
-    - uses: cli/runNpmCommand # Run npm command
-      with:
-        args: install --no-audit
-        workingDirectory: ./api
-  ```
+      ```yml
+      deploy:
+        - uses: cli/runNpmCommand # Run npm command
+          with:
+            args: install --no-audit
+            workingDirectory: ./api
+      ```
 
-- Start debugging, you will find your tab app launching with function app running behind.
+1. Start debugging, you will find your tab app launching with function app running behind.
 
 ## Add Authorization for http trigger
 
