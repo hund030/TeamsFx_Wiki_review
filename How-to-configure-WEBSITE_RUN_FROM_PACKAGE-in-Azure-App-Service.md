@@ -17,7 +17,9 @@ There are also some limitations to running from a package:
 * Can't use remote build
 
 You can find more details in the following links:
+
 https://learn.microsoft.com/en-us/azure/app-service/deploy-run-package
+
 https://github.com/projectkudu/kudu/wiki/WEBSITE_RUN_FROM_PACKAGE-and-WEBSITE_CONTENTAZUREFILECONNECTIONSTRING-Best-Practices
 
 # How to enable run from package
