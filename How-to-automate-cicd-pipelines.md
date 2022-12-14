@@ -57,21 +57,37 @@ To set up pipelines with GitHub for CI/CD:
 
 ### Create workflow templates
 
-You can create the following workflow templates with GitHub:
+1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
+1. Rename the downloaded template files by your needs.
+1. Put them under `.github/workflows` which is the designated folder for GitHub Actions.
 
 ### Customize CI workflow
 
-You can change or remove the test scripts to customize CI/CD workflow:
+To customize the CI workflow, you can do the following:
 
-1. By default, the CD workflow is triggered, when new commits are made to the `main` branch.
-1. Change the build scripts if necessary.
-1. Remove the test scripts as required.
+1. Change the trigger - By default, the CI workflow is triggered when a new pull request is created against `dev` branch.
+1. Add scripts to build the project - By default, the `Build the project` step is commented.
+1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
 ### Customize CD workflow
 
+To customize the CD workflow, you can do the following:
+
+1. Change the trigger - By default, the CD workflow is triggered when new commits are pushed into `main` branch.
+1. Add scripts to build the project - By default, the `Build the project` step is commented.
+1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
+
 ### Customize Provision workflow
 
+To customize the Provision workflow, you can do the following:
+
+1. Change the trigger - By default, the Provision workflow is triggered manually.
+
 ### Customize Publish workflow
+
+To customize the Publish workflow, you can do the following:
+
+1. Change the trigger - By default, the Publish workflow is triggered manually.
 
 ## Set up pipelines with Azure DevOps
 
@@ -82,22 +98,25 @@ To set up pipelines with Azure DevOps for CI/CD:
 
 ### Create workflow templates
 
-You can create the following workflow templates with Azure DevOps:
-
+1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
+1. Rename the downloaded template files by your needs.
+1. Put them under `.azure/pipelines` which is the conventional folder for Azure Pipelines.
 
 ### Customize CI workflow
 
-You can make the following changes for the script or workflow definition:
-
-1. Use npm build script or customize the way you build in the automation code.
-1. Use npm test script, which returns zero for success, and change the test commands.
+To customize the CI workflow, you can do the following:
 
 ### Customize CD workflow
 
-You can make the following changes for the script or workflow definition:
+To customize the CD workflow, you can do the following:
 
-1. Ensure you have an npm build script or customize the way you build in the automation code.
-1. Ensure you have an npm test script, which returns zero for success or change the test commands.
+### Customize Provision workflow
+
+To customize the Provision workflow, you can do the following:
+
+### Customize Publish workflow
+
+To customize the Publish workflow, you can do the following:
 
 ## Set up pipelines with Jenkins
 
@@ -108,30 +127,29 @@ To set up pipelines with Jenkins for CI/CD:
 
 ### Create workflow templates
 
-You can create the following workflow templates with Jenkins:
+1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
+1. Rename the downloaded template files by your needs.
+1. Put them under `.jenkins/pipelines` which can be a conventional folder for Jenkins Pipelines.
 
 ### Customize CI workflow
 
-You can make the following changes to your project:
-
-1. Change how the CI flow is triggered. The default is to use the triggers of **pollSCM** when a new change is pushed into the **dev** branch.
-1. Ensure you have an npm build script or customize the way you build in the automation code.
-1. Ensure you have an npm test script, which returns zero for success or change the test commands.
+To customize the CI workflow, you can do the following:
 
 ### Customize CD workflow
 
-Perform the following steps to customize the CD pipeline:
+To customize the CD workflow, you can do the following:
 
-1. Change the CD flow. The default is to use the triggers of `pollSCM` when a new change is pushed into the `main` branch.
-1. Change the build scripts if necessary.
-1. Remove the test scripts if you don't have tests.
+### Customize Provision workflow
+
+To customize the Provision workflow, you can do the following:
+
+### Customize Publish workflow
+
+To customize the Publish workflow, you can do the following:
 
 ## Set up pipelines for other platforms
 
-You can follow the predefined listed example bash scripts to build and customize CI/CD pipelines on the other platforms:
-
-* [CI Scripts](https://github.com/OfficeDev/TeamsFx/blob/main/docs/cicd_insider/others-script-ci-template.sh)
-* [CD Scripts](https://github.com/OfficeDev/TeamsFx/blob/main/docs/cicd_insider/others-script-cd-template.sh)
+You can follow the predefined listed example bash scripts from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates) to build and customize CI/CD pipelines on the other platforms:
 
 The scripts are based on a cross-platform TeamsFx command line tool [TeamsFx-CLI](https://www.npmjs.com/package/@microsoft/teamsfx-cli). You can install it with `npm install -g @microsoft/teamsfx-cli` and follow the [documentation](https://github.com/OfficeDev/TeamsFx/blob/dev/docs/cli/user-manual.md) to customize the scripts.
 
