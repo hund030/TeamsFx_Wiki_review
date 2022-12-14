@@ -8,6 +8,21 @@ Teams Toolkit will automatically upgrade your original project folder structure 
 ## File Structure Change
 Once migration succeeds, your project file structure will be changed.
 
+### File changes
+
+1. Moved `templates/appPackage/resource` and `templates/appPackage/manifest.template.json` into the `appPackage` folder.
+1. Renamed and moved `templates/appPakcage/aad.template.json` to `aad.manifest.template.json`.
+1. Updated placeholders in `appPackage/manifest.template.json` and `aad.manifest.template.json`.
+1. Updated `webApplicationInfo.resource` in `appPackage/manifest.template.json`.
+1. Updated `identifierUris` in `aad.manifest.template.json`.
+1. Moved `.fx/configs/azure.parameter.{env}.json` into the `templates/azure` folder
+1. Updated placeholders in azure parameter files 
+1. Created missing `.env.{env}` files in the `teamsfx` folder.
+1. Moved contents of `.fx/configs/config.{env}.json` into the respective `.env.{env}` file.
+1. Moved contents of `.fx/states/state.{env}.json` into the respective `.env.{env}` file, except for `fx-resource-aad-app-for-teams.clientSecret`, `fx-resource-bot.botPassword`, `fx-resource-apim.apimClientAADClientSecret`, and `fx-resource-azure-sql.adminPassword`.
+1. Moved contents of `.fx/states/userdata.{env}` into the respective `.env.{env}` file.
+1. Copied the `.fx`, `.vscode`, and `templates` folders into the `teamsfx/backup` folder.
+
 ### Project Configuration Files
 The existing project configuration files under the `.fx` folder are outdated and incompatible with the current version of Teams Toolkit. So some clean-ups are made and now your `.fx` folder will consist:
 * `azure.parameters.*.json:` Parameters for Provisioning Azure Resource, specific for each environment.
