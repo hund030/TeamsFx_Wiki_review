@@ -324,11 +324,11 @@ Before you add your logic of calling a Graph API, you should enable your dashboa
 
 1. Step 1: Click `Teams Toolkit` in the side bar > Click `Add features` in `DEVELOPMENT`.
 
-   ![image](https://user-images.githubusercontent.com/11220663/205840715-542f2cfb-bf70-440b-ab8a-8e9139ff3685.png)
+   <img src="public\addsso1.png" style="zoom: 42%">
 
 2. Step 2: Choose `Single Sign-On` to add.
 
-   ![image](https://user-images.githubusercontent.com/11220663/205840810-5906e6b0-0ff8-4587-8967-9c84dabf2683.png)
+   <img src="public\addsso2.png" style="zoom: 42%">
 
 3. Step 3: Move `auth-start.html` and `auth-end.html` in `auth/tab/public` folder to `tabs/public/`.
    These two HTML files are used for auth redirects.
@@ -337,7 +337,7 @@ Before you add your logic of calling a Graph API, you should enable your dashboa
 
 Now you have already added SSO files to your project, and you can call Graph APIs. There are two types of Graph APIs, one will be called from the front-end(most of APIs, use delegated permissions), the other will be called from the back-end(sendActivityNotification, e.g., use application permissions). You can refer to [this tutorial](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-beta) to check permission types of the Graph APIs you want to call.
 
-### From the front-end(use delegated permissions)
+### Call graph api from the front-end(use delegated permissions)
 
 If you want to call a Graph API from the front-end tab, you can refer to the following steps.
 
@@ -347,7 +347,7 @@ If you want to call a Graph API from the front-end tab, you can refer to the fol
 
 #### Step 1: Consent delegated permissions first
 
-You can call [`addNewScope(scopes: string[])`](/tabs/src/internal/addNewScopes.ts) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](/tabs/src/internal/singletonContext.ts).
+You can call [`addNewPermissionScope(scopes: string[])`](src/internal/addNewScopes.js) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](src/internal/singletonContext.js).
 
 You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0) to get the `scope name of the permission` related to the Graph API you want to call.
 
@@ -355,33 +355,31 @@ You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/ap
 
 You can refer to the following code snippet:
 
-```ts
-let teamsfx: TeamsFx;
-teamsfx = FxContext.getInstance().getTeamsFx();
-const graphClient: Client = createMicrosoftGraphClient(teamsfx, scope);
+```js
+let teamsfx;
+teamsfx = FxContextInstance.getTeamsFx();
+const graphClient = createMicrosoftGraphClient(teamsfx, scope);
 ```
 
 #### Step 3: Call the Graph API, and parse the response into a certain model, which will be used by front-end
 
 You can refer to the following code snippet:
 
-```ts
+```js
 try {
   const graphApiResult = await graphClient.api("<GRAPH_API_PATH>").get();
   // Parse the graphApiResult into a Model you defined, used by the front-end.
 } catch (e) {}
 ```
 
-### From the back-end(use application permissions)
+### Call graph api from the back-end(use application permissions)
 
-If you want to call a Graph API from the back-end, you can refer to the following steps. In this tutorial, we use `sendActivityNotification` API for example.
+If you want to call a Graph API from the back-end, you can refer to the following steps.
 
 1. [Step 1: Consent application permissions first](#step-1-consent-application-permissions-first)
 2. [Step 2: Add an Azure Function](#step-2-add-an-azure-function)
-3. [Step 3: Get the `installation id` of your Dashboard app](#step-3-get-the-installation-id-of-your-dashboard-app)
-4. [Step 4: Add your logic in Azure Function](#step-4-add-your-logic-in-azure-function)
-5. [Step 5: Edit manifest file](#step-5-edit-manifest-file)
-6. [Step 6: Call the Azure Function from the front-end](#step-5-call-the-azure-function-from-the-front-end)
+3. [Step 3: Add your logic in Azure Function](#step-4-add-your-logic-in-azure-function)
+4. [Step 4: Call the Azure Function from the front-end](#step-5-call-the-azure-function-from-the-front-end)
 
 #### Step 1: Consent application permissions first
 
@@ -391,93 +389,54 @@ Go to [Azure portal](https://portal.azure.com/) > Click `Azure Active Directory`
 
 In the VS Code side bar, click `Add features` in `Teams Toolkit` > Choose `Azure functions` > Enter the function name
 
-   ![image](https://user-images.githubusercontent.com/11220663/205843051-38beae3e-9e02-4fde-a24d-c9dfd7d58dbd.png)
+   <img src="public\add_azFunction.png" style="zoom: 42%">
 
-#### Step 3: Get the `installation id` of your Dashboard app
+#### Step 3: Add your logic in Azure Function
 
-Go [Graph Explorer](https://developer.microsoft.com/en-us/graph/graph-explorer), and use the following api path to get a response.
-
-```
-https://graph.microsoft.com/v1.0/users/{user-id | user-principal-name}/teamwork/installedApps?$expand=teamsAppDefinition
-```
-
-In the response, you should find the information of your Dashboard app, and then record the `id` of it as `installationId`, which will be used in step 4.
-
-   ![image](https://user-images.githubusercontent.com/11220663/205842962-1ddc76b1-b095-461f-881a-8f3d453ca188.png)
-
-#### Step 4: Add your logic in Azure Function
-
-In the `index.ts` under the folder named in step 2, you can add the following code snippet to call `sendActivityNotification`
+In the `index.jsx`/`index.ts` under the folder named in step 2, you can add the your logic which contains back-end graph api calling with application permissions. You can refer to the following code snippet.
 
 ```ts
-try {
-  // do sth here, to call activity notification api
-  //
-  const graphClient_userId: Client = await createMicrosoftGraphClient(teamsfx, [
-    "User.Read",
-  ]);
-  const userIdRes = await graphClient_userId.api("/me").get();
-  const userId = userIdRes["id"];
-  // get installationId
-  const installationId =
-    "ZmYxMGY2MjgtYjJjMC00MzRmLTgzZmItNmY3MGZmZWEzNmFkIyMyM2NhNWVlMy1iYWVlLTRiMjItYTA0OC03YjkzZjk0MDRkMTE=";
-  let postbody = {
-    topic: {
-      source: "entityUrl",
-      value:
-        "https://graph.microsoft.com/v1.0/users/" +
-        userId +
-        "/teamwork/installedApps/" +
-        installationId,
-    },
-    activityType: "taskCreated",
-    previewText: {
-      content: "New Task Created",
-    },
-    templateParameters: [
-      {
-        name: "taskId",
-        value: "12322",
-      },
-    ],
+/**
+ * This function handles requests from teamsfx client.
+ * The HTTP request should contain an SSO token queried from Teams in the header.
+ * Before trigger this function, teamsfx binding would process the SSO token and generate teamsfx configuration.
+ *
+ * You should initializes the teamsfx SDK with the configuration and calls these APIs.
+ *
+ * The response contains multiple message blocks constructed into a JSON object, including:
+ * - An echo of the request body.
+ * - The display name encoded in the SSO token.
+ * - Current user's Microsoft 365 profile if the user has consented.
+ *
+ * @param {Context} context - The Azure Functions context object.
+ * @param {HttpRequest} req - The HTTP request.
+ * @param {teamsfxContext} TeamsfxContext - The context generated by teamsfx binding.
+ */
+export default async function run(
+  context: Context,
+  req: HttpRequest,
+  teamsfxContext: TeamsfxContext
+): Promise<Response> {
+  context.log("HTTP trigger function processed a request.");
+
+  // Initialize response.
+  const res: Response = {
+    status: 200,
+    body: {},
   };
 
-  let teamsfx_app: TeamsFx;
-  teamsfx_app = new TeamsFx(IdentityType.App);
-  const graphClient: Client = createMicrosoftGraphClient(teamsfx_app, [
-    ".default",
-  ]);
-  await graphClient
-    .api("users/" + userId + "/teamwork/sendActivityNotification")
-    .post(postbody);
-} catch (e) {
-  console.log(e);
+  // Your logic here.
+
+  return res;
 }
 ```
+#### Step 4: Call the Azure Function from the front-end
 
-#### Step 5: Edit manifest file
-
-In the [templates\appPackage\manifest.template.json](templates\appPackage\manifest.template.json), you should add the following properties, which are align with properties in `postbody` in Step 4.
-
-```json
-"activities": {
-  "activityTypes": [
-    {
-      "type": "taskCreated",
-      "description": "Task Created",
-      "templateText": "{actor} created task {taskId}"
-    }
-  ]
-}
-```
-
-#### Step 6: Call the Azure Function from the front-end
-
-Call the Azure Function from the front-end. You can refer to the following code snippet to call the Azure Function.
+Call the Azure Function by function name. You can refer to the following code snippet to call the Azure Function.
 
 ```ts
 const functionName = process.env.REACT_APP_FUNC_NAME || "myFunc";
-async function callFunction(teamsfx?: TeamsFx) {
+async function callFunction(teamsfx) {
   if (!teamsfx) {
     throw new Error("TeamsFx SDK is not initialized.");
   }
