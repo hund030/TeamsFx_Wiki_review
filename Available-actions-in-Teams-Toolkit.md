@@ -340,6 +340,10 @@ This action will create or update the bot registration on [dev.botframework.com]
       messagingEndpoint: <your-messaging-endpoint> # Required. The messaging endpoint of the bot registration.
       description: <your-description> # Optional. The description of the bot registration.
       iconUrl: <your-icon-url> # Optional. The icon url of the bot registration.
+      channels: # Optional. The channel configurations of the bot registration.
+        - name: msteams # Required. The name of Microsoft Teams channel.
+          callingWebhook: <your-calling-webhook> # Optional. The calling webhook of Microsoft Teams channel.
+        - name: outlook # Required. The name of Outlook channel.
 ```
 
 ## Output:
