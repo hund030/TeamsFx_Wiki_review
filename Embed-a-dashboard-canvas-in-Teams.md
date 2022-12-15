@@ -324,11 +324,11 @@ Before you add your logic of calling a Graph API, you should enable your dashboa
 
 1. Step 1: Click `Teams Toolkit` in the side bar > Click `Add features` in `DEVELOPMENT`.
 
-   <img src="public\addsso1.png" style="zoom: 42%">
+   ![image](https://user-images.githubusercontent.com/11220663/205840715-542f2cfb-bf70-440b-ab8a-8e9139ff3685.png)
 
 2. Step 2: Choose `Single Sign-On` to add.
 
-   <img src="public\addsso2.png" style="zoom: 42%">
+   ![image](https://user-images.githubusercontent.com/11220663/205840810-5906e6b0-0ff8-4587-8967-9c84dabf2683.png)
 
 3. Step 3: Move `auth-start.html` and `auth-end.html` in `auth/tab/public` folder to `tabs/public/`.
    These two HTML files are used for auth redirects.
@@ -347,7 +347,7 @@ If you want to call a Graph API from the front-end tab, you can refer to the fol
 
 #### Step 1: Consent delegated permissions first
 
-You can call [`addNewPermissionScope(scopes: string[])`](src/internal/addNewScopes.js) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](src/internal/singletonContext.js).
+You can call [`addNewPermissionScope(scopes: string[])`](src/internal/addNewScopes.ts) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](src/internal/singletonContext.ts).
 
 You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0) to get the `scope name of the permission` related to the Graph API you want to call.
 
@@ -355,7 +355,7 @@ You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/ap
 
 You can refer to the following code snippet:
 
-```js
+```ts
 let teamsfx;
 teamsfx = FxContextInstance.getTeamsFx();
 const graphClient = createMicrosoftGraphClient(teamsfx, scope);
@@ -365,7 +365,7 @@ const graphClient = createMicrosoftGraphClient(teamsfx, scope);
 
 You can refer to the following code snippet:
 
-```js
+```ts
 try {
   const graphApiResult = await graphClient.api("<GRAPH_API_PATH>").get();
   // Parse the graphApiResult into a Model you defined, used by the front-end.
@@ -389,7 +389,7 @@ Go to [Azure portal](https://portal.azure.com/) > Click `Azure Active Directory`
 
 In the VS Code side bar, click `Add features` in `Teams Toolkit` > Choose `Azure functions` > Enter the function name
 
-   <img src="public\add_azFunction.png" style="zoom: 42%">
+   ![image](https://user-images.githubusercontent.com/11220663/205842962-1ddc76b1-b095-461f-881a-8f3d453ca188.png)
 
 #### Step 3: Add your logic in Azure Function
 
