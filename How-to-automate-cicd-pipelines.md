@@ -49,7 +49,7 @@ Two categories of login credentials are involved in CI/CD workflows:
 Templates varies in host types (Azure or SPFx) by which Provision and CD workflow templates are splited into copies. 
 CI, Publish workflow templates are host-type independent. 
 If you're working on Azure hosted projects, please download those templates with file name of `azure` infixes. 
-Or you're working on SPFx hosted projects, please download those templates with file name of `spfx` infixes.
+Or if you're working on SPFx hosted projects, please download those templates with file name of `spfx` infixes.
 
 ## Set up pipelines with GitHub
 
