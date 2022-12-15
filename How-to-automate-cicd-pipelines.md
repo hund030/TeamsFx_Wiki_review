@@ -46,7 +46,10 @@ Two categories of login credentials are involved in CI/CD workflows:
 > Currently, service principal for Azure is used in CI/CD workflows, and to create Azure service principals for use, refer to [here](#how-to-create-azure-service-principals-for-use).
 
 ### Host types
-Templates are varies in host types (Azure or SPFx), so Provision and CD workflow templates are splited into isolated copies as you can infer from template file name's infixes. CI, Publish workflow templates have no such infixes because they are infix-independent. If you're working on Azure hosted projects, please download those templates with file name of `azure` infixes. Or you're working on SPFx hosted projects, please download those templates with file name of `spfx` infixes.
+Templates varies in host types (Azure or SPFx) by which Provision and CD workflow templates are splited into copies. 
+CI, Publish workflow templates are host-type independent. 
+If you're working on Azure hosted projects, please download those templates with file name of `azure` infixes. 
+Or you're working on SPFx hosted projects, please download those templates with file name of `spfx` infixes.
 
 ## Set up pipelines with GitHub
 
