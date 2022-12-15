@@ -347,7 +347,7 @@ If you want to call a Graph API from the front-end tab, you can refer to the fol
 
 #### Step 1: Consent delegated permissions first
 
-You can call [`addNewPermissionScope(scopes: string[])`](src/internal/addNewScopes.ts) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](src/internal/singletonContext.ts).
+You can call [`addNewPermissionScope(scopes: string[])`](https://github.com/OfficeDev/TeamsFx/blob/dev/templates/tab/ts/dashboard/src/internal/addNewScopes.ts) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](https://github.com/OfficeDev/TeamsFx/blob/dev/templates/tab/ts/dashboard/src/internal/singletonContext.ts).
 
 You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0) to get the `scope name of the permission` related to the Graph API you want to call.
 
@@ -389,7 +389,7 @@ Go to [Azure portal](https://portal.azure.com/) > Click `Azure Active Directory`
 
 In the VS Code side bar, click `Add features` in `Teams Toolkit` > Choose `Azure functions` > Enter the function name
 
-   ![image](https://user-images.githubusercontent.com/11220663/205842962-1ddc76b1-b095-461f-881a-8f3d453ca188.png)
+   ![image](https://user-images.githubusercontent.com/11220663/205843051-38beae3e-9e02-4fde-a24d-c9dfd7d58dbd.png)
 
 #### Step 3: Add your logic in Azure Function
 
