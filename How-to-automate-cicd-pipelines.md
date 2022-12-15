@@ -21,7 +21,7 @@ You can set up pipelines with the following platforms:
 1. [Set up pipelines for other platforms](#set-up-pipelines-for-other-platforms)
 
 ### Workflow template types
-TeamsFx supports four workflow template types:
+TeamsFx supports four types of workflow templates:
 1. **CI** - Help checkout code, build and run test.
 1. **CD** - Help checkout code, build, test and deploy to cloud.
 1. **Provision** - Help create/update resources in cloud and Teams app registrations.
@@ -103,18 +103,26 @@ To set up pipelines with Azure DevOps for CI/CD:
 ### Customize CI workflow
 
 To customize the CI workflow, you can do the following:
+1. Change the trigger - By default, the CI workflow is triggered when a new pull request is created against `dev` branch.
+1. Add scripts to build the project - By default, the `Build the project` step is commented.
+1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
 ### Customize CD workflow
 
 To customize the CD workflow, you can do the following:
+1. Change the trigger - By default, the CD workflow is triggered when new commits are pushed into `main` branch.
+1. Change the value of environment variable `TEAMSFX_ENV_NAME` - By default, the value is `dev`.
+1. Change the value of environment variable `TEAMSFX_CLI_VERSION` - By default, the value is `1.*`.
+1. Add scripts to build the project - By default, the `Build the project` step is commented.
+1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
-### Customize Provision workflow
+### Customize Provision and Publish workflow
 
-To customize the Provision workflow, you can do the following:
+To customize the Provision and Publish workflow, you can do the following:
 
-### Customize Publish workflow
-
-To customize the Publish workflow, you can do the following:
+1. Change the trigger - By default, the workflow is triggered manually.
+1. Change the value of environment variable `TEAMSFX_ENV_NAME` - By default, the value is `dev`.
+1. Change the value of environment variable `TEAMSFX_CLI_VERSION` - By default, the value is `1.*`.
 
 ## Set up pipelines with Jenkins
 
@@ -132,18 +140,26 @@ To set up pipelines with Jenkins for CI/CD:
 ### Customize CI workflow
 
 To customize the CI workflow, you can do the following:
+1. Change the trigger - By default, the CI workflow is triggered periodically.
+1. Add scripts to build the project - By default, the `Build the project` step is commented.
+1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
 ### Customize CD workflow
 
 To customize the CD workflow, you can do the following:
+1. Change the trigger - By default, the CD workflow is triggered periodically.
+1. Change the value of environment variable `TEAMSFX_ENV_NAME` - By default, the value is `dev`.
+1. Change the value of environment variable `TEAMSFX_CLI_VERSION` - By default, the value is `1.*`.
+1. Add scripts to build the project - By default, the `Build the project` step is commented.
+1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
-### Customize Provision workflow
+### Customize Provision and Publish workflow
 
-To customize the Provision workflow, you can do the following:
+To customize the Provision and Publish workflow, you can do the following:
 
-### Customize Publish workflow
-
-To customize the Publish workflow, you can do the following:
+1. Change the trigger - By default, the workflow is triggered periodically.
+1. Change the value of environment variable `TEAMSFX_ENV_NAME` - By default, the value is `dev`.
+1. Change the value of environment variable `TEAMSFX_CLI_VERSION` - By default, the value is `1.*`.
 
 ## Set up pipelines for other platforms
 
