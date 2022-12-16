@@ -113,7 +113,7 @@ Your folder structure may be like:
     : Yes
     ```
 1. Manually merge the content in `.vscode` and `teamsfx` folder with yours. Update the `app.local.yml` and `run.js` to target your tab app code.
-Here is an sample project for reference. [TODO]().
+Here is an sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 1. Try local debug with Visual Studio Code.
 
@@ -136,7 +136,7 @@ Here is an sample project for reference. [TODO]().
     : Yes
     ```
 1. Manually merge the content in `infra` and `teamsfx` folder with yours.
-    Here is an sample project for reference. [TODO]().
+    Here is a sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
 
@@ -149,5 +149,5 @@ Here is an sample project for reference. [TODO]().
 There are other commonly suggested next steps, for example:
 
 - [Add authentication and make a Graph API call](https://learn.microsoft.com/microsoftteams/platform/toolkit/add-single-sign-on?pivots=visual-studio-code)
-- [Set up CI/CD pipelines](#How-to-add-CICD)
-- [Call a backend API](#How-to-add-Azure-Functions)
+- [Set up CI/CD pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
+- [Call a backend API](https://github.com/OfficeDev/TeamsFx/wiki/How-to-integrate-Azure-Functions-with-your-Teams-app)
