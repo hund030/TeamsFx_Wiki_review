@@ -23,7 +23,7 @@ Create a function app project with HTTP trigger in the `api` folder with Azure F
     ```
 
 After adding function app project, your folder structure may be like:
-    
+
     ```
     .
     |-- .vscode/
@@ -80,9 +80,54 @@ You can find a complete sample debug profile for VSC. [here](https://github.com/
       ]
       ```
 
-1. Find `Start backend` and `Watch backend` tasks from the [example](TODO), and copy them to your `tasks.json` file. Ensure `Start backend` is depended by `Start services` task. `Install Azure Functions binding extensions` is optional for now, you can add it after [adding authorization](#add-authorization-for-http-trigger).
+1. In `tasks.json` file, add `Start backend` and `Watch backend` tasks, and ensure `Start services` is depended by `Start services` task.
 
-1. Add the script `run.api.js` to `./teamsfx/script` folder, and add NPM scripts for the function app start.
+    ```
+    {
+      "label": "Start backend",
+      "type": "shell",
+      "command": "npm run dev:teamsfx",
+      "isBackground": true,
+      "options": {
+        "cwd": "${workspaceFolder}/api",
+        "env": {
+          "PATH": "${command:fx-extension.get-func-path}${env:PATH}"
+        }
+      },
+      "problemMatcher": {
+        "pattern": {
+          "regexp": "^.*$",
+          "file": 0,
+          "location": 1,
+          "message": 2
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "^.*(Job host stopped|signaling restart).*$",
+          "endsPattern": "^.*(Worker process started and initialized|Host lock lease acquired by instance ID).*$"
+        }
+      },
+      "presentation": {
+        "reveal": "silent"
+      },
+      "dependsOn": ["Watch backend"]
+    },
+    {
+      "label": "Watch backend",
+      "type": "shell",
+      "command": "npm run watch",
+      "isBackground": true,
+      "options": {
+        "cwd": "${workspaceFolder}/api"
+      },
+      "problemMatcher": "$tsc-watch",
+      "presentation": {
+        "reveal": "silent"
+      }
+    }
+    ```
+
+1. Copy the script [run.api.js](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/teamsfx/script/run.api.js) to `./teamsfx/script` folder, and add NPM scripts for the function app start.
 
       ```json
       "scripts": {
@@ -133,11 +178,11 @@ Here are the steps to add authorization.
     }
     ```
 
-Remember in [run.api.js](#setup-local-debug-environment-in-vsc), we have set variables M365_CLIENT_ID and ALLOWED_APP_ID in environment.
+Remember in [run.api.js](#setup-local-debug-environment-in-vsc), we have set variables M365_CLIENT_ID and ALLOWED_APP_IDS in environment.
 Now the Function App can only be called by those client whose client id is in the list of ALLOWED_APP_IDS or equals to M365_CLIENT_ID.
 M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab app is able to call your function.
 
-## Call the function from your client with Teams SDK
+## Call the function from your client with TeamsFx SDK
 
 1. We recommend setting function endpoint and function name in environment variables. In `teamsfx/app.local.yml` file, find the action `file/updateEnv` and add new envs.
     ```yml
@@ -158,7 +203,7 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
     process.env.REACT_APP_FUNC_ENDPOINT = envs.FUNC_ENDPOINT;
     ```
 
-1. Call your Azure Function with Teams SDK.
+1. Call your Azure Function with TeamsFx SDK.
 
    ```ts
    const functionName = process.env.REACT_APP_FUNC_NAME;
@@ -223,8 +268,8 @@ You can find a complete sample [here](https://github.com/OfficeDev/TeamsFx-Sampl
 
 ## Move the application to Azure
 
-1. Update bicep and azure.parameter.json to configure Azure Function App. You will need a Storage Account, an App Service Plan an an Function Service.
-You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/infra/azure.bicep)
+1. Update bicep and azure.parameter.json to configure Azure Function App. You will need a Storage Account, an App Service Plan and a Function App Service.
+You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/infra/azure.bicep).
 
     ```
     param resourceBaseName string
@@ -386,20 +431,32 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
 You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/teamsfx/app.yml)
 
     ```
-    - uses: npm/command # Run npm command
-      with:
-        workingDirectory: ./api
-        args: install
-    - uses: npm/command # Run npm command
-      with:
-        workingDirectory: ./api
-        args: run build --if-present
-    - uses: azureFunctions/deploy
-      with:
-        # deploy base folder
-        distributionPath: ./api
-        # the resource id of the cloud resource to be deployed to
-        resourceId: ${{API_FUNCTION_RESOURCE_ID}}
+    deploy:
+      - uses: cli/runNpmCommand # Run npm command
+        with:
+          workingDirectory: ./api
+          args: install
+      - uses: cli/runNpmCommand # Run npm command
+        with:
+          workingDirectory: ./api
+          args: run build --if-present
+      - uses: azureFunctions/deploy
+        with:
+          # deploy base folder
+          distributionPath: ./api
+          # the resource id of the cloud resource to be deployed to
+          resourceId: ${{API_FUNCTION_RESOURCE_ID}}
+    ```
+
+1. Add function name and function endpoint to tab app's environment, so that your tab app can call your function http trigger.
+    ```
+    deploy:
+      - uses: cli/runNpmCommand # Run npm command
+        env:
+          REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+          REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
+          REACT_APP_FUNC_NAME: getUserProfile
+          REACT_APP_FUNC_ENDPOINT: ${{API_FUNCTION_ENDPOINT}}
     ```
 
 1. Run `Teams: Deploy to cloud` command in Visual Studio Code to deploy your Tab app code to Azure.
