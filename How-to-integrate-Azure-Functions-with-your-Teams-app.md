@@ -41,7 +41,7 @@ After adding function app project, your folder structure may be like:
 
 ## Setup local debug environment in VSC
 
-You can find a complete sample debug profile for VSC. [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-tab-with-backend/.vscode).
+You can find a complete sample debug profile for VSC [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-tab-with-backend/.vscode).
 
 1. In `launch.json` file, add `Attach to Backend` configuration and ensure the it is cascaded by `Attach to Frontend` and be depended by `Debug` compounds.
 
