@@ -21,3 +21,4 @@ How To Guides
 * [How to configure Tab capability within your Teams app](https://aka.ms/teamsfx-add-tab)
 * [How to configure Bot capability within your Teams app](https://aka.ms/teamsfx-add-bot)
 * [How to configure Message Extension capability within your Teams app](https://aka.ms/teamsfx-add-message-extension)
+* [How to automate ci/cd pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
