@@ -97,23 +97,23 @@ To customize the Provision and Publish workflow, you can do the following:
 
 To set up pipelines with Azure DevOps for CI/CD:
 
-* Create workflow templates.
-* Customize CI/CD workflows.
+* Create CI/CD pipelines.
+* Customize CI/CD pipelines.
 
-### Create workflow templates
+### Create CI/CD pipelines
 
 1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
 1. Rename the downloaded template files by your needs.
 1. Put them under `.azure/pipelines` which is the conventional folder for Azure Pipelines.
 
-### Customize CI workflow
+### Customize CI pipeline
 
 To customize the CI workflow, you can do the following:
 1. Change the trigger - By default, the CI workflow is triggered when a new pull request is created against `dev` branch.
 1. Add scripts to build the project - By default, the `Build the project` step is commented.
 1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
-### Customize CD workflow
+### Customize CD pipeline
 
 To customize the CD workflow, you can do the following:
 1. Change the trigger - By default, the CD workflow is triggered when new commits are pushed into `main` branch.
@@ -122,7 +122,7 @@ To customize the CD workflow, you can do the following:
 1. Add scripts to build the project - By default, the `Build the project` step is commented.
 1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
-### Customize Provision and Publish workflow
+### Customize Provision and Publish pipelines
 
 To customize the Provision and Publish workflow, you can do the following:
 
@@ -134,23 +134,23 @@ To customize the Provision and Publish workflow, you can do the following:
 
 To set up pipelines with Jenkins for CI/CD:
 
-* Create workflow templates.
-* Customize CI/CD workflows.
+* Create CI/CD pipelines.
+* Customize CI/CD pipelines.
 
-### Create workflow templates
+### Create CI/CD pipelines
 
 1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
 1. Rename the downloaded template files by your needs.
 1. Put them under `.jenkins/pipelines` which can be a conventional folder for Jenkins Pipelines.
 
-### Customize CI workflow
+### Customize CI pipeline
 
 To customize the CI workflow, you can do the following:
 1. Change the trigger - By default, the CI workflow is triggered periodically.
 1. Add scripts to build the project - By default, the `Build the project` step is commented.
 1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
-### Customize CD workflow
+### Customize CD pipeline
 
 To customize the CD workflow, you can do the following:
 1. Change the trigger - By default, the CD workflow is triggered periodically.
@@ -159,7 +159,7 @@ To customize the CD workflow, you can do the following:
 1. Add scripts to build the project - By default, the `Build the project` step is commented.
 1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
-### Customize Provision and Publish workflow
+### Customize Provision and Publish pipelines
 
 To customize the Provision and Publish workflow, you can do the following:
 
