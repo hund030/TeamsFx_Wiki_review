@@ -55,14 +55,17 @@ Or if you're working on SPFx hosted projects, please download those templates wi
 
 To set up pipelines with GitHub for CI/CD:
 
-* Create workflow templates.
+* Create CI/CD workflows.
 * Customize CI/CD workflows.
 
-### Create workflow templates
+### Create CI/CD workflows
 
 1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
 1. Rename the downloaded template files by your needs.
 1. Put them under `.github/workflows` which is the designated folder for GitHub Actions.
+1. Commit and push these template files into remote repositories.
+1. Add necessary [encrypted secrets](https://docs.github.com/en/actions/security-guides/encrypted-secrets) for your workflows.
+1. Trigger your workflows. Check more [details](https://docs.github.com/en/actions/using-workflows/triggering-a-workflow) about how to trigger a workflow on GitHub.
 
 ### Customize CI workflow
 
