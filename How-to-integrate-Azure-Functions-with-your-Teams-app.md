@@ -466,5 +466,6 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
 
 ## What's next
 
-- [Set up CI/CD pipelines](#How-to-add-CICD)
-- [Integrate Azure Sql with your Teams app](#How-to-add-sql)
+- [Set up CI/CD pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
+- [Integrate Azure Sql with your Teams app](TODO)
+- [Integrate Azure API Management with your Teams app](TODO)
