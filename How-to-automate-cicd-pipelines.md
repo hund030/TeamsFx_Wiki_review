@@ -105,6 +105,10 @@ To set up pipelines with Azure DevOps for CI/CD:
 1. Download the corresponding template files from [Tools and Templates](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines#tools-and-templates).
 1. Rename the downloaded template files by your needs.
 1. Put them under `.azure/pipelines` which is the conventional folder for Azure Pipelines.
+1. Commit and push these template files into remote repositories.
+1. Create corresponding Azure DevOps pipelines by following [Create your first Azure DevOps Pipeline](https://docs.microsoft.com/en-us/azure/devops/pipelines/create-first-pipeline?view=azure-devops&tabs=java%2Ctfs-2018-2%2Cbrowser).
+1. Add necessary [Azure DevOps Pipeline variables](https://learn.microsoft.com/en-us/azure/devops/pipelines/process/variables) for your pipelines.
+1. Trigger your pipelines automatically, manually or do customization (Check the `trigger:` or `pr:` section in yml files to find the triggers). More about triggers in Azure DevOps, refer to [Triggers in Azure pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/build/triggers?view=azure-devops).
 
 ### Customize CI pipeline
 
