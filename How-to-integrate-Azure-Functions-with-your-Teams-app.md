@@ -1,4 +1,4 @@
-# Integrate Azure-Functions-with-your-Teams-app
+# Integrate Azure Functions with your Teams app
 
 ## Introduction
 
