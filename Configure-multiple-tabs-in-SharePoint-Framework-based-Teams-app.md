@@ -3,8 +3,8 @@ Tabs are Teams-aware webpages embedded in Microsoft Teams. They're simple HTML <
 
 You can extend Microsoft Teams with additional functionality by integrating your applications. This allows you expose functionality in the context of your users’ work helping them be more productive. By [building Microsoft Teams applications using SharePoint Framework](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/integrate-with-teams-introduction), you can save costs on hosting infrastructure and simplify the deployment and operation process.
 
-## Step-by-step guide to configure SPFx tab capability in your app 
-In this document, our scope is to provide instructions on how to add additional SPFx tab into existing SPFx project. Adding SPFx tab into other type of projects like Azure-hosted tab, bot is out of scope. 
+## Step-by-step guide to configure additional SPFx tab in your Teams app 
+This document will introduce you how to add additional SPFx tab into your SPFx Teams project (assume you already have one, if not you can quickly create a SPFx Teams project using Teams Toolkit). This document will not include intructions about how to add SPFx tab into other type of Teams projects. e.g. Azure-hosted tab or bot. 
 
 ### Prerequisite
 To add additional SPFx tab, please make sure: 
@@ -34,7 +34,7 @@ You can use packages that are globally installed by yourself or locally installe
 
 ### Configure SPFx tab capability in Teams application manifest
 Teams app is represented by its manifest, where SPFx tab capability is defined. Follow these steps to add additional SPFx tab
-1. Get added web part id from web part manifest (located at `src\src\webparts\${webPartName}\${webPartName}.manifest.json`) `id` field. 
+1. Get the new web part id from web part manifest (located at `src\src\webparts\${webPartName}\${webPartName}.manifest.json`) `id` field. 
 2. Configure your new web part in local environment by adding following static tab in `staticTabs` section in the `appPackage\manifest.template.local.json` file (Replace `${componentId}` and `${webPartName}` variable with actual value).
 ```
         {
