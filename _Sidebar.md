@@ -2,6 +2,7 @@ Scenario-based Tutorials
 * [Send notifications to Teams](https://aka.ms/teamsfx-send-notification)
 * [Respond to chat commands in Teams](https://aka.ms/teamsfx-create-command)
 * [Respond to card actions in Teams](https://aka.ms/teamsfx-card-action-response)
+* [Embed a dashboard canvas in Teams](https://aka.ms/teamsfx-dashboard-app)
 
 Extend Teams app across Microsoft 365
 * [Create and test a personal tab across Microsoft 365](https://github.com/OfficeDev/TeamsFx/wiki/Create-and-debug-a-personal-tab-across-Microsoft-365)
