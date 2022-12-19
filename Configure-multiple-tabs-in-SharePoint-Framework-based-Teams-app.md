@@ -1,10 +1,10 @@
 ## Introduction
-Tabs are Teams-aware webpages embedded in Microsoft Teams. They're simple HTML <iframe\> tags that point to domains declared in the app manifest and can be added as part of a channel inside a team, group chat, or personal app for an individual user. You can include custom tabs with your app to embed your own web content in Teams or add Teams-specific functionality to your web content. 
+Tabs are Teams-aware webpages embedded in Microsoft Teams. They're simple HTML <iframe\> tags that point to domains declared in the app manifest and can be added as part of a channel inside a team, group chat, or personal app for an individual user. You can include custom tabs with your app to embed your own web content in Teams or add Teams-specific functionality to your web content. Teams tab can be any web-based application, of course, your custom tabs can be a SharePoint web part.
 
 You can extend Microsoft Teams with additional functionality by integrating your applications. This allows you expose functionality in the context of your users’ work helping them be more productive. By [building Microsoft Teams applications using SharePoint Framework](https://learn.microsoft.com/en-us/sharepoint/dev/spfx/integrate-with-teams-introduction), you can save costs on hosting infrastructure and simplify the deployment and operation process.
 
 ## Step-by-step guide to configure additional SPFx tab in your Teams app 
-This document will introduce you how to add additional SPFx tab into your SPFx Teams project (assume you already have one, if not you can quickly create a SPFx Teams project using Teams Toolkit). This document will not include intructions about how to add SPFx tab into other type of Teams projects. e.g. Azure-hosted tab or bot. 
+Sometimes you will need to have multiple tabs for your Teams tab project. This document will introduce you how to add additional SPFx tab into your SPFx Teams project (assume you already have one, if not you can quickly create a SPFx Teams project using Teams Toolkit). This document will not include intructions about how to add SPFx tab into other type of Teams projects. e.g. Azure-hosted tab or bot. 
 
 ### Prerequisite
 To add additional SPFx tab, please make sure: 
