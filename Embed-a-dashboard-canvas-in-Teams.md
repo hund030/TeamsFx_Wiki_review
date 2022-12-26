@@ -24,7 +24,7 @@ Customize the scaffolded app template:
 
 1. From Teams Toolkit side bar click `Create a new Teams app` or select `Teams: Create a new Teams app` from the command palette.
 
-![image](https://user-images.githubusercontent.com/11220663/205845061-ef156620-b2c3-4d5c-9ad5-82291a6b0987.png)
+![image](https://user-images.githubusercontent.com/109947924/209491663-bf7d919f-642c-474f-b76f-6f926510f568.png)
 
 2. Select `Create a new Teams app`.
 
