@@ -89,7 +89,7 @@ For Teams Tab Application
     - add `aadApp/update` under 'configureApp'
       For updating your AAD app with AAD app manifest in step 1.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-update)
-    - update `appsettings/generate`
+    - update `file/updateAppSettings`
       For adding following environment variables when local debug:
         a. ClientId: AAD app client id
         b. ClientSecret: AAD app client secret
@@ -130,7 +130,7 @@ For Teams Tab Application
     In `teamsfx/app.local.yml` only:
     - Add following lines under `configureApp` to add AAD related configs to local debug service.
       ```
-      - uses: appsettings/generate
+      - uses: file/updateAppSettings
         with:
           target: ./appsettings.Development.json
           appsettings:
@@ -361,7 +361,7 @@ For Teams Bot Applications
     - add `aadApp/update` under 'configureApp'
       For updating your AAD app with AAD app manifest in step 1.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-update)
-    - update `appsettings/generate`
+    - update `file/updateAppSettings`
       For adding following environment variables when local debug:
         a. ClientId: AAD app client id
         b. ClientSecret: AAD app client secret
@@ -400,9 +400,9 @@ For Teams Bot Applications
             For example, './aad.manifest.template.json'
 
    In `teamsfx/app.local.yml` only:
-    - Update `appsettings/generate` under `provision` to add AAD related configs to local debug service.
+    - Update `file/updateAppSettings` under `provision` to add AAD related configs to local debug service.
       ```
-      - uses: appsettings/generate
+      - uses: file/updateAppSettings
         with:
           target: ./appsettings.Development.json
           appsettings:
