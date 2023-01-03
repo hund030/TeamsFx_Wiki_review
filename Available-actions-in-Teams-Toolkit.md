@@ -192,7 +192,9 @@ NA
 Please check if the command exists in your system path and try to run this command manually in your working directory.
 
 # azureAppService/deploy
-This action will upload and deploy the project to Azure APP Service. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
+This action will upload and deploy the project to Azure APP Service. 
+The parameter `workingDirectory` can be removed if you want to run this command in the project root.
+The parameter `resourceId` can be removed if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image)
 
 ## Syntax:
 ```
@@ -224,7 +226,9 @@ Please check the log output and try to upload the files located in your .deploym
 This error can be ignored if the deployment is already successful. You can check the deploy status by visiting `Deployment - Deployment center - Logs` in the Azure portal.
 
 # azureFunctions/deploy
-This action will upload and deploy the project to Azure Functions. The parameter `workingDirectory` can be removed if you want to run this command in the project root.
+This action will upload and deploy the project to Azure Functions. 
+The parameter `workingDirectory` can be removed if you want to run this command in the project root.
+The parameter `resourceId` can be removed if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image)
 
 ## Syntax:
 ```
