@@ -12,10 +12,14 @@ Basic Concepts:
 Get started with Teams Toolkit:
  * [How to create a new dashboard tab](#create-a-new-dashboard-project)
  * [How to understand the dashboard tab project](#take-a-tour-of-your-app-source-code)
+ * [How to understand the widget abstraction](#widget-abstraction)
+ * [How to understand the dashboard abstraction](#dashboard-abstraction)
 
 Customize the scaffolded app template:
  * [How to add a widget](#how-to-add-a-new-widget)
  * [How to add a dashboard](#how-to-add-a-new-dashboard)
+ * [How to customize the widget](#customize-the-widget)
+ * [How to customize the dashboard layout](#customize-the-dashboard-layout)
  * [How to add a Graph API call](#how-to-add-a-new-graph-api-call)
 
 ## Create a new dashboard project
@@ -104,6 +108,210 @@ The following files are project-related files. You generally will not need to cu
 | `src/internal/context.ts`          | TeamsFx Context                                  |
 | `src/internal/login.ts`            | Implementation of login                          |
 | `src/internal/singletonContext.ts` | Implementation of the TeamsFx instance singleton |
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## Widget Abstraction
+
+To simplify the development of a widget, the TeamsFx provides a `Widget` class 
+for developers to inherit to quickly implement a widget that meets their needs without pay too much attention to how to implement the widget layout.
+
+Below is the definition of the Widget class.
+
+```ts
+export abstract class Widget<T> extends Component<any, { data?: T | void }> {
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      data: undefined,
+    };
+  }
+
+  /**
+   * This method is invoked immediately after a component is mounted.
+   * It's a good place to fetch data from server.
+   */
+  async componentDidMount() {
+    this.setState({ data: await this.getData() });
+  }
+
+  /**
+   * Define your widget layout, you can edit the code here to customize your widget.
+   */
+  render() {
+    return (
+      <div style={widgetStyles()}>
+        {this.headerContent() && (
+          <div style={headerStyles()}>{this.headerContent()}</div>
+        )}
+        {this.bodyContent() && <div>{this.bodyContent()}</div>}
+        {this.footerContent() && <div>{this.footerContent()}</div>}
+      </div>
+    );
+  }
+
+  /**
+   * Get data required by the widget, you can get data from a api call or static data stored in a file. Override this method according to your needs.
+   * @returns data for the widget
+   */
+  protected async getData(): Promise<T> {
+    return new Promise<T>(() => {});
+  }
+
+  /**
+   * Override this method to customize the widget header.
+   * @returns JSX component for the widget body
+   */
+  protected headerContent(): JSX.Element | undefined {
+    return undefined;
+  }
+
+  /**
+   * Override this method to customize the widget body.
+   * @returns JSX component for the widget body
+   */
+  protected bodyContent(): JSX.Element | undefined {
+    return undefined;
+  }
+
+  /**
+   * Override this method to customize the widget footer.
+   * @returns react node for the widget footer
+   */
+  protected footerContent(): JSX.Element | undefined {
+    return undefined;
+  }
+}
+```
+
+| Methods               | Function                                                                                                                                                                             | Recommend to override |
+|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------|
+| `constructor()`       | Assigns the initial `this.state`, and call the constructor of the super class `React.Component`.                                                                                     | NO                    |
+| `componentDidMount()` | This method Will be invoked after a component is mounted, and assigns a value to the `data` property of the state by calling the `getData()` method.                                 | NO                    |
+| `render()`            | This method Will be called each time an update happens, the dashboard default layout is defined in this method.                                                                      | NO                    |
+| `getData()`           | This method can be used to get the data needed by the widget, and the value returned by this method will be set to `this.state.data`.                                                | YES                   |
+| `headerContent()`     | This method is used to define what the widget header will look like. You can choose to override this method to customize a widget or not, if not, the widget will not have a header. | YES                   |
+| `bodyContent()`       | This method is used to define what the widget body will look like. You can choose to override this method to customize a widget or not, if not, the widget will not have a body.     | YES                   |
+| `footerContent()`     | This method is used to define what the widget footer will look like. You can choose to override this method to customize a widget or not, if not, the widget will not have a footer. | YES                   |
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## Dashboard Abstraction
+In order to easily define and adjust the layout of the dashboard, the TeamsFx provides a `Dashboard` class 
+for developers to inherit to quickly implement a dashboard.
+
+Below is the definition of the Dashboard class.
+
+```ts
+interface IDashboardState {
+  isMobile?: boolean;
+  observer?: ResizeObserver;
+}
+
+/**
+ * The dashboard class which is the base class for all dashboard components.
+ */
+export class Dashboard extends Component<any, IDashboardState> {
+  private ref: React.RefObject<HTMLDivElement>;
+
+  /**
+   * Constructor for the dashboard class. Initializes the dashboard state.
+   * @param props The properties for the dashboard.
+   */
+  constructor(props: any) {
+    super(props);
+    this.state = {
+      isMobile: undefined,
+      observer: undefined,
+    };
+    this.ref = React.createRef<HTMLDivElement>();
+  }
+
+  /**
+   * This method is invoked immediately after a component is mounted. It's a good place to fetch data from server.
+   */
+  componentDidMount(): void {
+    // Observe the dashboard div for resize events
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        if (entry.target === this.ref.current) {
+          const { width } = entry.contentRect;
+          this.setState({ isMobile: width < 600 });
+        }
+      }
+    });
+    observer.observe(this.ref.current!);
+  }
+
+  /**
+   * This method is invoked immediately when a component will be unmounted. It's a good place to clean up the resources.
+   */
+  componentWillUnmount(): void {
+    // Unobserve the dashboard div for resize events
+    if (this.state.observer && this.ref.current) {
+      this.state.observer.unobserve(this.ref.current);
+    }
+  }
+
+  /**
+   * Define the dashboard default layout, you can edit the code here to customize your dashboard layout.
+   */
+  render() {
+    return (
+      <>
+        <div
+          ref={this.ref}
+          style={dashboardStyles(
+            this.state.isMobile,
+            this.rowHeights(),
+            this.columnWidths()
+          )}
+        >
+          {this.dashboardLayout()}
+        </div>
+      </>
+    );
+  }
+
+  /**
+   * Implement this method to define the row heights of the dashboard.
+   * For example, if you want to have 3 rows, and the height of the first row is 100px, the height of the second row is 200px, and the height of the third row is 300px, you can return "100px 200px 300px".
+   * @returns The row heights of the dashboard.
+   */
+  protected rowHeights(): string | undefined {
+    return undefined;
+  }
+
+  /**
+   * Implement this method to define the column widths of the dashboard.
+   * For example, if you want to have 3 columns, and each column occupies 1/3 of the full width, you can return "1fr 1fr 1fr".
+   * @returns The column widths of the dashboard.
+   */
+  protected columnWidths(): string | undefined {
+    return undefined;
+  }
+
+  /**
+   * Implement this method to define the dashboard layout.
+   */
+  protected dashboardLayout(): JSX.Element | undefined {
+    return undefined;
+  }
+}
+```
+
+In the Dashboard class, the TeamsFx provided some basic layouts and also some customizable methods. The Dashboard is actually still a react component, and the TeamsFx provide some basic implementations of functions based on the lifecycle of react components, such as implementing a basic render logic based on the Grid layout, adding an observer to automatically adapt to mobile devices.
+
+
+| Methods                  | Function                                                                                                       | Recommend to override |
+|--------------------------|----------------------------------------------------------------------------------------------------------------|-----------------------|
+| `constructor()`          | Initializes the dashboard state and variables                                                                  | NO                    |
+| `componentDidMount()`    | This method Will be invoked after a component is mounted                                                       | NO                    |
+| `componentWillUnmount()` | This method Will be invoked when a component will be unmounted                                                 | NO                    |
+| `render()`               | This method Will be called each time an update happens, we defined the dashboard default layout in this method | NO                    |
+| `rowHeights()`           | Customize the height of each row of the dashboard                                                              | YES                   |
+| `columnWidths()`         | Customize how many columns the dashboard has at most and the width of each column                              | YES                   |
+| `dashboardLayout()`      | Define the widgets layout in dashboard                                                                         | YES                   |
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
@@ -316,11 +524,231 @@ Open the [`templates/appPackage/manifest.template.json`](templates/appPackage/ma
 ```
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
+## Customize the Widget
+Since the widget class provides some methods that can be overridden to customize the widget, you can customize the widget by overriding these methods.
+
+- Override `headerContent()`、`bodyContent()`、`footerContent()` to customize the widget.
+
+```ts
+export class NewsWidget extends Widget<void> {
+
+    headerContent(): JSX.Element | undefined {
+        return (
+            <div style={headerContentStyle()}>
+                <News28Regular />
+                <Text style={headerTextStyle()}>Your News</Text>
+                <Button icon={<MoreHorizontal32Regular />} appearance="transparent" />
+            </div>
+        );
+    }
+
+    bodyContent(): JSX.Element | undefined {
+        return (
+            <div style={contentLayoutStyle()}>
+                <Image src="image.svg" style={imageStyle()} />
+                <Text style={titleStyle()}>Lorem Ipsum Dolor</Text>
+                <Text style={descStyle()}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim, elementum sed</Text>
+            </div>
+        );
+    }
+
+    footerContent(): JSX.Element | undefined {
+        return (
+            <Button
+                appearance="transparent"
+                icon={<ArrowRight16Filled />}
+                iconPosition="after"
+                size="small"
+                style={footerButtonStyle()}
+                onClick={() => { }} // navigate to detailed page
+            >
+                View details
+            </Button>
+        );
+    }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209327297-bbcc62fd-9ec1-4a4e-88af-f408085634aa.png)
+
+
+- Just override `bodyContent()`、`footerContent()` to customize the widget.
+
+```ts
+export class NewsWidget extends Widget<void> {
+
+    bodyContent(): JSX.Element | undefined {
+        return (
+            <div style={contentLayoutStyle()}>
+                <Image src="image.svg" style={imageStyle()} />
+                <Text style={titleStyle()}>Lorem Ipsum Dolor</Text>
+                <Text style={descStyle()}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim, elementum sed</Text>
+            </div>
+        );
+    }
+
+    footerContent(): JSX.Element | undefined {
+        return (
+            <Button
+                appearance="transparent"
+                icon={<ArrowRight16Filled />}
+                iconPosition="after"
+                size="small"
+                style={footerButtonStyle()}
+                onClick={() => { }} // navigate to detailed page
+            >
+                View details
+            </Button>
+        );
+    }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209326796-69fa92a6-0582-4ddb-bb1c-8383ac805433.png)
+
+
+- Just override `bodyContent()` to customize the widget.
+
+```ts
+export class NewsWidget extends Widget<void> {
+
+    bodyContent(): JSX.Element | undefined {
+        return (
+            <div style={contentLayoutStyle()}>
+                <Image src="image.svg" style={imageStyle()} />
+                <Text style={titleStyle()}>Lorem Ipsum Dolor</Text>
+                <Text style={descStyle()}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Enim, elementum sed</Text>
+            </div>
+        );
+    }
+
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209326667-e88e000f-04c5-48e6-a976-b6e40237a9ad.png)
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## Customize the Dashboard Layout
+The TeamsFx provided some convenient methods for defining and modifying the layout of the dashboard.
+
+- Three widgets in a row with a height of 350px, occupying 20%, 60% and 20% of the width respectively.
+
+```ts
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "350px";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "2fr 6fr 2fr";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <ListWidget />
+        <ChartWidget />
+        <NewsWidget />
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209525799-9ee5b7ab-6263-4a1f-89e6-b33eee6d31dc.png)
+
+- There are two widgets in a row with widths of 600px and 1100px, the height of the first line is the maximum height of its content, and the height of the second line is 400px.
+```ts
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "max-content 400px";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "600px 1100px";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <ListWidget />
+        <ChartWidget />
+        <NewsWidget />
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209532741-0ad90649-f904-4dae-af25-940e7f874bf2.png)
+
+- Arrange two widgets in a column.
+```ts
+import { oneColumn } from '../lib/Dashboard.styles';
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "max-content";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "4fr 6fr";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <NewsWidget />
+        <div style={oneColumn()}>
+          <ListWidget />
+          <ChartWidget />
+          
+        </div>
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209540272-094c871c-cdf0-45a4-b131-b1548e182e6f.png)
+
+
+- Customize the height of widgets in a row. The following code can achieve a height of 400px for the `ListWidget` and a height of 350px for the `ChartWidget`.
+
+```ts
+import { oneColumn } from '../lib/Dashboard.styles';
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "max-content";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "4fr 6fr";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <NewsWidget />
+        <div style={oneColumn("400px 350px")}>
+          <ListWidget />
+          <ChartWidget />
+        </div>
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209540029-1a888753-a03c-44e2-bd93-897fef077489.png)
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
 ## How to add a new Graph API call
 
 ### Add SSO First
 
-Before you add your logic of calling a Graph API, you should enable your dashboard project to use SSO. It is convenient to add SSO related files by using `Teams Toolkit`. Refer to the following 2 steps to add SSO.
+Before you add your logic of calling a Graph API, you should enable your dashboard project to use SSO. It is convenient to add SSO related files by using `Teams Toolkit`. Refer to the following steps to add SSO.
 
 1. Step 1: Click `Teams Toolkit` in the side bar > Click `Add features` in `DEVELOPMENT`.
 
