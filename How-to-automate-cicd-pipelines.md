@@ -31,7 +31,7 @@ TeamsFx supports four types of workflow templates:
 Two categories of login credentials are involved in CI/CD workflows:
 1. **M365** - M365 credentails are required for running Provision, Publish and SPFx based projects' CD workflows.
 1. **Azure** - Azure credentials are required for running Azure hosted projects' Provision and CD workflows.
-> Azure subscription id has to be specified in environment variable or `teamsfx/.env.*` before running Provision workflows. The variable name used is `AZURE_SUBSCRIPTION_ID`.
+> Azure subscription id is required to be set in environment variable or `teamsfx/.env.*` files before running Provision workflows. The variable name used is `AZURE_SUBSCRIPTION_ID`. Also, please don't forget to commit and push files `teamsfx/.env.*` into Git repositories as they are ignored by `.gitignore` file by default.
 
 |Name|Description|
 |---|---|
