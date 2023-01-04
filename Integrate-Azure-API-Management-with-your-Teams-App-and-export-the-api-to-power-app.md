@@ -136,7 +136,7 @@ var authorizedClientApplicationIds = '${apimClientAppClientId};${teamsMobileOrDe
 }
 ```
 ## Provision the resources
-
+Run Teams: Provision in the cloud command in Visual Studio Code to apply the bicep to Azure.
 
 ## Configure the client APP registration to visit the backend API
 1. To configure the client APP registration to access the Teams App Backend API, the permission of Teams App should be added to the client AAD. [Here](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis) are the detail steps.
