@@ -31,6 +31,7 @@ TeamsFx supports four types of workflow templates:
 Two categories of login credentials are involved in CI/CD workflows:
 1. **M365** - M365 credentails are required for running Provision, Publish and SPFx based projects' CD workflows.
 1. **Azure** - Azure credentials are required for running Azure hosted projects' Provision and CD workflows.
+> Azure subscription id has to be specified in environment variable or `teamsfx/.env.*` before running Provision workflows. The variable name used is `AZURE_SUBSCRIPTION_ID`.
 
 |Name|Description|
 |---|---|
@@ -86,7 +87,6 @@ To customize the CD workflow, you can do the following:
 1. Add scripts to run unit test - By default, the `Run unit test` step is commented.
 
 ### Customize Provision and Publish workflow
-
 To customize the Provision and Publish workflow, you can do the following:
 
 1. Change the trigger - By default, the workflow is triggered manually.
