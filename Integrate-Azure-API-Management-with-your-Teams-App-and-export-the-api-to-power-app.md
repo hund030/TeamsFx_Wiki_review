@@ -7,7 +7,6 @@ Azure API Management enables professional developers to publish their Teams App 
 - A Teams tab app with Azure Functions. [Sample](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-tab-with-backend)
 - A client Azure AD app used to visit the backend API. You can register a new Azure AD app add a client secret according to this [document](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app). Both the client app and the web API app must be registered in the same tenant.
 
-
 ## Add Azure API Management resource in Azure
 1. Add the the client id and client secret of the client Azure AD app to `teamsfx/.env.dev`.
    ```
@@ -208,17 +207,31 @@ Run Teams: Provision in the cloud command in Visual Studio Code to apply the bic
 ## Create the service principle for the AAD created by Teams Toolkit
 1. The value of `AAD_APP_CLIENT_ID` can be found in environment file `teamsfx/.env.dev`.
 1. Create the service principle.
-   - Azure CLI
+   - Use Azure CLI
+     Login with M365 account.
      ```
      az login
      az ad sp create --id ${AAD_APP_CLIENT_ID}
      ```
-   - Azure Portal
-     
+   - Use Azure Portal
+     1. Sign in to the [Azure portal](https://portal.azure.com/).
+     1. Search for and select Azure Active Directory.
+     1. Under Manage, select App registrations.
+     1. Select your application with client id `AAD_APP_CLIENT_ID`.
+     1. Click `Create Service Principle`.
+     ![image](https://user-images.githubusercontent.com/49138419/210941316-512c01ca-7beb-4544-bd85-e435a54f81fa.png)
 
 ## Configure the client APP registration to visit the backend API
-1. To configure the client APP registration to access the Teams App Backend API, the permission of Teams App should be added to the client AAD. [Here](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis) are the detail steps.
+To configure the client APP registration to access the Teams App Backend API, the permission of Teams App should be added to the client AAD. 
+1. Sign in to the [Azure portal](https://portal.azure.com/).
+1. Search for and select Azure Active Directory.
+1. Under Manage, select App registrations.
+1. Select your client application with client id `APIM_CLIENT_AAD_CLIENT_ID`.
+1. Select API permissions > Add a permission > My APIs.
+1. Select the web API with the client id `AAD_APP_CLIENT_ID` which registered by Teams Toolkit.
+![add api](https://user-images.githubusercontent.com/49138419/210943559-03433abf-acdd-438f-8b91-ad1b6f2a272a.jpg)
 
+You can learn more from [Here](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-configure-app-access-web-apis).
 
 ## Deploy the API in API management
 You can upload the OpenAPI specification of the backend API in Azure Portal according to this 
