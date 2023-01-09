@@ -131,7 +131,7 @@ You can also find sample for SSO enabled Tab [here](https://github.com/OfficeDev
 ### Azure AD app manifest
 > Note: You can find detail info about Azure AD app manifest [here](https://learn.microsoft.com/azure/active-directory/develop/reference-app-manifest).
 
-Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-tab) to `./`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
+Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-bot) to `./`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
 
 ### Teams app manifest
 
