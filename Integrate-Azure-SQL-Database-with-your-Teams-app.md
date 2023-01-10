@@ -52,7 +52,7 @@ resource sqlDB 'Microsoft.Sql/servers/databases@2021-08-01-preview' = {
 }
 
 // Allow Azure services connect to the SQL Server
-resource sqlFirewallRules 'Microsoft.Sql/servers/firewallRules@2021-08-01-preview'' = {
+resource sqlFirewallRules 'Microsoft.Sql/servers/firewallRules@2021-08-01-preview' = {
   parent: sqlServer
   name: 'AllowAzure'
   properties: {
