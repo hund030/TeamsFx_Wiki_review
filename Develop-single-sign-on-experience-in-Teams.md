@@ -1,4 +1,4 @@
-# Enable single sign-on for tab applications
+      # Enable single sign-on for tab applications
 
 Microsoft Teams provides a mechanism by which an application can obtain the signed-in Teams user token to access Microsoft Graph (and other APIs). Teams Toolkit facilitates this interaction by abstracting some of the Azure Active Directory flows and integrations behind some simple, high level APIs. This enables you to add single sign-on (SSO) features easily to your Teams application.
 
@@ -350,7 +350,7 @@ export const commandBot = new ConversationBot({
 
 #### For Messaging Extension
 The sample business logic provides a handler `TeamsBot` extends TeamsActivityHandler and override `handleTeamsMessagingExtensionQuery`. 
-You can update the query logic in the `handleMessageExtensionQueryWithToken` with token which is obtained by using the logged-in Teams user token.
+You can update the query logic in the `handleMessageExtensionQueryWithSSO` with token which is obtained by using the logged-in Teams user token.
 
 To make this work in your application:
 1. Move the `auth/public` folder to `bot`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
@@ -378,7 +378,7 @@ server.get(
   })
 );
 ```
-3. Override `handleTeamsMessagingExtensionQuery` interface under `src/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithToken` to do your own query logic.
+3. Override `handleTeamsMessagingExtensionQuery` interface under `src/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithSSO` to do your own query logic.
 4. Open `src/package.json`, ensure that `@microsoft/teamsfx` version >= 1.2.0
 5. Install `isomorphic-fetch` npm packages in your bot project.
 6. (For ts only) Install `copyfiles` npm packages in your bot project, add or update the `build` script in `src/package.json` as following
@@ -388,7 +388,7 @@ server.get(
 ```
 By doing this, the HTML pages used for auth redirect will be copied when building this bot project.
 
-1. Update `templates/appPackage/aad.template.json` your scopes which used in `handleMessageExtensionQueryWithToken`.
+1. Update `templates/appPackage/aad.template.json` your scopes which used in `handleMessageExtensionQueryWithSSO`.
 ```json
   "requiredResourceAccess": [
       {
