@@ -97,7 +97,7 @@ env:
 ```
 
 #### `script.js`
-Open `teamsfx/script/run.js` and add following env env for local debug
+Open `teamsfx/script/run.js` and add following env for local debug
 following lines in `set up environment variables` section:
 
 ```env
@@ -114,14 +114,14 @@ You can find and download sample code for TeamsFx Tab below to `./auth`:
 
 You can follow the following steps to update your source code:
 
-1. Move `auth-start.html` and `auth-end.html` in `auth/public` folder to `tabs/public/`.
+1. Move `auth-start.html` and `auth-end.html` in `auth/public` folder to `public/`.
   * These two HTML files are used for auth redirects.
 
-1. Move `sso` folder under `auth/` to `tabs/src/sso/`.
+2. Move `sso` folder under `auth/` to `src/sso/`.
   * `InitTeamsFx`: This file implements a function that initialize TeamsFx SDK and will open `GetUserProfile` component after SDK is initialized.
   * `GetUserProfile`: This file implements a function that calls Microsoft Graph API to get user info.
 
-1. Import and add `InitTeamsFx` in `Welcome.*`.
+3. Import and add `InitTeamsFx` in `Welcome.*`.
 
 You can also find sample for SSO enabled Tab [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/hello-world-tab).
 
@@ -244,7 +244,7 @@ You can set follow the steps below if you are using TeamsFx Tab/Bot template.
   }
   ```
 
-1. Open `infra/azure.bicep` find follow line:
+2. Open `infra/azure.bicep` find follow line:
   ```bicep
   param location string = resourceGroup().location
   ```
@@ -258,7 +258,7 @@ and add following lines:
   param m365ClientSecret string
   ```
 
-1. Add following lines before output
+3. Add following lines before output
   ```bicep
   resource webAppSettings 'Microsoft.Web/sites/config@2021-02-01' = {
     name: '${webAppName}/appsettings'
@@ -289,20 +289,20 @@ You can find and download sample code for TeamsFx Tab below to `./auth`:
   * for [ts](https://github.com/OfficeDev/TeamsFx/tree/main/packages/fx-core/templates/plugins/resource/aad/auth/bot/ts)
 
 #### For Bot
-1. Move files under `auth/sso` folder to `bot/src`. ProfileSsoCommandHandler class is a sso command handler to get user info with SSO token. You can follow this method and create your own sso command handler.
-1. Move `auth/public` folder to `bot/src`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
-1. Execute the following commands under `bot` folder: `npm install isomorphic-fetch --save`
-1. (For ts only) Execute the following commands under `bot` folder: `npm install copyfiles --save-dev` and replace following line in package.json:
+1. Move files under `auth/sso` folder to `src`. ProfileSsoCommandHandler class is a sso command handler to get user info with SSO token. You can follow this method and create your own sso command handler.
+2. Move `auth/public` folder to `src`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
+3. Execute the following commands under `src` folder: `npm install isomorphic-fetch --save`
+4. (For ts only) Execute the following commands under `bot` folder: `npm install copyfiles --save-dev` and replace following line in package.json:
     ```json
     "build": "tsc --build && shx cp -r ./src/adaptiveCards ./lib/src",
     ```
-with:
+    with:
     ```json
     "build": "tsc --build && shx cp -r ./src/adaptiveCards ./lib/src && copyfiles src/public/*.html lib/",
     ```
   By doing this, the HTML pages used for auth redirect will be copied when building this bot project.
 
-1. In `bot/src/index` file, you need to add following line to import `isomorphic-fetch`:
+5. In `bot/src/index` file, you need to add following line to import `isomorphic-fetch`:
   ```ts
   require("isomorphic-fetch");
   ```
@@ -327,7 +327,7 @@ with:
   });
   ```
 
-1. Add `ssoConfig` and `ssoCommands` in `ConversationBot` in `bot/src/internal/initialize`:
+6. Add `ssoConfig` and `ssoCommands` in `ConversationBot` in `bot/src/internal/initialize`:
 
 ```ts
 import { ProfileSsoCommandHandler } from "../profileSsoCommandHandler";
@@ -354,7 +354,7 @@ You can update the query logic in the `handleMessageExtensionQueryWithToken` wit
 
 To make this work in your application:
 1. Move the `auth/bot/public` folder to `bot`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
-1. Modify your `bot/index` to add the appropriate `restify` routes to these pages.
+2. Modify your `bot/index` to add the appropriate `restify` routes to these pages.
 
 ```ts
 const path = require("path");
@@ -378,10 +378,10 @@ server.get(
   })
 );
 ```
-1. Override `handleTeamsMessagingExtensionQuery` interface under `bot/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithToken` to do your own query logic.
-1. Open `bot/package.json`, ensure that `@microsoft/teamsfx` version >= 1.2.0
-1. Install `isomorphic-fetch` npm packages in your bot project.
-1. (For ts only) Install `copyfiles` npm packages in your bot project, add or update the `build` script in `bot/package.json` as following
+3. Override `handleTeamsMessagingExtensionQuery` interface under `bot/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithToken` to do your own query logic.
+4. Open `bot/package.json`, ensure that `@microsoft/teamsfx` version >= 1.2.0
+5. Install `isomorphic-fetch` npm packages in your bot project.
+6. (For ts only) Install `copyfiles` npm packages in your bot project, add or update the `build` script in `bot/package.json` as following
 
 ```json
 "build": "tsc --build && copyfiles ./public/*.html lib/",
