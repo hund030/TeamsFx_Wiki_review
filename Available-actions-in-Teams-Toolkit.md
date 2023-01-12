@@ -194,7 +194,7 @@ Please check if the command exists in your system path and try to run this comma
 # azureAppService/deploy
 This action will upload and deploy the project to Azure APP Service. 
 The parameter `workingDirectory` can be removed if you want to run this command in the project root.
-The parameter `resourceId` can be removed if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image)
+The parameter `dryRun` can be set to true if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image). The default value is false.
 
 ## Syntax:
 ```
@@ -204,6 +204,7 @@ The parameter `resourceId` can be removed if you don't plan to actually deploy, 
       distributionPath: . # Deploy base folder
       ignoreFile: ./.webappignore # Can be changed to any ignore file location, leave blank will ignore nothing
       resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
+      dryRun: false
 ```
 
 ## Output:
@@ -228,7 +229,7 @@ This error can be ignored if the deployment is already successful. You can check
 # azureFunctions/deploy
 This action will upload and deploy the project to Azure Functions. 
 The parameter `workingDirectory` can be removed if you want to run this command in the project root.
-The parameter `resourceId` can be removed if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image)
+The parameter `dryRun` can be set to true if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image). The default value is false.
 
 ## Syntax:
 ```
@@ -238,6 +239,7 @@ The parameter `resourceId` can be removed if you don't plan to actually deploy, 
       distributionPath: . # Deploy base folder
       ignoreFile: ./.webappignore # Can be changed to any ignore file location, leave blank will ignore nothing
       resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
+      dryRun: false
 ```
 
 ## Output:
