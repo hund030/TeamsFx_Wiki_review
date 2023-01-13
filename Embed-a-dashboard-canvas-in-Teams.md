@@ -60,13 +60,14 @@ Customize the scaffolded app template:
 
 After you successfully created the project, you can quickly start local debugging via `F5` in VSCode. Select `Debug (Edge)` or `Debug (Chrome)` debug option of your preferred browser. after running this template and you will see a tab app loaded as below:
 
-![image](https://user-images.githubusercontent.com/11220663/205831064-26f94d61-7bb7-4bc1-8678-c52be6cb27b3.png)
+![dashboard](https://user-images.githubusercontent.com/107838226/212262814-37a2bf02-2801-458f-97f0-af26ea04553c.png)
+
 
 This app also supported teams different themes, including dark theme and high contrast theme.
 
 |           Dark theme           |     High contrast theme      |
 | :----------------------------: | :--------------------------: |
-| <img src="https://user-images.githubusercontent.com/11220663/205836054-52777c73-7598-4f30-9284-62917fab865d.png" width="500" height="300" /> | <img src="https://user-images.githubusercontent.com/11220663/205836124-ffc16d63-0148-4b72-bb70-c304174ef5e7.png" width="500" height="300" /> |
+| <img src="https://user-images.githubusercontent.com/107838226/212263051-6e212830-4299-4901-b0f2-d6c6e035aabb.png" /> | <img src="https://user-images.githubusercontent.com/107838226/212263105-450f106f-fee5-40d3-93a6-b7147455fc9d.png" /> |
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
