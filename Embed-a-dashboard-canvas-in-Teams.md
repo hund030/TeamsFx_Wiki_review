@@ -19,6 +19,7 @@ Customize the scaffolded app template:
  * [How to add a widget](#how-to-add-a-new-widget)
  * [How to add a dashboard](#how-to-add-a-new-dashboard)
  * [How to customize the widget](#customize-the-widget)
+ * [How to handle empty state](#how-to-handle-empty-state)
  * [How to customize the dashboard layout](#customize-the-dashboard-layout)
  * [How to add a Graph API call](#how-to-add-a-new-graph-api-call)
 
@@ -742,6 +743,74 @@ export default class SampleDashboard extends Dashboard {
 ```
 
 ![image](https://user-images.githubusercontent.com/107838226/209540029-1a888753-a03c-44e2-bd93-897fef077489.png)
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## How to handle empty state
+
+You can display a specific content in your widget when the data is empty. To do so, you need to modify the `bodyContent` method in your widget file to adopt different states of the data. The following example shows how to display an empty image when the data is empty:
+
+```ts
+bodyContent(): JSX.Element | undefined {
+    let hasData = this.state.data && this.state.data.length > 0;
+    return (
+      <div style={bodyContentStyle()}>
+        {hasData ? (
+          <>
+            {this.state.data?.map((t: ListModel) => {
+              return (
+                <div key={`${t.id}-div`} style={itemLayoutStyle()}>
+                  <div key={`${t.id}-divider`} style={dividerStyle()} />
+                  <Text key={`${t.id}-title`} style={itemTitleStyle()}>
+                    {t.title}
+                  </Text>
+                  <Text key={`${t.id}-content`} style={itemSubtitleStyle()}>
+                    {t.content}
+                  </Text>
+                </div>
+              );
+            })}
+          </>
+        ) : (
+          <div
+            style={{
+              display: "grid",
+              gap: "1rem",
+              justifyContent: "center",
+              alignContent: "center",
+            }}
+          >
+            <Image src="empty-default.svg" height="150px" />
+            <Text align="center">No data</Text>
+          </div>
+        )}
+      </div>
+    );
+  }
+```
+
+And you can use a similar approach to remove the footer content of your widget when the data is empty. 
+
+```ts
+footerContent(): JSX.Element | undefined {
+    let hasData = this.state.data && this.state.data.length > 0;
+    if (hasData) {
+      return (
+        <Button
+          appearance="primary"
+          size="medium"
+          onClick={() => {}} // navigate to detailed page
+        >
+          View Details
+        </Button>
+      );
+    }
+  }
+```
+
+Your list widget will look like this when the data is empty:
+![image](https://user-images.githubusercontent.com/107838226/212546123-33b8943e-094c-4de5-9f23-61868ee4e51b.png)
+
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
