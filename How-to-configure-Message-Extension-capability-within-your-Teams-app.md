@@ -100,7 +100,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
     |   |-- config.ts
     |   |-- teamsBot.ts
     |   |-- package.json
-    |-- tabs/           <!--move your current source code to a new sub folder-->
+    |-- tab/           <!--move your current source code to a new sub folder-->
     |   |-- src/
     |   |   |-- index.tsx
     |   |-- package.json
