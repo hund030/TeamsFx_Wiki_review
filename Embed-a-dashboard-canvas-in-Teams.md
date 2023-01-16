@@ -829,17 +829,7 @@ bodyContent(): JSX.Element | undefined {
         {hasData ? (
           <>
             {this.state.data?.map((t: ListModel) => {
-              return (
-                <div key={`${t.id}-div`} style={itemLayoutStyle()}>
-                  <div key={`${t.id}-divider`} style={dividerStyle()} />
-                  <Text key={`${t.id}-title`} style={itemTitleStyle()}>
-                    {t.title}
-                  </Text>
-                  <Text key={`${t.id}-content`} style={itemSubtitleStyle()}>
-                    {t.content}
-                  </Text>
-                </div>
-              );
+              ...
             })}
           </>
         ) : (
@@ -868,11 +858,7 @@ footerContent(): JSX.Element | undefined {
     if (hasData) {
       return (
         <Button
-          appearance="primary"
-          size="medium"
-          onClick={() => {}} // navigate to detailed page
-        >
-          View Details
+          ...
         </Button>
       );
     }
