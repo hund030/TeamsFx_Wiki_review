@@ -104,7 +104,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     |   |-- config.ts
     |   |-- teamsBot.ts
     |   |-- package.json
-    |-- tabs/           <!--move your current source code to a new sub folder-->
+    |-- tab/           <!--move your current source code to a new sub folder-->
     |   |-- src/
     |   |   |-- index.tsx
     |   |-- package.json
