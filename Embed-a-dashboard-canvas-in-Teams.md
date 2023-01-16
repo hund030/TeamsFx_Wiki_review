@@ -19,6 +19,7 @@ Customize the scaffolded app template:
  * [How to add a widget](#how-to-add-a-new-widget)
  * [How to add a dashboard](#how-to-add-a-new-dashboard)
  * [How to customize the widget](#customize-the-widget)
+ * [How to include a data loader](#how-to-include-a-data-loader)
  * [How to handle empty state](#how-to-handle-empty-state)
  * [How to customize the dashboard layout](#customize-the-dashboard-layout)
  * [How to add a Graph API call](#how-to-add-a-new-graph-api-call)
@@ -746,9 +747,79 @@ export default class SampleDashboard extends Dashboard {
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
+## How to include a data loader
+
+If you want to include a data loader to your widget before the widget is loaded, you can add a property to the state of the widget to indicate that the data loader is loading. This property can be used to show a loading indicator to the user. 
+
+The following steps show how to add a property to the state of the ListWidget and how to use it to show a loading spinner while the data is loading.
+
+### Step 1: Define a state type
+Define a state type including a property named `loading` that indicates whether the data is loading.
+
+```ts
+interface ListWidgetState {
+  data: ListModel[];
+  loading?: boolean;
+}
+```
+
+### Step 2: Add a data loader
+
+Modify the `bodyContent` method to show a loading spinner if data is loading.
+
+```ts
+bodyContent(): JSX.Element | undefined {
+  return (
+    <>
+      {this.state.loading !== false ? (
+        <div style={{ display: "grid", justifyContent: "center", height: "100%" }}>
+          <Spinner label="Loading..." labelPosition="below" />
+        </div>
+      ) : (
+        <div style={bodyContentStyle()}>
+          ...
+        </div>
+      )}
+    </>
+  );
+}
+```
+
+### Step 3: Hide the footer button if data is loading
+
+```ts
+footerContent(): JSX.Element | undefined {
+  if (this.state.loading === false) {
+    return (
+      <Button
+        ...
+      </Button>
+    );
+  }
+}
+```
+
+### Step 4: Update the state reference
+
+Update the state reference in the widget file to use the new state type and update the state in the `getData` method to set the `loading` property to `false` after the data is loaded.
+
+```ts
+...
+export class ListWidget extends Widget<ListWidgetState> {
+  
+  async getData(): Promise<ListWidgetState> {
+    return { data: await getListData(), loading: false };
+  }
+...
+```
+
+Now, the loading spinner is shown while the data is loading. When the data is loaded, the loading spinner is hidden, and the list data and footer button are shown.
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
 ## How to handle empty state
 
-You can display a specific content in your widget when the data is empty. To do so, you need to modify the `bodyContent` method in your widget file to adopt different states of the data. The following example shows how to display an empty image when the data is empty:
+You can display a specific content in your widget when the data is empty. To do so, you need to modify the `bodyContent` method in your widget file to adopt different states of the data. The following example shows how to display an empty image when the data of ListWidget is empty:
 
 ```ts
 bodyContent(): JSX.Element | undefined {
