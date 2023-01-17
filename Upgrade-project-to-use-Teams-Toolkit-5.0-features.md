@@ -14,18 +14,33 @@ Once upgrade succeeds, your project file structure will be changed.
 
 ### File changes
 
-1. Moved everything in `.fx` to `teamsfx` folder with new file format.
-    * Created new `app.yml` and `app.local.yml` files in `teamsfx` folder
-    * Moved contents in `state.{env}.json`, `config.{env}.json` and `{env}.userdata` to `.env.{env}` in `teamsfx` folder
-2. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
-3. Moved `templates/appPackage/aad.template.json` to `aad.manifest.template.json` and updated placeholders in it per latest tooling's requirement.
-4. Moved `.fx/configs/azure.parameter.{env}.json` to `templates/azure` and updated placeholders in it per latest tooling's requirement.
+1. Created `teamsapp.yml` and `teamsapp.local.yml` in your project root folder
+    > These file contains lifecycle configuration for your project
+2. Moved environment files in `.fx` to `.env.{env}` in `teamsAppEnv` folder
+    > The environment files in old project contains `state.{env}.json`, `config.{env}.json` and `{env}.userdata`
+3. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
+    > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
+4. Moved `templates/appPackage/aad.template.json` to `aad.manifest.template.json` and updated placeholders in it per latest tooling's requirement.
+    > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
 5. Updated `.vscode/tasks.json` and `.vscode/launch.json`.
-6. Updated `.gitignore` to ignore new environment files in `teamsfx` folder.
+6. Updated `.gitignore` to ignore new environment files.
+7. Removed `.fx` folder
+    > Content under this folder is no longer used.
 
-> All existing files will be moved into `teamsfx/.backup` folder for your reference. You can safely delete the `.backup` folder after you have compared and reviewed the changes.
+> All existing files will be moved into `.backup` folder for your reference. You can safely delete the `.backup` folder after you have compared and reviewed the changes.
 
-## Changes to existing features in VS Code Teams Toolkit
+## Restore your project configuration
+
+If you still want to restore your project configuration after the upgrade is successful and continue to use old version Teams Toolkit, you can:
+1. Copy every folder / file under `.backup` folder to your project root path
+    > You can safely overwrite any existing files if you didn't change the files after upgrade.
+2. Remove the new folders / files mentioned in [File Changes](#file-changes) section:
+    * teamsapp.yml and teamsapp.local.yml
+    * aad.manifest.template.json
+    * teamsAppEnv folder
+    * appPackage folder
+
+## Feature changes that impact your development flow
 
 If you're using VS Code Teams Toolkit, there're some changes to existing features you should be aware of:
 
@@ -34,6 +49,7 @@ If you're using VS Code Teams Toolkit, there're some changes to existing feature
 1. All the environment files will be gitignored by default. You need to sync the environment variables in `.env.{env_name}` files under `teamsfx` folder by yourselves to other machines to operate corresponding environments.
 2. When creating new environments, you need to fill customized fields in the new `.env.{env_name}` file. Usually you need to provide values for all environment values with `CONFIG__` prefix.
 3. When creating new environments, you need to manually create `templates/azure/azure.parameters.{env_name}.json` as Azure provision parameters and fill the parameter values accordingly.
+4. Some additional steps are required if you added SQL or APIM to your project. Refer [Provision SQL databases](#provision-sql-databases) and [Provision APIM service](#provision-apim-service) section to learn more.
 
 ### Launch your app
 
@@ -51,10 +67,6 @@ If you're using VS Code Teams Toolkit, there're some changes to existing feature
 2. You need to manually create an Azure Active Directory app for APIM service when provisioning a new environment. This [document](https://aka.ms/teamsfx-add-azure-apim) includes tutorials about how to create an Azure Active Directory app for APIM service.
 3. Teams Toolkit no longer support deploy API spec to APIM any more.
 Teams Toolkit will reuse your provisioned resource when upgrading (except Bot Service), when you wish to add a new environment after project upgrading, please remember to change resource name in `azure.parameters.{your_env_name}.json` to avoid name conflicts. 
-
-## Restore your project configuration
-
-If you still want to restore your project configuration after the upgrade is successful and continue to use old version Teams Toolkit, you can copy every folder / file to your project root path and remove the new folders / files mentioned in [File Changes](#file-changes) section.
 
 ## Upgrade your projects manually
 
