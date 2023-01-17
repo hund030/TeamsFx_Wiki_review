@@ -28,7 +28,7 @@ This action will update your AAD app based on give AAD app manifest. It will ref
 ```
   - uses: aadApp/update
     with:
-      manifestTemplatePath: ./aad.manifest.template.json # Required. Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app.
+      manifestPath: ./aad.manifest.template.json # Required. Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app.
       outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to teamsfx folder. This action will output the final AAD manifest used to update AAD app to this path.
 ```
 
