@@ -21,6 +21,7 @@ Customize the scaffolded app template:
  * [How to customize the widget](#customize-the-widget)
  * [How to include a data loader](#how-to-include-a-data-loader)
  * [How to handle empty state](#how-to-handle-empty-state)
+ * [How to use Microsoft Graph Toolkit as widget content](#how-to-use-microsoft-graph-toolkit-as-widget-content)
  * [How to customize the dashboard layout](#customize-the-dashboard-layout)
  * [How to add a Graph API call](#how-to-add-a-new-graph-api-call)
 
@@ -632,120 +633,7 @@ export class NewsWidget extends Widget<void> {
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
-## Customize the Dashboard Layout
-The TeamsFx provided some convenient methods for defining and modifying the layout of the dashboard.
 
-- Three widgets in a row with a height of 350px, occupying 20%, 60% and 20% of the width respectively.
-
-```ts
-export default class SampleDashboard extends Dashboard {
-  protected rowHeights(): string | undefined {
-    return "350px";
-  }
-
-  protected columnWidths(): string | undefined {
-    return "2fr 6fr 2fr";
-  }
-
-  protected dashboardLayout(): undefined | JSX.Element {
-    return (
-      <>
-        <ListWidget />
-        <ChartWidget />
-        <NewsWidget />
-      </>
-    );
-  }
-}
-```
-
-![image](https://user-images.githubusercontent.com/107838226/209525799-9ee5b7ab-6263-4a1f-89e6-b33eee6d31dc.png)
-
-- There are two widgets in a row with widths of 600px and 1100px, the height of the first line is the maximum height of its content, and the height of the second line is 400px.
-```ts
-export default class SampleDashboard extends Dashboard {
-  protected rowHeights(): string | undefined {
-    return "max-content 400px";
-  }
-
-  protected columnWidths(): string | undefined {
-    return "600px 1100px";
-  }
-
-  protected dashboardLayout(): undefined | JSX.Element {
-    return (
-      <>
-        <ListWidget />
-        <ChartWidget />
-        <NewsWidget />
-      </>
-    );
-  }
-}
-```
-
-![image](https://user-images.githubusercontent.com/107838226/209532741-0ad90649-f904-4dae-af25-940e7f874bf2.png)
-
-- Arrange two widgets in a column.
-```ts
-import { oneColumn } from '../lib/Dashboard.styles';
-export default class SampleDashboard extends Dashboard {
-  protected rowHeights(): string | undefined {
-    return "max-content";
-  }
-
-  protected columnWidths(): string | undefined {
-    return "4fr 6fr";
-  }
-
-  protected dashboardLayout(): undefined | JSX.Element {
-    return (
-      <>
-        <NewsWidget />
-        <div style={oneColumn()}>
-          <ListWidget />
-          <ChartWidget />
-          
-        </div>
-      </>
-    );
-  }
-}
-```
-
-![image](https://user-images.githubusercontent.com/107838226/209540272-094c871c-cdf0-45a4-b131-b1548e182e6f.png)
-
-
-- Customize the height of widgets in a row. The following code can achieve a height of 400px for the `ListWidget` and a height of 350px for the `ChartWidget`.
-
-```ts
-import { oneColumn } from '../lib/Dashboard.styles';
-export default class SampleDashboard extends Dashboard {
-  protected rowHeights(): string | undefined {
-    return "max-content";
-  }
-
-  protected columnWidths(): string | undefined {
-    return "4fr 6fr";
-  }
-
-  protected dashboardLayout(): undefined | JSX.Element {
-    return (
-      <>
-        <NewsWidget />
-        <div style={oneColumn("400px 350px")}>
-          <ListWidget />
-          <ChartWidget />
-        </div>
-      </>
-    );
-  }
-}
-```
-
-![image](https://user-images.githubusercontent.com/107838226/209540029-1a888753-a03c-44e2-bd93-897fef077489.png)
-
-<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## How to include a data loader
 
@@ -870,6 +758,222 @@ footerContent(): JSX.Element | undefined {
 Your list widget will look like this when the data is empty:
 ![image](https://user-images.githubusercontent.com/107838226/212546123-33b8943e-094c-4de5-9f23-61868ee4e51b.png)
 
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## How to use Microsoft Graph Toolkit as widget content
+
+Microsoft Graph Toolkit is a set of reusables, framework-agnostic web components and helpers for accessing and working with Microsoft Graph. You can use the Microsoft Graph Toolkit with any web framework or without a framework at all. 
+
+You can follow the steps below to use Microsoft Graph Toolkit as your widget content.
+
+### Step 1: Add SSO feature to your Teams app
+
+Microsoft Teams provides single sign-on (SSO) function for an app to obtain signed in Teams user token to access Microsoft Graph. For how to add SSO feature to your Teams app, please refer to [this document](https://aka.ms/teamsfx-add-sso).
+
+### Step 2: Install required npm packages
+
+Run the following command in your project `tabs` folder to install the required npm packages:
+
+```bash
+npm install @microsoft/mgt-react @microsoft/mgt-teamsfx-provider
+```
+
+### Step 3: Add a new Graph Toolkit widget
+
+Create a new widget file in your project `tabs/src/views/widgets` folder. For example, `GraphyWidget.tsx`. In this widget, we will guide users to consent our app to access Microsoft Graph and then show the user's todo list by using Microsoft Graph Toolkit. The following code is an example of using `Todo` component from Microsoft Graph Toolkit in widget.
+
+```tsx
+import { Providers, ProviderState, Todo } from "@microsoft/mgt-react";
+import { TeamsFxProvider } from "@microsoft/mgt-teamsfx-provider";
+
+import { loginAction } from "../../internal/login";
+import { TeamsUserCredentialContext } from "../../internal/singletonContext";
+import { Widget } from "../lib/Widget";
+
+interface IGraphWidgetState {
+  needLogin: boolean;
+}
+
+export class GraphWidget extends Widget<IGraphWidgetState> {
+  protected bodyContent(): JSX.Element | undefined {
+    return <div>{this.state.needLogin === false && <Todo />}</div>;
+  }
+
+  async componentDidMount() {
+    super.componentDidMount();
+
+    // Initialize TeamsFx provider
+    const provider = new TeamsFxProvider(TeamsUserCredentialContext.getInstance().getCredential(), [
+      "Tasks.ReadWrite",
+    ]);
+    Providers.globalProvider = provider;
+
+    // Check if user is signed in
+    if (await this.checkIsConsentNeeded()) {
+      await loginAction(["Tasks.ReadWrite"]);
+    }
+
+    // Update signed in state
+    Providers.globalProvider.setState(ProviderState.SignedIn);
+    this.setState({ needLogin: false });
+  }
+
+  /**
+   * Check if user needs to consent
+   * @returns true if user needs to consent
+   */
+  async checkIsConsentNeeded() {
+    let needConsent = false;
+    try {
+      await TeamsUserCredentialContext.getInstance().getCredential().getToken(["Tasks.ReadWrite"]);
+    } catch (error) {
+      needConsent = true;
+    }
+    return needConsent;
+  }
+}
+
+```
+
+You also can use other Microsoft Graph Toolkit components in your widget. For more information about Microsoft Graph Toolkit components, please refer to [this document](https://learn.microsoft.com/en-us/graph/toolkit/overview).
+
+### Step 4: Add the widget to dashboard layout
+
+Include the new widget in your dashboard file.
+
+```tsx
+...
+export default class YourDashboard extends Dashboard {
+  ...
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <GraphWiget />
+      </>
+    );
+  }
+  ...
+}
+```
+
+Now, launching or refreshing your Teams app, you will see the new widget using Microsoft Graph Toolkit after you finish login to consent our app to access Microsoft Graph.
+
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## Customize the Dashboard Layout
+The TeamsFx provided some convenient methods for defining and modifying the layout of the dashboard.
+
+- Three widgets in a row with a height of 350px, occupying 20%, 60% and 20% of the width respectively.
+
+```ts
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "350px";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "2fr 6fr 2fr";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <ListWidget />
+        <ChartWidget />
+        <NewsWidget />
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209525799-9ee5b7ab-6263-4a1f-89e6-b33eee6d31dc.png)
+
+- There are two widgets in a row with widths of 600px and 1100px, the height of the first line is the maximum height of its content, and the height of the second line is 400px.
+```ts
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "max-content 400px";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "600px 1100px";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <ListWidget />
+        <ChartWidget />
+        <NewsWidget />
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209532741-0ad90649-f904-4dae-af25-940e7f874bf2.png)
+
+- Arrange two widgets in a column.
+```ts
+import { oneColumn } from '../lib/Dashboard.styles';
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "max-content";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "4fr 6fr";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <NewsWidget />
+        <div style={oneColumn()}>
+          <ListWidget />
+          <ChartWidget />
+          
+        </div>
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209540272-094c871c-cdf0-45a4-b131-b1548e182e6f.png)
+
+
+- Customize the height of widgets in a row. The following code can achieve a height of 400px for the `ListWidget` and a height of 350px for the `ChartWidget`.
+
+```ts
+import { oneColumn } from '../lib/Dashboard.styles';
+export default class SampleDashboard extends Dashboard {
+  protected rowHeights(): string | undefined {
+    return "max-content";
+  }
+
+  protected columnWidths(): string | undefined {
+    return "4fr 6fr";
+  }
+
+  protected dashboardLayout(): undefined | JSX.Element {
+    return (
+      <>
+        <NewsWidget />
+        <div style={oneColumn("400px 350px")}>
+          <ListWidget />
+          <ChartWidget />
+        </div>
+      </>
+    );
+  }
+}
+```
+
+![image](https://user-images.githubusercontent.com/107838226/209540029-1a888753-a03c-44e2-bd93-897fef077489.png)
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
