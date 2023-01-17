@@ -815,6 +815,8 @@ export class ListWidget extends Widget<ListWidgetState> {
 
 Now, the loading spinner is shown while the data is loading. When the data is loaded, the loading spinner is hidden, and the list data and footer button are shown.
 
+![5xcq3-utv28](https://user-images.githubusercontent.com/107838226/212793039-90aa6f7e-28fd-4650-bb64-f9c3859d260b.gif)
+
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## How to handle empty state
