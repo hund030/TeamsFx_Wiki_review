@@ -79,7 +79,7 @@ This action will render Teams app manifest template with environment variables, 
 ```
   - uses: teamsApp/validate
     with:
-      manifestTemplatePath: ./appPackage/manifest.template.json # Required. Path to manifest template
+      manifestPath: ./appPackage/manifest.template.json # Required. Path to manifest template
 ```
 
 ## Output:
@@ -92,7 +92,7 @@ This action will render Teams app manifest template with environment variables, 
 ```
   - uses: teamsApp/zipAppPackage
     with:
-      manifestTemplatePath: ./appPackage/manifest.template.json # Required. Relative path to teamsfx folder. This is the path for Teams app manifest template.
+      manifestPath: ./appPackage/manifest.template.json # Required. Relative path to teamsfx folder. This is the path for Teams app manifest template.
       outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
       outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to teamsfx folder. This is the path for built manifest json file.
 ```
