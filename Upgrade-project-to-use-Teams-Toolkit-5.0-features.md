@@ -16,7 +16,7 @@ Once upgrade succeeds, your project file structure will be changed.
 
 1. Created `teamsapp.yml` and `teamsapp.local.yml` in your project root folder
     > These file contains lifecycle configuration for your project
-2. Moved environment files in `.fx` to `.env.{env}` in `teamsAppEnv` folder
+2. Moved environment files in `.fx` to `.env.{env}` in `env` folder
     > The environment files in old project contains `state.{env}.json`, `config.{env}.json` and `{env}.userdata`
 3. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
