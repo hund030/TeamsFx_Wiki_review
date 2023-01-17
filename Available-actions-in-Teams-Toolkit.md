@@ -64,7 +64,7 @@ Apply the Teams app manifest to an existing Teams app. Will use the app id in ma
 ```
   - uses: teamsApp/update # 
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
 ```
 
 ## Output:
@@ -92,9 +92,9 @@ This action will render Teams app manifest template with environment variables, 
 ```
   - uses: teamsApp/zipAppPackage
     with:
-      manifestPath: ./appPackage/manifest.template.json # Required. Relative path to teamsfx folder. This is the path for Teams app manifest template.
-      outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
-      outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to teamsfx folder. This is the path for built manifest json file.
+      manifestPath: ./appPackage/manifest.template.json # Required. Relative path to this file. This is the path for Teams app manifest template.
+      outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
+      outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to this file. This is the path for built manifest json file.
 ```
 
 ## Output:
@@ -107,7 +107,7 @@ This action will publish built Teams app zip file to tenant app catalog.
 ```
   - uses: teamsApp/publishAppPackage
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to teamsfx folder. This is the path for built zip file.
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
 ```
 
 ## Output:
