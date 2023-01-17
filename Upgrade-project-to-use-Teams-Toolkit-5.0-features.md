@@ -40,6 +40,11 @@ If you still want to restore your project configuration after the upgrade is suc
     * teamsAppEnv folder
     * appPackage folder
 
+## Known issues
+
+1. If your project only contains a bot, you may meet error that complains `STATE__FX_RESOURCE_FRONTEND_HOSTING__ENDPOINT` is missing when executing commands. Replace this placeholder with a valid URL in `appPackage/manifest.template.json` to fix it.
+   > The old tooling provides a default example URL for your project if this placeholder does not exist. In latest tooling, we want to make everything more transparent so requires you to provide your URL here.
+
 ## Feature changes that impact your development flow
 
 If you're using VS Code Teams Toolkit, there're some changes to existing features you should be aware of:
