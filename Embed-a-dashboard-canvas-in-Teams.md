@@ -21,7 +21,9 @@ Customize the scaffolded app template:
  * [How to customize the widget](#customize-the-widget)
  * [How to include a data loader](#how-to-include-a-data-loader)
  * [How to handle empty state](#how-to-handle-empty-state)
+ * [How to refresh data as scheduled](#how-to-refresh-data-as-scheduled)
  * [How to use Microsoft Graph Toolkit as widget content](#how-to-use-microsoft-graph-toolkit-as-widget-content)
+ * [How to embed Power BI to Dashboard](#how-to-embed-power-bi-to-dashboard)
  * [How to customize the dashboard layout](#customize-the-dashboard-layout)
  * [How to add a Graph API call](#how-to-add-a-new-graph-api-call)
 
@@ -761,6 +763,34 @@ Your list widget will look like this when the data is empty:
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
+## How to refresh data as scheduled
+
+The following example shows how to display real-time data in a widget. The widget displays the current time and updates every second.
+
+```tsx
+import { Widget } from "../lib/Widget";
+
+interface IRefreshWidgetState {
+  data: string;
+}
+
+export class RefreshWidget extends Widget<IRefreshWidgetState> {
+  bodyContent(): JSX.Element | undefined {
+    return <>{this.state.data}</>;
+  }
+
+  async componentDidMount() {
+    setInterval(() => {
+      this.setState({ data: new Date().toLocaleTimeString() });
+    }, 1000);
+  }
+}
+```
+
+You can modify `setInterval` method to call your own function to refresh data, like this: `setInterval(() => yourGetDataFunction(), 1000)`.
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
 ## How to use Microsoft Graph Toolkit as widget content
 
 Microsoft Graph Toolkit is a set of reusables, framework-agnostic web components and helpers for accessing and working with Microsoft Graph. You can use the Microsoft Graph Toolkit with any web framework or without a framework at all. 
@@ -861,6 +891,10 @@ Now, launching or refreshing your Teams app, you will see the new widget using M
 
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
+
+## How to embed Power BI to Dashboard
+
+For how to embed Power BI item to the Dashboard, you can refer to [this document](https://learn.microsoft.com/en-us/javascript/api/overview/powerbi/powerbi-client-react).
 
 ## Customize the Dashboard Layout
 The TeamsFx provided some convenient methods for defining and modifying the layout of the dashboard.
