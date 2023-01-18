@@ -806,7 +806,7 @@ Microsoft Teams provides single sign-on (SSO) function for an app to obtain sign
 Run the following command in your project `tabs` folder to install the required npm packages:
 
 ```bash
-npm install @microsoft/mgt-react @microsoft/mgt-teamsfx-provider
+npm install @microsoft/mgt-react @microsoft/mgt-element @microsoft/mgt-teamsfx-provider
 ```
 
 ### Step 3: Add a new Graph Toolkit widget
@@ -863,7 +863,6 @@ export class GraphWidget extends Widget<IGraphWidgetState> {
     return needConsent;
   }
 }
-
 ```
 
 You also can use other Microsoft Graph Toolkit components in your widget. For more information about Microsoft Graph Toolkit components, please refer to [this document](https://learn.microsoft.com/en-us/graph/toolkit/overview).
@@ -889,6 +888,7 @@ export default class YourDashboard extends Dashboard {
 
 Now, launching or refreshing your Teams app, you will see the new widget using Microsoft Graph Toolkit after you finish login to consent our app to access Microsoft Graph.
 
+![image](https://user-images.githubusercontent.com/107838226/213122528-f0823063-b5b6-4cbf-9f2c-0198e6d72958.png)
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
