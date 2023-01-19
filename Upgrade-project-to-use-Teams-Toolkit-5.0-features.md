@@ -88,3 +88,9 @@ If you meet errors, you can follow these steps to initialize your project again 
 4. Run `teamsfx init infra` under your project root and follow the instructions to update your remote environment configurations
 
 5. Update the placeholders in your Teams app manifest file, AAD app manifest file (if have) and azure.parameters.{env}.json (if have). The old placeholder `{{xxx}}` needs to be replaced with new format `${{xxx}}`. You need to change the name of placeholder to your preferred environment variable name and update `app.yml` and `app.local.yml` to generate these environment variables for these files.
+
+## Migration
+### MigrationAppPackageNotExist
+The project to be migrated has no appPackage folder under templates which is required for migration. 
+### ManifestTemplateNotExist
+The project to be migrated has no manifest.template.json file under templates/appPackage which is required for migration. 
