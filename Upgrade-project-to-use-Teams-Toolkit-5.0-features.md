@@ -4,9 +4,9 @@ Teams Toolkit continuously evolves to offer more powerful features for developer
 
 ## How to Upgrade
 
-Teams Toolkit will automatically upgrade your original project folder structure and not change your custom code.
+Teams Toolkit automatically upgrades your project without changing your existing application code.
 
-> We recommend you to leverage git to track the changes during upgrade it possible.
+> We recommend using git to track changes during upgrade.
 
 ## File Structure Change
 
