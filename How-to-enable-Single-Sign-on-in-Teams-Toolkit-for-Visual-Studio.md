@@ -570,6 +570,39 @@ For Teams Bot Applications
       options.InitiateLoginEndpoint = config.TeamsFx.Authentication.Bot.InitiateLoginEndpoint;
     });
     ```
+    Find the following lines:
+    '''
+    builder.Services.AddSingleton<HelloWorldCommandHandler>();
+    builder.Services.AddSingleton(sp =>
+    {
+      var options = new ConversationOptions()
+      {
+        Adapter = sp.GetService<CloudAdapter>(),
+        Command = new CommandOptions()
+        {
+          Commands = new List<ITeamsCommandHandler> { sp.GetService<HelloWorldCommandHandler>() }
+        }
+      };
+
+      return new ConversationBot(options);
+    });
+    '''
+    and replace with:
+    '''
+    builder.Services.AddSingleton(sp =>
+    {
+      var options = new ConversationOptions()
+      {
+        Adapter = sp.GetService<CloudAdapter>(),
+        Command = new CommandOptions()
+        {
+          Commands = new List<ITeamsCommandHandler> { }
+        }
+      };
+
+      return new ConversationBot(options);
+    });
+    '''
 
     Find and delete the following code:
       ```
