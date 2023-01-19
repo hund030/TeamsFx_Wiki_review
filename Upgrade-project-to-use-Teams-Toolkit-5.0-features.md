@@ -27,7 +27,7 @@ Teams Toolkit performs the following changes to your project during upgrade.
 7. Removed `.fx` folder
     > Content under this folder is no longer used.
 
-> All existing files will be moved into `.backup` folder for your reference. You can safely delete the `.backup` folder after you have compared and reviewed the changes.
+> All existing files will be moved into `.backup` folder for your reference. You can safely delete the `.backup` folder after you reviewed the changes.
 
 ## Restore your project configuration
 
