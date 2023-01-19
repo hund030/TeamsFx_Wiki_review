@@ -65,9 +65,9 @@ Following are the steps to add Tab capability:
 Your folder structure may be like:
     ```
     .
-    |-- teasmfx/
-    |-- infra/
     |-- appPackage/
+    |-- env/
+    |-- infra/
     |-- tabs/           <!--tab app source code-->
     |   |-- src/
     |   |   |-- index.tsx
@@ -75,15 +75,15 @@ Your folder structure may be like:
     |-- src/            <!--your current source code-->
     |   |-- index.ts
     |-- package.json
+    |-- teamsapp.yml
     ```
 
     It is suggested to re-organize the folder structure as:
 
     ```
     .
-    |-- teasmfx/
-    |-- infra/
     |-- appPackage/
+    |-- infra/
     |-- tabs/           <!--tab app source code-->
     |   |-- src/
     |   |   |-- index.tsx
@@ -92,6 +92,7 @@ Your folder structure may be like:
     |   |-- src/
     |   |   |-- index.ts
     |   |-- package.json
+    |-- teamsapp.yml
     ```
 
 1. Generate debug profile with TeamsFx CLI.
@@ -101,18 +102,19 @@ Your folder structure may be like:
     ? Teams Toolkit: Select the capability of your app: Tab
     ? Teams Toolkit: Are you developing with SPFx?: No
     ? Teams Toolkit: Teams Toolkit will generate the following files (existing files with duplicated names will be overwritten), would you like to proceed?
-      teamsfx/
-        - app.local.yml
-        - .env.local
-        - settings.json
-        - run.js
-      .vscode/
+      .vscode-teamsfx/
         - launch.json
         - settings.json
         - tasks.json
+      script/
+        - run.js
+      env/
+        - .env.local
+      teamsapp.local.yml
+      teamsapp.yml
     : Yes
     ```
-1. Manually merge the content in `.vscode` and `teamsfx` folder with yours. Update the `app.local.yml` and `run.js` to target your tab app code.
+1. Manually merge the content in `.vscode-teamsfx`, `env` folder and `teamsapp.local.yml` file with yours. Update the `teamsapp.local.yml` and `run.js` to target your tab app code.
 Here is an sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 1. Try local debug with Visual Studio Code.
@@ -126,16 +128,15 @@ Here is an sample project for reference. [Hello World Bot with Tab](https://gith
     ? Teams Toolkit: Select the capability of your app: Tab
     ? Teams Toolkit: Are you developing with SPFx?: No
     ? Teams Toolkit: Teams Toolkit will generate the following files (existing files with duplicated names will be overwritten), would you like to proceed?
-      teamsfx/
-        - app.yml
-        - .env.dev
-        - settings.json
       infra/
         - azure.bicep
         - azure.parameters.json
+      env/
+        - .env.dev
+      teamsapp.yml
     : Yes
     ```
-1. Manually merge the content in `infra` and `teamsfx` folder with yours.
+1. Manually merge the content in `infra`, `env` folder and `teamsapp.yml` file with yours.
     Here is a sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
@@ -148,6 +149,6 @@ Here is an sample project for reference. [Hello World Bot with Tab](https://gith
 
 There are other commonly suggested next steps, for example:
 
-- [Add authentication and make a Graph API call](https://learn.microsoft.com/microsoftteams/platform/toolkit/add-single-sign-on?pivots=visual-studio-code)
-- [Set up CI/CD pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
-- [Call a backend API](https://github.com/OfficeDev/TeamsFx/wiki/How-to-integrate-Azure-Functions-with-your-Teams-app)
+- [Add authentication and make a Graph API call](https://aka.ms/teamsfx-add-sso-new)
+- [Set up CI/CD pipelines](https://aka.ms/teamsfx-add-cicd-new)
+- [Call a backend API](https://aka.ms/teamsfx-add-azure-function)
