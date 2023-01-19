@@ -76,7 +76,7 @@ Teams Toolkit will reuse your provisioned resource when upgrading (except Bot Se
 
 ## Upgrade your projects manually
 
-If you meet errors, you can follow these steps to initialize your project again to develop it with latest Teams Toolkit. You can visit [Teams Toolkit 5.0 guide](https://aka.ms/teamsfx-v5.0-guide) to learn more about the new concepts in Teams Toolkit 5.0. And refer [Teams Toolkit initialize document](https://aka.ms/teamsfx-init) to learn how to initialize debug or remote environment configurations.
+If any error occurs during upgrade, you can follow these steps to initialize your project again to develop it with latest Teams Toolkit. Visit [Teams Toolkit 5.0 guide](https://aka.ms/teamsfx-v5.0-guide) to learn more about the new concepts in Teams Toolkit 5.0. And refer [Teams Toolkit initialize document](https://aka.ms/teamsfx-init) to learn how to initialize debug or remote environment configurations.
 
 1. Run `npm install -g @microsoft/teamsfx-cli@alpha` to install latest TeamsFx CLI
 > This step requires nodejs installed in your development machine.
