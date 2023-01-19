@@ -10,11 +10,11 @@ Teams Toolkit automatically upgrades your project without changing your existing
 
 ## File Structure Change
 
-Once upgrade succeeds, your project file structure will be changed.
+Teams Toolkit performs the following changes to your project during upgrade.
 
 ### File changes
 
-1. Created `teamsapp.yml` and `teamsapp.local.yml` in your project root folder
+1. Created `teamsapp.yml` and `teamsapp.local.yml` in your project's root folder
     > These file contains lifecycle configuration for your project
 2. Moved environment files in `.fx` to `.env.{env}` in `env` folder
     > The environment files in old project contains `state.{env}.json`, `config.{env}.json` and `{env}.userdata`
