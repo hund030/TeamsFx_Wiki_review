@@ -27,7 +27,7 @@ After adding function app project, your folder structure may be like:
     ```
     .
     |-- .vscode/
-    |-- teasmfx/
+    |-- env/
     |-- infra/
     |-- api/                      <!--function app source code-->
     |   |-- getUserProfile/       <!--HTTP trigger name-->
@@ -37,6 +37,7 @@ After adding function app project, your folder structure may be like:
     |-- src/                      <!--your current source code-->
     |   |-- index.ts
     |-- package.json
+    |-- teamsapp.yml
     ```
 
 ## Setup local debug environment in VSC
@@ -127,17 +128,17 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
     }
     ```
 
-1. Copy the script [run.api.js](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/teamsfx/script/run.api.js) to `./teamsfx/script` folder, and add NPM scripts for the function app start.
+1. Copy the script [run.api.js](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/script/run.api.js) to `./script` folder, and add NPM scripts for the function app start.
 
       ```json
       "scripts": {
-        "dev:teamsfx": "node ../teamsfx/script/run.api.js ../ ../teamsfx/.env.local",
+        "dev:teamsfx": "node ../script/run.api.js ../ ../env/.env.local",
         "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
         ...
       }
       ```
 
-1. Add a cli/runNpmCommand action in deploy stage in `./teamsfx/app.local.yml` file. This action trigger `npm install` before launching your function app.
+1. Add a cli/runNpmCommand action in deploy stage in `./teamsapp.local.yml` file. This action trigger `npm install` before launching your function app.
 
       ```yml
       deploy:
@@ -184,7 +185,7 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
 
 ## Call the function from your client with TeamsFx SDK
 
-1. We recommend setting function endpoint and function name in environment variables. In `teamsfx/app.local.yml` file, find the action `file/updateEnv` and add new envs.
+1. We recommend setting function endpoint and function name in environment variables. In `teamsapp.local.yml` file, find the action `file/updateEnv` and add new envs.
     ```yml
     - uses: file/updateEnv # Generate env to .env file
       with:
@@ -195,7 +196,7 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
           FUNC_ENDPOINT: http://localhost:7071
     ```
 
-    Then update `teamsfx/script/run.js` script to set the environment variable in tab app service process.
+    Then update `script/run.js` script to set the environment variable in tab app service process.
     M365_CLIENT_ID should already be set to environment.
 
     ```js
@@ -427,8 +428,8 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
 
 1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
 
-1. Add new actions in `teamsfx/app.yaml` to setup deployment.
-You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/teamsfx/app.yml)
+1. Add new actions in `teamsapp.yaml` to setup deployment.
+You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/teamsapp.yml)
 
     ```
     deploy:
@@ -466,6 +467,6 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
 
 ## What's next
 
-- [Set up CI/CD pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
-- [Integrate Azure Sql with your Teams app](TODO)
-- [Integrate Azure API Management with your Teams app](TODO)
+- [Set up CI/CD pipelines](https://aka.ms/teamsfx-add-cicd-new)
+- [Integrate Azure Sql with your Teams app](https://aka.ms/teamsfx-add-azure-sql)
+- [Integrate Azure API Management with your Teams app](https://aka.ms/teamsfx-add-azure-apim)
