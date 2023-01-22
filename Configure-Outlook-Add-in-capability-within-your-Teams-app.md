@@ -104,7 +104,14 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     },
    ```
 
-1.
+1. Open the file teamsfx\script\run.js and find the line near the end that spawns a separate process. 
+1. Change the string "start" in that line to "start:tab". When you are done the line should look like the following:
+
+    ```
+    cp.spawn(/^win/.test(process.platform) ? "npm.cmd" : "npm", ["run", "start:tab"], {
+      stdio: "inherit",
+    });
+    ```
 
 ## Create an Outlook Add-in project
 
