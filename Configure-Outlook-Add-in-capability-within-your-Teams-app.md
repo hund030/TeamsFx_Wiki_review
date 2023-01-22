@@ -134,6 +134,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
     **Note**:
     It is a good practice to append "-local" onto the end of the name in the .env.local file.
+    The maximum length of the variable is 30 characters.
     The "name.short" value appears in both the Teams tab app and the Outlook add-in. Examples: 
 
     - It is the label under the launch button of the tab app.
