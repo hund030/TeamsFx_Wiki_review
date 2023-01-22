@@ -73,17 +73,13 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 
     ```
     {
-        "name": "",
-        "version": "",
-        "engines": {
-             "node": ">=14 <=16"
-        },
+        "name": "CombinedTabAndAddin",
+        "version": "0.0.1",
+        "author": "Contoso",
         "scripts": {
             "test": "echo \"Error: no test specified\" && exit 1",
+            "install": "cd tab && npm install",
             "install:tab": "cd tab && npm install",
-
-            "install": "cd tab && npm install", 
-
             "start:tab": "cd tab && npm run start",
             "build:tab": "cd tab && npm run build",
         },
@@ -92,7 +88,23 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         },
     }
     ```
-1. Copy the "name", "version", and "engine" properties and their values from the package.json in the tabs folder and paste them over the corresponding properties in the root package.json.
+1. Change the "name", "version", and "author" properties, as needed.
+1. Open the package.json in the tabs subfolder and find the script for "dev:teamsfx". Add `cd .. &&` to the front of the value of the script. It should look like the following when you are done:
+
+    ```
+    "dev:teamsfx": "cd .. && node teamsfx/script/run.js . teamsfx/.env.local",
+    ```
+
+1. In the .vscode folder, open the tasks.json file and find the `Start frontend` task.
+1. In the "options.cwd" property, add `/tab` to the end of the value. When you are done, it should look like the following:
+
+   ```
+    "options": {
+        "cwd": "${workspaceFolder}/tab"
+    },
+   ```
+
+1.
 
 ## Create an Outlook Add-in project
 
