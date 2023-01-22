@@ -66,7 +66,37 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     |-- gitignore
     ```
 
-1. 
+1. Create a new file named package.json in the root of the project and give it the following content:
+
+    ```
+    {
+        "name": "TabAndAddin",
+        "version": "0.1.0",
+        "engines": {
+             "node": ">=14 <=16"
+       },
+        "scripts": {
+         "test": "echo \"Error: no test specified\" && exit 1",
+        "install:bot": "cd bot && npm install",
+        "install:tab": "cd tab && npm install",
+
+        "install": "cd tab && npm install",
+
+        "ORIGINALinstall": "concurrently \"npm run install:bot\" \"npm run install:tab\"",
+        "dev:bot": "cd bot && npm run dev",
+        "start:tab": "cd tab && npm run start",
+        "build:tab": "cd tab && npm run build",
+        "build:bot": "cd bot && npm run build",
+        "build": "concurrently \"npm run build:tab\" \"npm run build:bot\""
+      },
+      "devDependencies": {
+          "@microsoft/teamsfx-run-utils": "alpha"
+      },
+      "dependencies": {
+          "concurrently": "^7.6.0"
+      }
+    }
+    ```
 
 ## Create an Outlook Add-in project
 
