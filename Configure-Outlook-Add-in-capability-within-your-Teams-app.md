@@ -14,7 +14,10 @@ For more information, start with [Outlook Add-ins Overview](https://learn.micros
 
 ## Prerequisites
 
-To configure an Office Add-in as additional capability, please make sure you have a Microsoft 365 account to test the application.
+To configure an Office Add-in as additional capability, you must meet the following conditions:
+
+- You have a Microsoft 365 account to test the application. For example, an *.onmicrosoft.com account.
+- Your Micrsoft 365 account has been added as an account in desktop Outlook. See [Add an email account to Outlook](https://support.microsoft.com/office/add-an-email-account-to-outlook-e9da47c4-9b89-4b49-b945-a204aeea6726)
 
 ## Overview
 
