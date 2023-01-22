@@ -48,6 +48,9 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     ```
 
 1. Create a folder under the root named "tab" (or "bot").
+
+    **NOTE**: For simplicity, the remainder of this article assumes that the existing Teams app is a tab. If you started with a bot instead, replace "tab" with "bot" in all of these instructions, including the content you add or edit in various files. 
+
 1. Move the node_modules, public, and src folders into the new subfolder.
 1. Move the package-lock.json, package.json, and tsconfig.json into the new subfolder. The project structure should now look like the following:
 
@@ -70,33 +73,26 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 
     ```
     {
-        "name": "TabAndAddin",
-        "version": "0.1.0",
+        "name": "",
+        "version": "",
         "engines": {
              "node": ">=14 <=16"
-       },
+        },
         "scripts": {
-         "test": "echo \"Error: no test specified\" && exit 1",
-        "install:bot": "cd bot && npm install",
-        "install:tab": "cd tab && npm install",
+            "test": "echo \"Error: no test specified\" && exit 1",
+            "install:tab": "cd tab && npm install",
 
-        "install": "cd tab && npm install",
+            "install": "cd tab && npm install", 
 
-        "ORIGINALinstall": "concurrently \"npm run install:bot\" \"npm run install:tab\"",
-        "dev:bot": "cd bot && npm run dev",
-        "start:tab": "cd tab && npm run start",
-        "build:tab": "cd tab && npm run build",
-        "build:bot": "cd bot && npm run build",
-        "build": "concurrently \"npm run build:tab\" \"npm run build:bot\""
-      },
-      "devDependencies": {
-          "@microsoft/teamsfx-run-utils": "alpha"
-      },
-      "dependencies": {
-          "concurrently": "^7.6.0"
-      }
+            "start:tab": "cd tab && npm run start",
+            "build:tab": "cd tab && npm run build",
+        },
+        "devDependencies": {
+            "@microsoft/teamsfx-run-utils": "alpha"
+        },
     }
     ```
+1. Copy the "name", "version", and "engine" properties and their values from the package.json in the tabs folder and paste them over the corresponding properties in the root package.json.
 
 ## Create an Outlook Add-in project
 
