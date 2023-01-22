@@ -89,20 +89,20 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     }
     ```
 1. Change the "name", "version", and "author" properties, as needed.
-1. Open the package.json in the tabs subfolder and find the script for "dev:teamsfx". Add `cd .. &&` to the front of the value of the script. It should look like the following when you are done:
+1. In the .vscode folder, open the tasks.json file and find the `Start frontend` task.
+1. This task runs a script named "dev:teamsfx" that is defined in the package.json file in the "tab" subfolder. But tasks assume they are running in the root, unless told otherwise, so in the "options.cwd" property, add `/tab` to the end of the value. This ensures that the task will find the script. When you are done, it should look like the following:
+
+    ```
+    "options": {
+        "cwd": "${workspaceFolder}/tab"
+    },
+    ```
+   
+1. Open the package.json in the tabs subfolder and find the script for "dev:teamsfx". Add `cd .. &&` to the front of the value of the script. This change is needed because the script was originally defined in a package.json file at the root. Since that file has moved, npm needs to run it from the root so it can find the "teamsfx" folder, which has not moved. It should look like the following when you are done:
 
     ```
     "dev:teamsfx": "cd .. && node teamsfx/script/run.js . teamsfx/.env.local",
     ```
-
-1. In the .vscode folder, open the tasks.json file and find the `Start frontend` task.
-1. In the "options.cwd" property, add `/tab` to the end of the value. When you are done, it should look like the following:
-
-   ```
-    "options": {
-        "cwd": "${workspaceFolder}/tab"
-    },
-   ```
 
 1. Open the file teamsfx\script\run.js and find the line near the end that spawns a separate process. 
 1. Change the string "start" in that line to "start:tab". When you are done the line should look like the following:
