@@ -221,14 +221,17 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
     ```
     |-- .vscode/
-        |-- add-ins/
-        |   |-- assets/
-        |   |-- src/
-        |   |   |-- commands/
-        |   |   |-- taskpane/
-        |   |-- .eslintrc.json
-        |   |-- babel.config.json
-        |   |-- tsconfig.json
+    |-- add-ins/
+    |   |-- assets/
+    |   |-- src/
+    |   |   |-- commands/
+    |   |   |-- taskpane/
+    |   |-- .eslintrc.json
+    |   |-- babel.config.json
+    |-- |-- package-lock.json
+    |-- |-- package.json
+    |   |-- tsconfig.json
+    |   |-- webpack.config.js
     |-- appPackage/
     |-- build\appPackage/
     |-- infra/
