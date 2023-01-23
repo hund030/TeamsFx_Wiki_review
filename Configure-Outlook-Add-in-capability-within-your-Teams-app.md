@@ -73,7 +73,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     ```
 
 1. In package.json that you just moved to the tab folder, delete the script named "dev:teamsfx" from the "scripts" object. This script is added to a new package.json in the next step.
-1. Create a new file named package.json in the root of the project and give it the following content:
+1. Create a new file named package.json *in the root of the project* and give it the following content:
 
     ```
     {
@@ -104,10 +104,11 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     });
     ```
 
-1. Verify that you can sideload the by selecting **View** | **Run** in Visual Studio Code. 
-1. In the **RUN AND DEBUG** drop down menu, select the top option, **Debug (Edge)**. The project will build and run. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app. 
-1. Select **Add**. 
-1. To stop debugging and uninstall the app, select **Run** | **Stop Debugging** in Visual Studio Code.
+1. Verify that you can sideload the tab with the following steps:
+    a. Select **View** | **Run** in Visual Studio Code. 
+    a. In the **RUN AND DEBUG** drop down menu, select the top option, **Debug (Edge)**. The project will build and run. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app. 
+    a. Select **Add**. 
+    a. To stop debugging and uninstall the app, select **Run** | **Stop Debugging** in Visual Studio Code.
 
 ## Create an Outlook Add-in project
 
