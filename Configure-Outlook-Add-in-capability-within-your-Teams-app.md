@@ -105,6 +105,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     ```
 
 1. Verify that you can sideload the tab with the following steps:
+
     a. Select **View** | **Run** in Visual Studio Code. 
     a. In the **RUN AND DEBUG** drop down menu, select the top option, **Debug (Edge)**. The project will build and run. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app. 
     a. Select **Add**. 
