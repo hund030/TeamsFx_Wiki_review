@@ -119,13 +119,17 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 1. With Teams Toolkit open in Visual Studio Code, select **Create a new app** under **DEVELOPMENT**.
 1. In the **Select an option** drop down, select **Create a new Office add-in**, and then select **Outlook Taskpane Add-in (preview)**.
 1. Give a name to the project when prompted and Teams Toolkit will create the project with basic files and scaffolding. You will used this project as a source for files and markup that you add to the Teams project.
-1. Although you won't be developing this project, you should use it to verify that basic Outlook add-in sideloading from Visual Studio Code works before you continue. *First, make sure Outlook desktop is closed.*
-1. In Visual Studio Code, open the Teams Toolkit.
-1. In the **ACCOUNTS** section, verify that you are signed into Microsoft 365.
-1. Select **View** | **Run** in Visual Studio Code. In the **RUN AND DEBUG** drop down menu, select the top option, **Outlook Desktop (Edge Chromium)**. The project builds and a Node dev-server window opens. This process may take a couple of minutes. Eventually, Outlook desktop will open.
-1. Open the **Inbox** *of your Microsoft 365 account identity* and open any message. A **Contoso Add-in** tab with two buttons will appear on the **Home** ribbon (or the **Message** ribbon, if you have opened the message in its own window).
-1. Click the **Show Taskpane** button and a task pane opens. Click the **Perform an action** button and a small notification appears near the top of the message.
-1. To stop debugging and uninstall the add-in, select **Run** | **Stop Debugging** in Visual Studio Code.
+1. Although you won't be developing this project, you should use it to verify that basic Outlook add-in sideloading from Visual Studio Code works before you continue. Use the following steps:
+
+    <ol type="a">
+      <li><i>First, make sure Outlook desktop is closed.</i></li>
+      <li>In Visual Studio Code, open the Teams Toolkit.</li>
+      <li>In the <b>ACCOUNTS</b> section, verify that you are signed into Microsoft 365.</li>
+      <li>Select <b>View</b> | <b>Run</b>in Visual Studio Code. In the <b>RUN AND DEBUG</b> drop down menu, select the top option, <b>Outlook Desktop (Edge Chromium)</b>. The project builds and a Node dev-server window opens. This process may take a couple of minutes. Eventually, Outlook desktop will open.</li>
+      <li>Open the <b>Inbox</b> <i>of your Microsoft 365 account identity</i> and open any message. A <b>Contoso Add-in</b> tab with two buttons will appear on the <b>Home</b> ribbon (or the <b>Message</b> ribbon, if you have opened the message in its own window).</li>
+      <li>Click the <b>Show Taskpane</b>button and a task pane opens. Click the <b>Perform an action</b> button and a small notification appears near the top of the message.</li>
+      <li>To stop debugging and uninstall the add-in, select <b>Run</b> | <b>Stop Debugging</b> in Visual Studio Code.</li>
+    </ol>
 
 ## Merge the manifest
 
