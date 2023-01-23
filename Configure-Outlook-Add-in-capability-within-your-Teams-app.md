@@ -107,10 +107,10 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 1. Verify that you can sideload the tab with the following steps:
 
     <ol type="a">
-      <li>Select **View** | **Run** in Visual Studio Code.</li>
-      <li>In the **RUN AND DEBUG** drop down menu, select the top option, **Debug (Edge)**. The project will build and run. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app.</li>
-      <li>Select **Add**.</li>
-      <li>To stop debugging and uninstall the app, select **Run** | **Stop Debugging** in Visual Studio Code.</li>
+      <li>Select <b>View</b> | <b>Run</b> in Visual Studio Code.</li>
+      <li>In the <b>RUN AND DEBUG</b> drop down menu, select the top option, <b>Debug (Edge)</b>. The project will build and run. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app.</li>
+      <li>Select <b>Add</b>.</li>
+      <li>To stop debugging and uninstall the app, select <b>Run</b> | <b>Stop Debugging</b> in Visual Studio Code.</li>
     </ol>
 
 ## Create an Outlook Add-in project
