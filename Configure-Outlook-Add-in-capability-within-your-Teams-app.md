@@ -202,34 +202,46 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 ## Copy the Outlook Add-in files to the Teams app project
 
-1. Your Teams **tab** app starts with the following folder structure.
-
-    ```
-    |-- .vscode/
-    |-- appPackage/
-    |-- build\appPackage/
-    |-- infra/
-    |-- node_modules/
-    |-- public/
-    |-- src/            <!--your current source code-->
-    |-- teamsfx/
-    |-- package-lock.json
-    |-- package.json
-    |-- <!-- possibly other files, depending on how the project was created -->
-    ```
-
-1. Create a top-level folder called "add-ins" in the Teams app project.
-1. Copy the following files and folders from the add-in project to the "add-ins" folder of the Teams app project.
+1. Create a top-level folder called "add-in" in the Teams app project.
+1. Copy the following files and folders from the add-in project to the "add-in" folder of the Teams app project.
 
     - /assets
     - /src
     - .eslintrc.json
     - babel.config.json
+    - package-lock.json
+    - package.json
     - tsconfig.json
+    - webpack.config.js
 
     **NOTE**: Do *not* copy over the manifest.json file.
 
     Your folder structure should now look like the following:
+
+
+    ```
+    |-- .vscode/
+        |-- add-ins/
+        |   |-- assets/
+        |   |-- src/
+        |   |   |-- commands/
+        |   |   |-- taskpane/
+        |   |-- .eslintrc.json
+        |   |-- babel.config.json
+        |   |-- tsconfig.json
+    |-- appPackage/
+    |-- build\appPackage/
+    |-- infra/
+    |-- tab/
+    |-- |-- public/
+    |-- |-- src/
+    |-- |-- package-lock.json
+    |-- |-- package.json
+    |-- |-- tsconfig.json
+    |-- teamsfx/
+    |-- gitignore
+    ```
+
 
         ```
         |-- .vscode/
