@@ -222,16 +222,16 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     ```
     |-- .vscode/
     |-- add-ins/
-    |   |-- assets/
-    |   |-- src/
-    |   |   |-- commands/
-    |   |   |-- taskpane/
-    |   |-- .eslintrc.json
-    |   |-- babel.config.json
+    |-- |-- assets/
+    |-- |-- src/
+    |-- |-- |-- commands/
+    |-- |-- |-- taskpane/
+    |-- |-- .eslintrc.json
+    |-- |-- babel.config.json
     |-- |-- package-lock.json
     |-- |-- package.json
-    |   |-- tsconfig.json
-    |   |-- webpack.config.js
+    |-- |-- tsconfig.json
+    |-- |-- webpack.config.js
     |-- appPackage/
     |-- build\appPackage/
     |-- infra/
@@ -245,53 +245,24 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     |-- gitignore
     ```
 
-
-        ```
-        |-- .vscode/
-        |-- appPackage/
-        |-- build\appPackage/
-        |-- infra/
-        |-- node_modules/
-        |-- public/
-        |-- src/
-        |-- package-lock.json
-        |-- package.json
-        |-- <!-- possibly other files, depending on how the project was created -->
-        |-- add-ins/
-        |   |-- assets/
-        |   |-- src/
-        |   |   |-- commands/
-        |   |   |-- taskpane/
-        |   |-- .eslintrc.json
-        |   |-- babel.config.json
-        |   |-- tsconfig.json
-        |-- teamsfx/
-    ```
-
-1. Copy the webpack.config.js file from the root of the add-in project to the root of the Teams project.
-
 ## Edit the tooling configuration files
 
-1. Open the package.json file in the add-in project and the package.json file in the Teams project. In the next few steps you will copy markup from the former to the latter.
-1. Copy the entire "config" property. Then change the "dev_server_port" value to `53000`.
-1. Copy all of the properties in the "scripts" object to the destination "scripts". This will create redundant "build" and "start" scripts. Rename the ones you copied to "buildAddin" and "startAddin".
-1. Just below the "startAddin" script are "start:desktop" and "start:web". Change these to "startAddin:desktop" and "startAddin:web", respectively.
-1. Several of the scripts you copied in the last step have a `manifest.json` parameter. In each of these, change the parameter to `./build/AppPackage/manifest.local.json`. For example, 
+1. Open the package.json file in the add-in folder. 
+1. In the "config" object, change the "dev_server_port" value to `53000`.
+1. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
 
     ```
-    "startAddin:desktop": "office-addin-debugging start manifest.json desktop",
+    "start:desktop": "office-addin-debugging start manifest.json desktop",
     ```
 
     should be changed to 
 
     ```
-    "startAddin:desktop": "office-addin-debugging start ./build/AppPackage/manifest.local.json desktop",
+    "start:desktop": "office-addin-debugging start ../build/AppPackage/manifest.local.json desktop",
     ```
 
-1. Copy all of the properties in the "dependencies" object to the destination "dependencies".
-1. Copy all of the properties in the "devDependencies" object to the destination "devDependencies". This will create redundant "typescript" properties. Delete the one with the lowest value. For example, if they are `"typescript": "^4.1.2"` and `"typescript": "^4.3.5"`, delete the first one.
-1. In Visual Studio Code, open the **TERMINAL**. Be sure you at the root of the Teams project, then run the command `npm update`. 
-1. In the webpack.config.js in the root of the Teams project, find all the URLs that begin with `"./src`, such as `template: "./src/taskpane/taskpane.html"`. Add `/add-ins` after the "." to each of them. For example, `"./src/taskpane/taskpane.html"` should be changed to `"./add-ins/src/taskpane/taskpane.html"`.
+1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-ins folder, then run the command `npm install`. 
+1. In the webpack.config.js file, find all the URLs that begin with `"./src`, such as `template: "./src/taskpane/taskpane.html"`. Replace the single dot (`.`) at the start of these URLs with `../add-ins`. For example, `"./src/taskpane/taskpane.html"` should be changed to `"../add-ins/src/taskpane/taskpane.html"`.
 1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
  
 1. In the Teams app project, open the teamsfx/app.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
