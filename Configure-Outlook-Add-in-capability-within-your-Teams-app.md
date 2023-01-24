@@ -221,7 +221,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
     ```
     |-- .vscode/
-    |-- add-ins/
+    |-- add-in/
     |-- |-- assets/
     |-- |-- src/
     |-- |-- |-- commands/
@@ -261,8 +261,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     "start:desktop": "office-addin-debugging start ../build/AppPackage/manifest.local.json desktop",
     ```
 
-1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-ins folder, then run the command `npm install`. 
-1. In the webpack.config.js file, find all the URLs that begin with `"./src`, such as `template: "./src/taskpane/taskpane.html"`. Replace the single dot (`.`) at the start of these URLs with `../add-ins`. For example, `"./src/taskpane/taskpane.html"` should be changed to `"../add-ins/src/taskpane/taskpane.html"`.
+1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
+1. In the webpack.config.js file, find all the URLs that begin with `./src`, such as `template: "./src/taskpane/taskpane.html"`. Replace the single dot (`.`) at the start of these URLs with `../add-in`. For example, `"./src/taskpane/taskpane.html"` should be changed to `"../add-in/src/taskpane/taskpane.html"`.
 1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
  
 1. In the Teams app project, open the teamsfx/app.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
