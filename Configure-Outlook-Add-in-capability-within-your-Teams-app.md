@@ -218,7 +218,6 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
     Your folder structure should now look like the following:
 
-
     ```
     |-- .vscode/
     |-- add-in/
@@ -282,7 +281,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
    ```
 
 1. Open the .vscode\tasks.json file in the add-in project and copy all of the tasks in the "tasks" array to the `tasks` array of the same file in the Teams project. Be sure all tasks are separated by commas. 
-1. In *each* of the task objects that you just copied, add the following "options" property to ensure that these tasks run in the add-in folder.
+1. In *each* of the task objects that you just copied (except the one named "inputs"), add the following "options" property to ensure that these tasks run in the add-in folder.
 
     ```
     "options": {
@@ -296,7 +295,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     {
         "label": "Debug: Outlook Desktop",
         "type": "npm",
-        script": "startAddin:desktop -- --app outlook",
+        script": "start:desktop -- --app outlook",
         "presentation": {
             "clear": true,
             "panel": "dedicated",
@@ -306,6 +305,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
         "options": {
             "cwd": "${workspaceFolder}/add-in/"
         },
+    }
     ```
 
 1. Add the following task to the "tasks" array in the .vscode\tasks.json file of the Teams project. Note the following about this markup: 
@@ -341,57 +341,13 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 EVERYTHING BELOW THIS POINT WAS COPIED FROM ANOTHER ARTICLE AND i DON'T KNOW IF IT IS ACCURATE OR NEEDED.
 
-## Setup local debug environment
-
-1. Generate debug profile with TeamsFx CLI.
-    ```
-    > teamsfx init debug
-    ? Teams Toolkit: Select your development environment: Visual Studio Code (JS/TS)
-    ? Teams Toolkit: Select the capability of your app: Tab
-    ? Teams Toolkit: Are you developing with SPFx?: No
-    ? Teams Toolkit: Teams Toolkit will generate the following files (existing files with duplicated names will be overwritten), would you like to proceed?
-      teamsfx/
-        - app.local.yml
-        - .env.local
-        - settings.json
-        - run.js
-      .vscode/
-        - launch.json
-        - settings.json
-        - tasks.json
-    : Yes
-    ```
-1. Manually merge the content in `.vscode` and `teamsfx` folder with yours. Update the `app.local.yml` and `run.js` to target your tab app code.
-Here is an sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
-
-1. Try local debug with Visual Studio Code.
-
 ## Move the application to Azure
 
-1. Generate Bicep file for Azure infrastructure with TeamsFx CLI.
-    ```
-    > teamsfx init infra
-    ? Teams Toolkit: Select your development environment: Visual Studio Code (JS/TS)
-    ? Teams Toolkit: Select the capability of your app: Tab
-    ? Teams Toolkit: Are you developing with SPFx?: No
-    ? Teams Toolkit: Teams Toolkit will generate the following files (existing files with duplicated names will be overwritten), would you like to proceed?
-      teamsfx/
-        - app.yml
-        - .env.dev
-        - settings.json
-      infra/
-        - azure.bicep
-        - azure.parameters.json
-    : Yes
-    ```
-1. Manually merge the content in `infra` and `teamsfx` folder with yours.
-    Here is a sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
+1. In Visual Studio Code open the Teams Toolkit and in the **DEPLOYMENT **section, select **Provision in the cloud** to apply the bicep to Azure.
 
-1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
+1. When provisioning completes, select **Deploy to the cloud** comto deploy your app code to Azure.
 
-1. Run `Teams: Deploy to cloud` command in Visual Studio Code to deploy your Tab app code to Azure.
-
-1. Open the `Run and Debug Activity Panel` and select `Launch Remote (Edge)` or `Launch Remote (Chrome)`. Press F5 to preview your Teams app.
+1. Select **View **| **Run** in Visual Studio Code and in the drop down, select one of the following and then Launch Remote (Edge) or Launch Remote (Chrome). Press F5 to preview your Teams app.
 
 ## What’s next
 
