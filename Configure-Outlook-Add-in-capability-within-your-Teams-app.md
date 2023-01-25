@@ -89,7 +89,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         },
         "devDependencies": {
             "@microsoft/teamsfx-run-utils": "alpha"
-        },
+        }
     }
     ```
 
