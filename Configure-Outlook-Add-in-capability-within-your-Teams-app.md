@@ -233,9 +233,9 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     |-- appPackage/
     |-- build\appPackage/
     |-- infra/
-    |-- node_modules
+    |-- node_modules/
     |-- tab/
-    |-- |- node_modules
+    |-- |- node_modules/
     |-- |-- public/
     |-- |-- src/
     |-- |-- package-lock.json
