@@ -281,46 +281,50 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     
    ```
 
-1. Open the .vscode\tasks.json file and add the following objects to the top of the "tasks" array. Note the following about this markup: 
+1. Open the .vscode\tasks.json file in the add-in project and copy all of the tasks in the "tasks" array to the `tasks` array of the same file in the Teams project. Be sure all tasks are separated by commas. 
+1. In *each* of the task objects that you just copied, add the following "options" property to ensure that these tasks run in the add-in folder.
 
-    - It adds tasks similar to what is in the tasks.json of the add-in project to debug and stop debugging.
-    - It also adds a "Start Add-in Locally" task that combines the tab app's "Create resources" task with the add-in's debugging task and specifies that they must run in that order.
-    - The "Create resources" task generates the final manifest.
-    - The "Debug: Outlook Desktop" calls the `startAddin:desktop` script that you added to the package.json in an earlier step. It also adds a command switch to that specifies that the add-in should be sideloaded in Outlook. 
+    ```
+    "options": {
+        "cwd": "${workspaceFolder}/add-in/"
+    },
+    ```
+
+    For example, the "Debug: Outlook Desktop" task should like the following when you are done. 
 
     ```
     {
-            "label": "Start Add-in Locally",
-            "dependsOn": [
-                "Create resources",
-                "Debug: Outlook Desktop"
-            ],
-            "dependsOrder": "sequence"
-         },
-         {
-            "label": "Debug: Outlook Desktop",
-            "type": "npm",
-            "script": "startAddin:desktop -- --app outlook",
-            "presentation": {
-              "clear": true,
-              "panel": "dedicated",
-            },
-            "problemMatcher": []
-          },
-          {
-            "label": "Stop Debug",
-            "type": "npm",
-            "script": "stop",
-            "presentation": {
-              "clear": true,
-              "panel": "shared",
-              "showReuseMessage": false
-            },
-            "problemMatcher": []
-          },
-          ```
+        "label": "Debug: Outlook Desktop",
+        "type": "npm",
+        script": "startAddin:desktop -- --app outlook",
+        "presentation": {
+            "clear": true,
+            "panel": "dedicated",
+        },
+        "problemMatcher": []
+        },
+        "options": {
+            "cwd": "${workspaceFolder}/add-in/"
+        },
+    ```
 
-1. Open the .vscode\launch.json file, which configures the **RUN AND DEBUG** UI in Visual Studio Code, and add the following object to the top of the "configurations" array.
+1. Add the following task to the "tasks" array in the .vscode\tasks.json file of the Teams project. Note the following about this markup: 
+
+    - It adds a "Start Add-in Locally" task that combines the tab app's "Create resources" task with the add-in's debugging task and specifies that they must run in that order.
+    - The "Create resources" task generates the final manifest.
+
+    ```
+    {
+        "label": "Start Add-in Locally",
+        "dependsOn": [
+            "Create resources",
+            "Debug: Outlook Desktop"
+        ],
+        "dependsOrder": "sequence"
+    },
+    ```
+
+1. Open the .vscode\launch.json file in the Teams project, which configures the **RUN AND DEBUG** UI in Visual Studio Code and add the following object to the top of the "configurations" array.
 
     ```
     {
@@ -330,25 +334,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
         "port": 9229,
         "timeout": 600000,
         "webRoot": "${workspaceRoot}",
-        "preLaunchTask": "Debug: Outlook Desktop",
-        "postDebugTask": "Stop Debug"
-    },
-    ```
-
-1. In the same file, add the following object to the top of the "compounds" array. This markup adds "Debug Add-in (Edge)" as the third option from the top in the **RUN AND DEBUG** drop down. It uses the configuration that you added in the previous step and it runs the task "Start Add-in Locally" that you added to tasks.json in an earlier step.
-
-    ```
-    {
-        "name": "Debug Add-in (Edge)",
-        "configurations": [
-            "Outlook Desktop (Edge Chromium)"
-        ],
         "preLaunchTask": "Start Add-in Locally",
-        "presentation": {
-            "group": "all",
-            "order": 3
-        },
-        "stopAll": true
+        "postDebugTask": "Stop Debug"
     },
     ```
 
