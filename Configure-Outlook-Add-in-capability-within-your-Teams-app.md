@@ -28,7 +28,6 @@ The following are the major steps to adding an Outlook Add-in to a Teams app. De
 1. [Merge the manifest](#merge-the-manifest) from the Outlook Add-in project into the Teams app manifest.
 1. [Copy the Outlook Add-in files to the Teams app project](#copy-the-outlook-add-in-files-to-the-teams-app-project).
 1. [Edit the tooling configuration files](#edit-the-tooling-configuration-files).
-1. [Setup local debug environment](#setup-local-debug-environment).
 1. [Move the application to Azure](#move-the-application-to-azure).
 
 ## Prepare the Teams app project
