@@ -282,7 +282,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
    ```
 
 1. Open the .vscode\tasks.json file in the add-in project and copy all of the tasks in the "tasks" array to the `tasks` array of the same file in the Teams project. Be sure all tasks are separated by commas. 
-1. In *each* of the task objects that you just copied (except the one named "inputs"), add the following "options" property to ensure that these tasks run in the add-in folder.
+1. In *each* of the task objects that you just copied, add the following "options" property to ensure that these tasks run in the add-in folder.
 
     ```
     "options": {
