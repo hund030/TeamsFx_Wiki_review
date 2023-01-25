@@ -302,7 +302,6 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
             "panel": "dedicated",
         },
         "problemMatcher": []
-        },
         "options": {
             "cwd": "${workspaceFolder}/add-in/"
         },
