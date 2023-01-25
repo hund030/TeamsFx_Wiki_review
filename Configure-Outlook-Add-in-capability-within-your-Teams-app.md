@@ -342,10 +342,40 @@ EVERYTHING BELOW THIS POINT WAS COPIED FROM ANOTHER ARTICLE AND i DON'T KNOW IF 
 
 ## Move the application to Azure
 
+1. Open the teamsfx\app.yml file. Replace the entire `deploy:` section with the following code. These changes take account of the new folder structure and the fact that both add-in and tab files need to be deployed.
+
+    ```
+    deploy:
+      - name: npmInstallTab
+        uses: cli/runNpmCommand # Run npm command
+        with:
+          workingDirectory: ./tab
+          args: install
+      - name: buildTab
+        uses: cli/runNpmCommand # Run npm command
+        with:
+          workingDirectory: ./tab
+          args: run build --if-present
+      - name: npmInstallAddin
+        uses: cli/runNpmCommand # Run npm command
+        with:
+          workingDirectory: ./add-in
+          args: install
+      - name: buildAddin
+        uses: cli/runNpmCommand # Run npm command
+        with:
+          workingDirectory: ./add-in
+          args: run build --if-present # The add-in's build will copy add-in's dist folder to tab's build folder, so both tab and add-in are deployed.
+
+      - uses: azureStorage/deploy # Deploy bits to Azure Storage Static Website
+        with:
+          workingDirectory: .
+          distributionPath: ./tab/build # Deploy base folder
+          resourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
+    ```
+
 1. In Visual Studio Code open the Teams Toolkit and in the **DEPLOYMENT **section, select **Provision in the cloud** to apply the bicep to Azure.
-
-1. When provisioning completes, select **Deploy to the cloud** comto deploy your app code to Azure.
-
+1. When provisioning completes, select **Deploy to the cloud** to deploy your app code to Azure.
 1. Select **View **| **Run** in Visual Studio Code and in the drop down, select one of the following and then Launch Remote (Edge) or Launch Remote (Chrome). Press F5 to preview your Teams app.
 
 ## What’s next
