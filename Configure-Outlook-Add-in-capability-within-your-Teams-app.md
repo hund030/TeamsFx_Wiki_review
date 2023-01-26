@@ -199,6 +199,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 1. Copy the entire "extensions" property from the add-in's manifest into the Teams app manifest as a top-level property.
 
+1. TEMPORARY STEP NEEDED TO WORKAROUND A BUG: After you have completed the changes to the manifest, sideload the tab app locally as described at the end of the section [Prepare the Teams app project](#prepare-the-teams-app-project). This will build a new manifest.local.json in the appPackage folder. Copy this file to the add-in folder and rename the copy to "manifest.json". Repeat this every time you make a change to the manifest.template.json.
+
 ## Copy the Outlook Add-in files to the Teams app project
 
 1. Create a top-level folder called "add-in" in the Teams app project.
@@ -338,6 +340,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
         "postDebugTask": "Stop Debug"
     },
     ```
+1. TEMPORARY STEP NEEDED TO WORKAROUND A BUG: Copy the entire resource subfolder that is under the appPackage folder to the add-in folder.
+
 
 EVERYTHING BELOW THIS POINT WAS COPIED FROM ANOTHER ARTICLE AND i DON'T KNOW IF IT IS ACCURATE OR NEEDED.
 
