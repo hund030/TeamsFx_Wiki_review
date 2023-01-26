@@ -197,7 +197,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     ],
     ```
 
-1. Copy the entire "extensions" property from the add-in's manifest into the Teams app manifest as a top-level property.
+1. Copy the entire "extensions" property from the add-in's manifest into the Teams app manifest template as a top-level property.
+1. In the Teams app manifest template, replace every occurrence of "localhost:3000" with "localhost:53000".
 
 1. TEMPORARY STEP NEEDED TO WORKAROUND A BUG: After you have completed the changes to the manifest, sideload the tab app locally as described at the end of the section [Prepare the Teams app project](#prepare-the-teams-app-project). This will build a new manifest.local.json in the appPackage folder. Copy this file to the add-in folder and rename the copy to "manifest.json". Repeat this every time you make a change to the manifest.template.json.
 
@@ -251,7 +252,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 1. Open the package.json file in the add-in folder. 
 1. In the "config" object, change the "dev_server_port" value to `53000`.
-1. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
+1. THIS STEP WILL EVENTUALLY BE NECESSARY, BUT TO WORK AROUND A BUG, IT SHOULD BE SKIPPED. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
 
     ```
     "start:desktop": "office-addin-debugging start manifest.json desktop",
