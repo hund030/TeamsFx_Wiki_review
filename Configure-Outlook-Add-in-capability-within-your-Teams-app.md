@@ -343,9 +343,6 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     ```
 1. TEMPORARY STEP NEEDED TO WORKAROUND A BUG: Copy the entire resource subfolder that is under the appPackage folder to the add-in folder.
 
-
-EVERYTHING BELOW THIS POINT WAS COPIED FROM ANOTHER ARTICLE AND i DON'T KNOW IF IT IS ACCURATE OR NEEDED.
-
 ## Move the application to Azure
 
 1. Open the teamsfx\app.yml file. Replace the entire `deploy:` section with the following code. These changes take account of the new folder structure and the fact that both add-in and tab files need to be deployed.
