@@ -379,7 +379,14 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 1. In Visual Studio Code open the Teams Toolkit and in the **DEPLOYMENT **section, select **Provision in the cloud** to apply the bicep to Azure.
 1. When provisioning completes, select **Deploy to the cloud** to deploy your app code to Azure.
-1. Select **View **| **Run** in Visual Studio Code and in the drop down, select one of the following and then Launch Remote (Edge) or Launch Remote (Chrome). Press F5 to preview your Teams app.
+1. To run the tab capability from the remote deployment, select **View**| **Run** in Visual Studio Code and in the drop down, select one of the following:
+
+    - **Launch Remote (Edge)**
+    - **Launch Remote (Chrome)** 
+
+    Press F5 to preview your Teams app.
+
+1. To run the add-in capability from the remote deployment, ... ?
 
 ## What’s next
 
