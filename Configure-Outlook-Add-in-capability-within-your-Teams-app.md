@@ -81,12 +81,13 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         "version": "0.0.1",
         "author": "Contoso",
         "scripts": {
-            "test": "echo \"Error: no test specified\" && exit 1",
+            "build:tab": "cd tab && npm run build",
             "dev:teamsfx": "node teamsfx/script/run.js . teamsfx/.env.local",
-            "install": "cd tab && npm install",
+            "install": "install:add-in && install:tab",
+            "install:add-in": "cd add-in && npm install",
             "install:tab": "cd tab && npm install",
             "start:tab": "cd tab && npm run start",
-            "build:tab": "cd tab && npm run build",
+            "test": "echo \"Error: no test specified\" && exit 1"
         },
         "devDependencies": {
             "@microsoft/teamsfx-run-utils": "alpha"
@@ -264,6 +265,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     "start:desktop": "office-addin-debugging start ../build/AppPackage/manifest.local.json desktop",
     ```
 
+1. THIS STEP WILL EVENTUALLY BE NECESSARY, BUT TO WORK AROUND A BUG, IT SHOULD BE SKIPPED. Open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
 1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
 1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
  
