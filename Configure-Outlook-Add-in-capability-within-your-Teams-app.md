@@ -201,8 +201,6 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 1. Copy the entire "extensions" property from the add-in's manifest into the Teams app manifest template as a top-level property.
 1. In the Teams app manifest template, replace every occurrence of "localhost:3000" with "localhost:53000".
 
-1. TEMPORARY STEP NEEDED TO WORKAROUND A BUG: After you have completed the changes to the manifest, sideload the tab app locally as described at the end of the section [Prepare the Teams app project](#prepare-the-teams-app-project). This will build a new manifest.local.json in the appPackage folder. Copy this file to the add-in folder and rename the copy to "manifest.json". Repeat this every time you make a change to the manifest.template.json.
-
 ## Copy the Outlook Add-in files to the Teams app project
 
 1. Create a top-level folder called "add-in" in the Teams app project.
@@ -253,7 +251,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 1. Open the package.json file in the add-in folder. 
 1. In the "config" object, change the "dev_server_port" value to `53000`.
-1. THIS STEP WILL EVENTUALLY BE NECESSARY, BUT TO WORK AROUND A BUG, IT SHOULD BE SKIPPED. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
+1. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
 
     ```
     "start:desktop": "office-addin-debugging start manifest.json desktop",
@@ -266,7 +264,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     ```
 
 1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
-1. THIS STEP WILL EVENTUALLY BE NECESSARY, BUT TO WORK AROUND A BUG, IT SHOULD BE SKIPPED. Open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
+1. Open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
 1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
 1. In the Teams app project, open the teamsfx/app.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
 
@@ -342,7 +340,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
         "postDebugTask": "Stop Debug"
     },
     ```
-1. TEMPORARY STEP NEEDED TO WORKAROUND A BUG: Copy the entire resource subfolder that is under the appPackage folder to the add-in folder.
+
 1. Verify that you can sideload the add-in part of the Teams app to Outlook with the following steps:
 
     <ol type="a">
