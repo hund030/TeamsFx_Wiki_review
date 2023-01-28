@@ -117,7 +117,7 @@ The following files are project-related files. You generally will not need to cu
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
-## Widget Abstraction
+## Widget abstraction
 
 To simplify the development of a widget, the TeamsFx provides a `Widget` class 
 for developers to inherit to quickly implement a widget that meets their needs without pay too much attention to how to implement the widget layout.
@@ -202,7 +202,7 @@ export abstract class Widget<T> extends Component<any, { data?: T | void }> {
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
-## Dashboard Abstraction
+## Dashboard abstraction
 In order to easily define and adjust the layout of the dashboard, the TeamsFx provides a `Dashboard` class 
 for developers to inherit to quickly implement a dashboard.
 
@@ -895,6 +895,8 @@ Now, launching or refreshing your Teams app, you will see the new widget using M
 ## How to embed Power BI to Dashboard
 
 For how to embed Power BI item to the Dashboard, you can refer to [this document](https://learn.microsoft.com/en-us/javascript/api/overview/powerbi/powerbi-client-react).
+
+<p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
 ## Customize the Dashboard Layout
 The TeamsFx provided some convenient methods for defining and modifying the layout of the dashboard.
