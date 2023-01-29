@@ -335,7 +335,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
         "request": "attach",
         "port": 9229,
         "timeout": 600000,
-        "webRoot": "${workspaceRoot}",
+        "webRoot": "${workspaceRoot}//add-in",
         "preLaunchTask": "Start Add-in Locally",
         "postDebugTask": "Stop Debug"
     },
