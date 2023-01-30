@@ -1,4 +1,4 @@
-      # Enable single sign-on for tab applications
+# Enable single sign-on for tab applications
 
 Microsoft Teams provides a mechanism by which an application can obtain the signed-in Teams user token to access Microsoft Graph (and other APIs). Teams Toolkit facilitates this interaction by abstracting some of the Azure Active Directory flows and integrations behind some simple, high level APIs. This enables you to add single sign-on (SSO) features easily to your Teams application.
 
@@ -34,7 +34,7 @@ Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manife
 
 > Note: You can find detail info about Teams app manifest [here](https://learn.microsoft.com/microsoftteams/platform/resources/schema/manifest-schema).
 
-You can find your original Teams app manifest template in `./appPackages/manifest.template.json`, and you need to add `webApplicationInfo` in the manifest.
+You can find your original Teams app manifest template in `./appPackages/manifest.json`, and you need to add `webApplicationInfo` in the manifest.
 
 [`webApplicationInfo`](https://learn.microsoft.com/microsoftteams/platform/resources/schema/manifest-schema#webapplicationinfo) provides your Azure Active Directory App ID and Microsoft Graph information to help users seamlessly sign into your app.
 
@@ -49,7 +49,7 @@ Example: You can add following object into your Teams app manifest for your Tab 
 
 ### Teams Toolkit configuration files
 
-You can find your Teams Toolkit configuration files under `./teamsfx`. AAD related changes and configs needs to be added into your `.yml` files:
+You can find your Teams Toolkit configuration files `./.yml`. AAD related changes and configs needs to be added into your configuration files:
 - add `aadApp/create` under 'registerApp':
   * For creating new AAD apps used for SSO.
   * You can find more info [here](https://aka.ms/teamsfx-actions/aadapp-create)
@@ -60,12 +60,12 @@ You can find your Teams Toolkit configuration files under `./teamsfx`. AAD relat
   * For adding following environment variables when local debug:
     * REACT_APP_CLIENT_ID: AAD app client id
     * REACT_APP_START_LOGIN_PAGE_URL: AAD app client secret
-- update `script.js`
+- update `script/run.js`
   * For adding following environment variables when local debug:
     * REACT_APP_CLIENT_ID: AAD app client id
     * REACT_APP_START_LOGIN_PAGE_URL: Login start page for authentication
 
-You can set following values if you are using TeamsFx Tab/Bot template.
+You can set following values if you are using TeamsFx Tab template.
 
 #### `aad/create`
 Add following lines in `registerApp` in `app.yml` and `app.local.yml`:
@@ -83,20 +83,22 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 ```yml
 - uses: aadApp/update
   with:
-    manifestTemplatePath: "./aad.manifest.template.json"
+    manifestPath: "./aad.manifest.template.json"
     outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
 ```
-> Note: Replace the value of "manifestTemplatePath" with the relative path of AAD app manifest template (`aad.manifest.template.json`) if you have modify the path of this file.
+> Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.template.json`) if you have modify the path of this file.
+
+> Note: For local you need to place `aad/update` after `file/updateEnv` action since `aad/update` will consume output of `file/updateEnv`.
 
 #### `npm/command`
-Find `npm/command` action for `build` and add following env:
+Find `npm/command` action for `build` in `app.yml` and add following env:
 ```yml
 env:
   REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
   REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
 ```
 
-#### `script.js`
+#### `script/run.js`
 Open `teamsfx/script/run.js` and add following env for local debug
 following lines in `set up environment variables` section:
 
@@ -137,7 +139,7 @@ Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manife
 
 > Note: You can find detail info about Teams app manifest [here](https://learn.microsoft.com/microsoftteams/platform/resources/schema/manifest-schema).
 
-You can find your original Teams app manifest template in `./appPackages/manifest.template.json`.
+You can find your original Teams app manifest template in `./appPackages/manifest.json`.
 
 #### Add `webApplicationInfo`
 [`webApplicationInfo`](https://learn.microsoft.com/microsoftteams/platform/resources/schema/manifest-schema#webapplicationinfo) provides your Azure Active Directory App ID and Microsoft Graph information to help users seamlessly sign into your app.
@@ -164,7 +166,7 @@ You can set following values if you are using TeamsFx Bot template.
 
 ### Teams Toolkit configuration files
 
-You can find your Teams Toolkit configuration files under `./teamsfx`. AAD related changes and configs needs to be added into your `.yml` files:
+You can find your Teams Toolkit configuration files `./.yml`. AAD related changes and configs needs to be added into your configuration files:
 
   - add `aadApp/create` under 'registerApp':
     * For creating new AAD apps used for SSO.
@@ -199,12 +201,12 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 ```yml
 - uses: aadApp/update
   with:
-    manifestTemplatePath: "./aad.manifest.template.json"
+    manifestPath: "./aad.manifest.template.json"
     outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
 ```
-> Note: Replace the value of "manifestTemplatePath" with the relative path of AAD app manifest template (`aad.manifest.template.json`) if you have modify the path of this file.
+> Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.template.json`) if you have modify the path of this file.
 
-#### `script.js`
+#### `script/run.js`
 Open `teamsfx/script/run.js` and add following lines in `set up environment variables` section:
 
 ```env
@@ -290,9 +292,9 @@ You can find and download sample code for TeamsFx Tab below to `./auth`:
 
 #### For Bot
 1. Move files under `auth/sso` folder to `src`. ProfileSsoCommandHandler class is a sso command handler to get user info with SSO token. You can follow this method and create your own sso command handler.
-2. Move `auth/public` folder to `src`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
-3. Execute the following commands under `src` folder: `npm install isomorphic-fetch --save`
-4. (For ts only) Execute the following commands under `bot` folder: `npm install copyfiles --save-dev` and replace following line in package.json:
+2. Move `auth/public` folder to `src/public`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
+3. Execute the following commands under `./` folder: `npm install isomorphic-fetch --save`
+4. (For ts only) Execute the following commands under `./` folder: `npm install copyfiles --save-dev` and replace following line in package.json:
     ```json
     "build": "tsc --build && shx cp -r ./src/adaptiveCards ./lib/src",
     ```
@@ -310,7 +312,7 @@ You can find and download sample code for TeamsFx Tab below to `./auth`:
   and add following lines to add redirect to auth pages:
   ```ts
   server.get(
-    "/auth-*.html",
+    "/auth-:name(start|end).html",
     restify.plugins.serveStatic({
         directory: path.join(__dirname, "public"),
     })
@@ -353,7 +355,7 @@ The sample business logic provides a handler `TeamsBot` extends TeamsActivityHan
 You can update the query logic in the `handleMessageExtensionQueryWithSSO` with token which is obtained by using the logged-in Teams user token.
 
 To make this work in your application:
-1. Move the `auth/public` folder to `bot`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
+1. Move the `auth/public` folder to `src/public`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
 2. Modify your `src/index` to add the appropriate `restify` routes to these pages.
 
 ```ts
@@ -372,14 +374,14 @@ server.post("/api/messages", async (req, res) => {
 });
 
 server.get(
-  "/auth-*.html",
+  "/auth-:name(start|end).html",
   restify.plugins.serveStatic({
     directory: path.join(__dirname, "public"),
   })
 );
 ```
 3. Override `handleTeamsMessagingExtensionQuery` interface under `src/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithSSO` to do your own query logic.
-4. Open `src/package.json`, ensure that `@microsoft/teamsfx` version >= 1.2.0
+4. Open `package.json`, ensure that `@microsoft/teamsfx` version >= 1.2.0
 5. Install `isomorphic-fetch` npm packages in your bot project.
 6. (For ts only) Install `copyfiles` npm packages in your bot project, add or update the `build` script in `src/package.json` as following
 
