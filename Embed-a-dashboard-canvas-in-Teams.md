@@ -1044,7 +1044,7 @@ If you want to call a Graph API from the front-end tab, you can refer to the fol
 
 #### Step 1: Consent delegated permissions first
 
-You can call [`addNewPermissionScope(scopes: string[])`](https://github.com/OfficeDev/TeamsFx/blob/dev/templates/tab/ts/dashboard/src/internal/addNewScopes.ts) to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`FxContext`](https://github.com/OfficeDev/TeamsFx/blob/dev/templates/tab/ts/dashboard/src/internal/singletonContext.ts).
+You can call [`addNewPermissionScope(scopes: string[])`](https://github.com/OfficeDev/TeamsFx/blob/dev/templates/tab/ts/dashboard/src/internal/addNewScopes.ts) from `tab/ts/dashboard/src/internal/addNewScopes.ts` to consent the scopes of permissions you want to add. And the consented status will be preserved in a global context [`TeamsUserCredentialContext`](https://github.com/OfficeDev/TeamsFx/blob/dev/templates/tab/ts/dashboard/src/internal/singletonContext.ts).
 
 You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-1.0) to get the `scope name of the permission` related to the Graph API you want to call.
 
@@ -1054,7 +1054,7 @@ You can refer to the following code snippet:
 
 ```ts
 let teamsfx;
-teamsfx = FxContextInstance.getTeamsFx();
+teamsfx = TeamsUserCredentialContext.getTeamsFx();
 const graphClient = createMicrosoftGraphClient(teamsfx, scope);
 ```
 
