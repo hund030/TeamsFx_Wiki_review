@@ -49,7 +49,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 |-- tsconfig.json
 ```
 
-    **NOTE**: If you are working with a new Teams tab project, the build\appPackage folder and the package-lock.json file will not be present until after the first time you debug the project. 
+**NOTE**: If you are working with a new Teams tab project, the build\appPackage folder and the package-lock.json file will not be present until after the first time you debug the project. 
 
 1. Create a folder under the root named "tab" (or "bot").
 
