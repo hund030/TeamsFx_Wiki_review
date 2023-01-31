@@ -34,20 +34,22 @@ The following are the major steps to adding an Outlook Add-in to a Teams app. De
 
 Begin by segregating the source code for the tab (or bot) into its own subfolder. These instructions assume that the project initially has the following structure: 
 
-    ```
-    |-- .vscode/
-    |-- appPackage/
-    |-- build\appPackage/
-    |-- infra/
-    |-- node_modules/
-    |-- public/
-    |-- src/
-    |-- teamsfx/
-    |-- gitignore
-    |-- package-lock.json
-    |-- package.json
-    |-- tsconfig.json
-    ```
+```
+|-- .vscode/
+|-- appPackage/
+|-- build\appPackage/
+|-- infra/
+|-- node_modules/
+|-- public/
+|-- src/
+|-- teamsfx/
+|-- gitignore
+|-- package-lock.json
+|-- package.json
+|-- tsconfig.json
+```
+
+    **NOTE**: If you are working with a new Teams tab project, the build\appPackage folder and the package-lock.json file will not be present until after the first time you debug the project. 
 
 1. Create a folder under the root named "tab" (or "bot").
 
