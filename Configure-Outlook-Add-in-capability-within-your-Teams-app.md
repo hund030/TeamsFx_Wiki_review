@@ -38,14 +38,17 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 |-- .vscode/
 |-- appPackage/
 |-- build\appPackage/
+|-- env/
 |-- infra/
 |-- node_modules/
 |-- public/
+|-- script/
 |-- src/
-|-- teamsfx/
 |-- gitignore
 |-- package-lock.json
 |-- package.json
+|-- teamsapp.local.yml
+|-- teamsapp.yml
 |-- tsconfig.json
 ```
 
@@ -62,6 +65,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     |-- .vscode/
     |-- appPackage/
     |-- build\appPackage/
+    |-- env/
     |-- infra/
     |-- tab/
     |-- |-- node_modules/
@@ -70,8 +74,9 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     |-- |-- package-lock.json
     |-- |-- package.json
     |-- |-- tsconfig.json
-    |-- teamsfx/
     |-- gitignore
+    |-- teamsapp.local.yml
+    |-- teamsapp.yml
     ```
 
 1. In package.json that you just moved to the tab folder, delete the script named "dev:teamsfx" from the "scripts" object. This script is added to a new package.json in the next step.
@@ -98,7 +103,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     ```
 
 1. Change the "name", "version", and "author" properties, as needed.
-1. Open the file teamsfx\script\run.js and find the line near the end that spawns a separate process. 
+1. Open the file script\run.js and find the line near the end that spawns a separate process. 
 1. Change the string "start" in that line to "start:tab". When you are done the line should look like the following:
 
     ```
@@ -136,7 +141,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 
 ## Merge the manifest
 
-The Teams app's manifest is generated at debug-and-sideload time (or build time) from the template file, manifest.template.json in the \appPackage folder of the Teams project. Most of the markup is hardcoded into the template, but there are also some configuration files that contain data that gets injected into the final generated manifest. In this procedure, you do the following:
+The Teams app's manifest is generated at debug-and-sideload time (or build time) from the file manifest.json in the \appPackage folder of the Teams project. *This file is actually a kind of **template** for a manifest. In this article it is referred to as the "template" or "manifest template".* Most of the markup is hardcoded into the template, but there are also some configuration files that contain data that gets injected into the final generated manifest. In this procedure, you do the following:
 
 - Copy markup from the add-in's manifest to the Teams app's manifest template.
 - Edit the configuration files. 
