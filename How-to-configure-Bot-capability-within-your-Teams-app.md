@@ -82,9 +82,9 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 1. Bring your own bot app code into your project. If you don't have one, you can use the bot app project previously created and copy the source code to into your current project. We suggest you to copy them into a `bot/` folder. Your folder structure will be like:
     ```
-    |-- teasmfx/
-    |-- infra/
     |-- appPackage/
+    |-- env/
+    |-- infra/
     |-- bot/           <!--bot source code-->
     |   |-- index.ts
     |   |-- config.ts
@@ -93,12 +93,14 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     |-- src/            <!--your current source code-->
     |   |-- index.ts
     |-- package.json
+    |-- teamsapp.local.yml
+    |-- teamsapp.yml
     ```
     We suggest you to re-organize the folder structure and create a root package.json as:
      ```
-    |-- teasmfx/
-    |-- infra/
     |-- appPackage/
+    |-- env/
+    |-- infra/
     |-- bot/            <!--bot source code-->
     |   |-- index.ts
     |   |-- config.ts
@@ -109,6 +111,8 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     |   |   |-- index.tsx
     |   |-- package.json
     |-- package.json <!--root package.json-->
+    |-- teamsapp.local.yml
+    |-- teamsapp.yml
     ```
 1. Add following to your root package.json:
     ```json
@@ -133,7 +137,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 ### Setup local debug environment
 
-1. Manually merge the content in `.vscode/` and `teamsfx/app.local.yml` folders with yours. Update the `app.local.yml` and `run.js` to target your bot code.
+1. Manually merge the content in `.vscode/` and `teamsapp.local.yml` folders with yours. Update the `teamsapp.local.yml` and `run.js` to target your bot code.
 Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab) for reference.
 
 
@@ -141,7 +145,7 @@ Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3
 
 ### Move the application to Azure
 
-1. Manually merge the content in `infra/` and `teamsfx/app.yml` folder with yours.
+1. Manually merge the content in `infra/` and `teamsapp.yml` folder with yours.
 Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab) for reference.
 1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
 
