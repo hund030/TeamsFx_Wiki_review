@@ -118,6 +118,14 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         ```
         Now you can use `${{TAB_ENDPOINT}}` as the new placeholder in these files. Remember put their values to `env/.env.{env}` files if you have provisioned the environment. The values can be found in `.fx/states/state.{env}.json`.
 
+    4. For `{{{state.fx-resource-aad-app-for-teams.applicationIdUris}}}`, covert it based on following rule:
+        1. If your project only enables SSO for tab, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/${{AAD_APP_CLIENT_ID}}`
+            > You need to replace `{{state.fx-resource-frontend-hosting.domain}}` with actual placeholder that represents your tab's endpoint
+        2. If your project only enables SSO for bot or message extension, convert it to `api://botid-${{BOT_ID}}`
+        3. If your project enables SSO for both and bot / message extension, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/botid-${{BOT_ID}}`
+            > You need to replace `{{state.fx-resource-frontend-hosting.domain}}` with actual placeholder that represents your tab's endpoint
+
+
 4. We recommend you to move following files to new positions so Teams Toolkit can find them automatically when executing certain commands:
     1. Move `templates/appPackage/*` to `appPackage/*` and rename `manifest.template.json` under `appPackage` folder to `manifest.json`
     2. Move `templates/aad.template.json` to `aad.manifest.json` if your project contains this file
