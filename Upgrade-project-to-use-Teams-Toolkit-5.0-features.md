@@ -127,8 +127,8 @@ If any error occurs during upgrade, you can follow these steps to initialize you
 
 
 4. We recommend you to move following files to new positions so Teams Toolkit can find them automatically when executing certain commands:
-    1. Move `templates/appPackage/*` to `appPackage/*` and rename `manifest.template.json` under `appPackage` folder to `manifest.json`
-    2. Move `templates/aad.template.json` to `aad.manifest.json` if your project contains this file
+    1. Move `templates/appPackage/aad.template.json` to `aad.manifest.json` if your project contains this file
+    2. Move `templates/appPackage/*` to `appPackage/*` and rename `manifest.template.json` under `appPackage` folder to `manifest.json`
     > You need to update the paths in `teamsapp.yml` and `teamsapp.local.yml` in step 5 and 6 if you changes the file location and name.
 
 5. Run `teamsfx init infra` under your project root and follow the instructions to update your remote environment configurations. You can visit https://aka.ms/teamsfx-actions to learn the syntax of each action when authoring teamsapp.yml.
