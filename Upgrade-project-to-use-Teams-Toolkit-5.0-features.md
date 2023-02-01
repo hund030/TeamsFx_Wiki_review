@@ -397,7 +397,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
           with:
             target: ./tabs/.env.teamsfx.local
             envs:
-              REACT_APP_START_LOGIN_PAGE_URL: ${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT}}/auth-start.html
+              REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
               REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
 
         - uses: file/updateEnv # Add necessary environment variable for your bot app, you can remove this if your project does not contain a bot or message extension
