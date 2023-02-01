@@ -163,7 +163,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         
     - uses: azureStorage/enableStaticWebsite # You can remove this if your project does not contain a tab.
         with:
-        storageResourceId: ${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__STORAGERESOURCEID}} # Reference the Azure Storage resource id outputted in arm/deploy action. Feel free to modify your bicep files to output the value with a better environment variable name and reference it here. Note: the `PROVISIONOUTPUT__`` prefix is required because every output in provision.bicep is wrapped in a provisionOutput variable in current bicep files.
+        storageResourceId: <azure-storage-resource-id> # Reference the Azure Storage resource id outputted in arm/deploy action. You can output the resource id in `main.bicep` with your preferred environment variable name. For example: use `output TAB_STORAGE_RESOURCE_ID string = provision.outputs.azureStorageTabOutput.storageResourceId` to output the Azure Storage resource id to `TAB_STORAGE_RESOURCE_ID` in .env.{env} file.
         indexPage: index.html
         errorPage: error.html
 
@@ -176,7 +176,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
     - uses: cli/runNpmCommand
         env:
         REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
-        REACT_APP_START_LOGIN_PAGE_URL: ${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT}}/auth-start.html
+        REACT_APP_START_LOGIN_PAGE_URL: <your-tab-endpoint>/auth-start.html # Reference the tab endpoint outputted in arm/deploy action. You can output the resource id in `main.bicep` with your preferred environment variable name. For example: use `output TAB_ENDPOINT string = provision.outputs.azureStorageTabOutput.endpoint` to output the Azure Storage static website endpoint to `TAB_ENDPOINT` in .env.{env} file.
         with:
         workingDirectory: tabs
         args: run build --if-present
@@ -185,7 +185,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         workingDirectory: tabs
         distributionPath: build
         ignoreFile:  # Leave blank will ignore nothing
-        resourceId: ${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__STORAGERESOURCEID}} # Reference the Azure Storage resource id outputted in arm/deploy action. You can change the environment variable name by editing bicep files. Refer https://aka.ms/teamsfx-actions/arm-deploy for more details about ARM output.
+        resourceId: <azure-storage-resource-id> # Reference the Azure Storage resource id outputted in arm/deploy action.
 
     # Deploy your bot. You can remove following 3 actions if your project does not contain a bot or message extension.
     # Note: if you bot is hosted in Azure Functions, you need to adjust your actions to build and deploy to Azure Functions.
@@ -202,7 +202,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         workingDirectory: bot
         distributionPath: .
         ignoreFile: # Leave blank will ignore nothing
-        resourceId: ${{PROVISIONOUTPUT__AZUREWEBAPPBOTOUTPUT__RESOURCEID}} # Reference the Azure Storage resource id outputted in arm/deploy action. You can change the environment variable name by editing bicep files. Refer https://aka.ms/teamsfx-actions/arm-deploy for more details about ARM output.
+        resourceId: <app-service-resource-id> # Reference the Azure App Service resource id outputted in arm/deploy action.
 
     registerApp:
     - uses: aadApp/create # You can remove this if your project does not require an AAD app.
