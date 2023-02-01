@@ -346,9 +346,9 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         - uses: file/updateEnv # ARM deployment will output some environment variables to .env.{env} for Teams app manifest and AAD app manifest. You need to set these environment variables manually when run your app in local. Following environment variables are just examples. Please change the environment variable name and value accordingly.
           with:
             envs:
-              PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__DOMAIN: localhost:53000
-              PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT: https://localhost:53000
-              PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__INDEXPATH: /index.html#
+              YOUR_TAB_DOMAIN: localhost:53000
+              YOUR_TAB_ENDPOINT: https://localhost:53000
+              YOUR_TAB_INDEXPATH: /index.html#
 
       configureApp:
         - uses: aadApp/update
@@ -397,7 +397,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
           with:
             target: ./tabs/.env.teamsfx.local
             envs:
-              REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
+              REACT_APP_START_LOGIN_PAGE_URL: ${{YOUR_TAB_ENDPOINT}}/auth-start.html
               REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
 
         - uses: file/updateEnv # Add necessary environment variable for your bot app, you can remove this if your project does not contain a bot or message extension
@@ -408,8 +408,8 @@ If any error occurs during upgrade, you can follow these steps to initialize you
               M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
               M365_TENANT_ID: ${{AAD_APP_TENANT_ID}}
               M365_AUTHORITY_HOST: ${{AAD_APP_OAUTH_AUTHORITY_HOST}}
-              INITIATE_LOGIN_ENDPOINT: ${{PROVISIONOUTPUT__AZUREWEBAPPBOTOUTPUT__SITEENDPOINT}}/auth-start.html
-              M365_APPLICATION_ID_URI: api://${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT}}/botid-${{BOT_ID}}
+              INITIATE_LOGIN_ENDPOINT: ${{YOUR_BOT_ENDPOINT}}/auth-start.html
+              M365_APPLICATION_ID_URI: api://${{YOUR_TAB_ENDPOINT}}/botid-${{BOT_ID}}
 
         - uses: cli/runNpmCommand # You can remove this if your project does not contain a tab
           with:
