@@ -207,12 +207,12 @@ If any error occurs during upgrade, you can follow these steps to initialize you
     registerApp:
     - uses: aadApp/create # You can remove this if your project does not require an AAD app.
         with:
-        name: <your-preferred-aad-app-name>
+        name: <your-preferred-aad-app-name> # The name will be modified based on AAD app manifest in aadApp/update action. It's recommended to use same name defined in the manifest file.
         generateClientSecret: true 
 
     - uses: teamsApp/create
         with:
-        name: <your-preferred-teams-app-name>
+        name: <your-preferred-teams-app-name> # The name will be modified based on Teams app manifest in teamsApp/update action. It's recommended to use same name defined in the manifest file.
 
     configureApp:
     - uses: aadApp/update # You can remove this if your project does not require an AAD app.
