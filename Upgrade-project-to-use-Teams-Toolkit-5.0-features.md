@@ -457,6 +457,9 @@ If any error occurs during upgrade, you can follow these steps to initialize you
       ```
    </details>
 
+9. Update `.vscode/launch.json`.
+    1. Replace `${teamsAppId}` with `${dev:teamsAppId}` (you can change `dev` to any other environment name in your project).
+    2. Replace `${localTeamsAppId}` with `${local:teamsAppId}`.
 
 ## Migration
 ### MigrationAppPackageNotExist
