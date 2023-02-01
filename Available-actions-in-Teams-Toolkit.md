@@ -50,7 +50,7 @@ This action will create a new Teams app for you if TEAMS_APP_ID environment vari
 ```
   - uses: teamsApp/create
     with:
-      name: ${{TEAMS_APP_NAME}} # This is the environment variable defined in teamsfx/.env.<environment> file.
+      name: YOUR-APP-NAME-${{TEAMSFX_ENV}} # TEAMSFX_ENV is the environment variable defined in env/.env.<environment> file, used to differentiate Teams app in Teams Developer Portal
 ```
 
 ## Output:
@@ -79,7 +79,7 @@ This action will render Teams app manifest template with environment variables, 
 ```
   - uses: teamsApp/validate
     with:
-      manifestPath: ./appPackage/manifest.template.json # Required. Path to manifest template
+      manifestPath: ./appPackage/manifest.json # Required. Path to Teams app manifest file
 ```
 
 ## Output:
@@ -92,7 +92,7 @@ This action will render Teams app manifest template with environment variables, 
 ```
   - uses: teamsApp/zipAppPackage
     with:
-      manifestPath: ./appPackage/manifest.template.json # Required. Relative path to this file. This is the path for Teams app manifest template.
+      manifestPath: ./appPackage/manifest.json # Required. Relative path to this file. This is the path for Teams app manifest file.
       outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
       outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to this file. This is the path for built manifest json file.
 ```
