@@ -147,11 +147,11 @@ If any error occurs during upgrade, you can follow these steps to initialize you
     environmentFolderPath: ./env # You can use any folder you want
 
     provision:
-    - uses: botAadApp/create # You can remove this if your project does not contain a bot or message extension.
+      - uses: botAadApp/create # You can remove this if your project does not contain a bot or message extension.
         with:
-        name: <your-preferred-bot-aad-app-name>
+          name: <your-preferred-bot-aad-app-name>
 
-    - uses: arm/deploy
+      - uses: arm/deploy
         with:
           subscriptionId: ${{AZURE_SUBSCRIPTION_ID}}
           resourceGroupName: ${{AZURE_RESOURCE_GROUP_NAME}}
@@ -161,89 +161,89 @@ If any error occurs during upgrade, you can follow these steps to initialize you
             deploymentName: teams_toolkit_deployment
           bicepCliVersion: v0.4.613 
         
-    - uses: azureStorage/enableStaticWebsite # You can remove this if your project does not contain a tab.
+      - uses: azureStorage/enableStaticWebsite # You can remove this if your project does not contain a tab.
         with:
-        storageResourceId: <azure-storage-resource-id> # Reference the Azure Storage resource id outputted in arm/deploy action. You can output the resource id in `main.bicep` with your preferred environment variable name. For example: use `output TAB_STORAGE_RESOURCE_ID string = provision.outputs.azureStorageTabOutput.storageResourceId` to output the Azure Storage resource id to `TAB_STORAGE_RESOURCE_ID` in .env.{env} file.
-        indexPage: index.html
-        errorPage: error.html
+          storageResourceId: <azure-storage-resource-id> # Reference the Azure Storage resource id outputted in arm/deploy action. You can output the resource id in `main.bicep` with your preferred environment variable name. For example: use `output TAB_STORAGE_RESOURCE_ID string = provision.outputs.azureStorageTabOutput.storageResourceId` to output the Azure Storage resource id to `TAB_STORAGE_RESOURCE_ID` in .env.{env} file.
+          indexPage: index.html
+          errorPage: error.html
 
     deploy:
     # Deploy your tab. You can remove following 3 actions if your project does not contain a tab.
-    - uses: cli/runNpmCommand 
+      - uses: cli/runNpmCommand 
         with:
-        workingDirectory: tabs
-        args: install
-    - uses: cli/runNpmCommand
+          workingDirectory: tabs
+          args: install
+      - uses: cli/runNpmCommand
         env:
-        REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
-        REACT_APP_START_LOGIN_PAGE_URL: <your-tab-endpoint>/auth-start.html # Reference the tab endpoint outputted in arm/deploy action. You can output the resource id in `main.bicep` with your preferred environment variable name. For example: use `output TAB_ENDPOINT string = provision.outputs.azureStorageTabOutput.endpoint` to output the Azure Storage static website endpoint to `TAB_ENDPOINT` in .env.{env} file.
+          REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+          REACT_APP_START_LOGIN_PAGE_URL: <your-tab-endpoint>/auth-start.html # Reference the tab endpoint outputted in arm/deploy action. You can output the resource id in `main.bicep` with your preferred environment variable name. For example: use `output TAB_ENDPOINT string = provision.outputs.azureStorageTabOutput.endpoint` to output the Azure Storage static website endpoint to `TAB_ENDPOINT` in .env.{env} file.
         with:
-        workingDirectory: tabs
-        args: run build --if-present
-    - uses: azureStorage/deploy
+          workingDirectory: tabs
+          args: run build --if-present
+      - uses: azureStorage/deploy
         with:
-        workingDirectory: tabs
-        distributionPath: build
-        ignoreFile:  # Leave blank will ignore nothing
-        resourceId: <azure-storage-resource-id> # Reference the Azure Storage resource id outputted in arm/deploy action.
+          workingDirectory: tabs
+          distributionPath: build
+          ignoreFile:  # Leave blank will ignore nothing
+          resourceId: <azure-storage-resource-id> # Reference the Azure Storage resource id outputted in arm/deploy action.
 
     # Deploy your bot. You can remove following 3 actions if your project does not contain a bot or message extension.
     # Note: if you bot is hosted in Azure Functions, you need to adjust your actions to build and deploy to Azure Functions.
-    - uses: cli/runNpmCommand
+      - uses: cli/runNpmCommand
         with:
-        workingDirectory: bot
-        args: install
-    - uses: cli/runNpmCommand
+          workingDirectory: bot
+          args: install
+      - uses: cli/runNpmCommand
         with:
-        workingDirectory: bot
-        args: run build --if-present
-    - uses: azureAppService/deploy
+          workingDirectory: bot
+          args: run build --if-present
+      - uses: azureAppService/deploy
         with:
-        workingDirectory: bot
-        distributionPath: .
-        ignoreFile: # Leave blank will ignore nothing
-        resourceId: <app-service-resource-id> # Reference the Azure App Service resource id outputted in arm/deploy action.
+          workingDirectory: bot
+          distributionPath: .
+          ignoreFile: # Leave blank will ignore nothing
+          resourceId: <app-service-resource-id> # Reference the Azure App Service resource id outputted in arm/deploy action.
 
     registerApp:
-    - uses: aadApp/create # You can remove this if your project does not require an AAD app.
+      - uses: aadApp/create # You can remove this if your project does not require an AAD app.
         with:
-        name: <your-preferred-aad-app-name> # The name will be modified based on AAD app manifest in aadApp/update action. It's recommended to use same name defined in the manifest file.
-        generateClientSecret: true 
+          name: <your-preferred-aad-app-name> # The name will be modified based on AAD app manifest in aadApp/update action. It's recommended to use same name defined in the manifest file.
+          generateClientSecret: true 
 
-    - uses: teamsApp/create
+      - uses: teamsApp/create
         with:
-        name: <your-preferred-teams-app-name> # The name will be modified based on Teams app manifest in teamsApp/update action. It's recommended to use same name defined in the manifest file.
+          name: <your-preferred-teams-app-name> # The name will be modified based on Teams app manifest in teamsApp/update action. It's recommended to use same name defined in the manifest file.
 
     configureApp:
-    - uses: aadApp/update # You can remove this if your project does not require an AAD app.
+      - uses: aadApp/update # You can remove this if your project does not require an AAD app.
         with:
-        manifestPath: ./templates/aad.template.json 
-        outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
+          manifestPath: ./templates/aad.template.json 
+          outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
 
-    - uses: teamsApp/validate
+      - uses: teamsApp/validate
         with:
-        manifestPath: ./templates/appPackage/manifest.template.json
-    - uses: teamsApp/zipAppPackage
+          manifestPath: ./templates/appPackage/manifest.template.json
+      - uses: teamsApp/zipAppPackage
         with:
-        manifestPath: ./templates/appPackage/manifest.template.json
-        outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
-        outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json
-    - uses: teamsApp/update
+          manifestPath: ./templates/appPackage/manifest.template.json
+          outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json
+      - uses: teamsApp/update
         with:
-        appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
 
     publish:
-    - uses: teamsApp/validate
+      - uses: teamsApp/validate
         with:
-        manifestPath: ./templates/appPackage/manifest.template.json
-    - uses: teamsApp/zipAppPackage
+          manifestPath: ./templates/appPackage/manifest.template.json
+      - uses: teamsApp/zipAppPackage
         with:
-        manifestPath: ./templates/appPackage/manifest.template.json
-        outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
-        outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json
-    - uses: teamsApp/publishAppPackage
+          manifestPath: ./templates/appPackage/manifest.template.json
+          outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json
+      - uses: teamsApp/publishAppPackage
         with:
-        appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
       ```
    </details>
 
@@ -258,57 +258,57 @@ If any error occurs during upgrade, you can follow these steps to initialize you
     environmentFolderPath: ./env # You can use any folder you want
 
     deploy:
-    - uses: cli/runNpmCommand
+      - uses: cli/runNpmCommand
         with:
-        args: install
-        workingDirectory: ./SPFx
-    - uses: cli/runNpxCommand
+          args: install
+          workingDirectory: ./SPFx
+      - uses: cli/runNpxCommand
         with:
-        workingDirectory: ./SPFx
-        args: gulp bundle --ship --no-color
-    - uses: cli/runNpxCommand
+          workingDirectory: ./SPFx
+          args: gulp bundle --ship --no-color
+      - uses: cli/runNpxCommand
         with:
-        workingDirectory: ./SPFx
-        args: gulp package-solution --ship --no-color
-    - uses: spfx/deploy
+          workingDirectory: ./SPFx
+          args: gulp package-solution --ship --no-color
+      - uses: spfx/deploy
         with:
-        createAppCatalogIfNotExist: false
-        packageSolutionPath: ./SPFx/config/package-solution.json
+          createAppCatalogIfNotExist: false
+          packageSolutionPath: ./SPFx/config/package-solution.json
 
     registerApp:
-    - uses: teamsApp/create
+      - uses: teamsApp/create
         with:
-        name: <your-preferred-teams-app-name> # Put your preferred app name here
+          name: <your-preferred-teams-app-name> # Put your preferred app name here
 
     configureApp:
-    - uses: teamsApp/validate
+      - uses: teamsApp/validate
         with:
-        manifestPath: ./templates/appPackage/manifest.json
-    - uses: teamsApp/zipAppPackage
+          manifestPath: ./templates/appPackage/manifest.json
+      - uses: teamsApp/zipAppPackage
         with:
-        manifestPath: ./templates/appPackage/manifest.json
-        outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
-        outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json
-    - uses: teamsApp/update
+          manifestPath: ./templates/appPackage/manifest.json
+          outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json
+      - uses: teamsApp/update
         with:
-        appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
 
     publish:
-    - uses: teamsApp/validate
+      - uses: teamsApp/validate
         with:
-        manifestPath: ./templates/appPackage/manifest.json
-    - uses: teamsApp/zipAppPackage
+          manifestPath: ./templates/appPackage/manifest.json
+      - uses: teamsApp/zipAppPackage
         with:
-        manifestPath: ./templates/appPackage/manifest.json
-        outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
-        outputJsonPath: ./build/manifest.${{TEAMSFX_ENV}}.json
-    - uses: teamsApp/copyAppPackageToSPFx
+          manifestPath: ./templates/appPackage/manifest.json
+          outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          outputJsonPath: ./build/manifest.${{TEAMSFX_ENV}}.json
+      - uses: teamsApp/copyAppPackageToSPFx
         with:
-        appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
-        spfxFolder: ./src
-    - uses: teamsApp/publishAppPackage
+          appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          spfxFolder: ./src
+      - uses: teamsApp/publishAppPackage
         with:
-        appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
+          appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip
       ```
    </details>
 
