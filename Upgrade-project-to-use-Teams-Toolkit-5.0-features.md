@@ -79,7 +79,7 @@ Teams Toolkit will reuse your provisioned resource when upgrading (except Bot Se
 If any error occurs during upgrade, you can follow these steps to initialize your project again to develop it with latest Teams Toolkit. Visit [Teams Toolkit 5.0 guide](https://aka.ms/teamsfx-v5.0-guide) to learn more about the new concepts in Teams Toolkit 5.0. And refer [Teams Toolkit initialize document](https://aka.ms/teamsfx-init) to learn how to initialize debug or remote environment configurations.
 
 1. Run `npm install -g @microsoft/teamsfx-cli@alpha` to install latest TeamsFx CLI
-> This step requires nodejs installed in your development machine.
+    > This step requires nodejs installed in your development machine.
 
 2. Set environment variable `TEAMSFX_V3` to `true`
 
@@ -129,6 +129,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         3. If your project enables SSO for both and bot / message extension, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/botid-${{BOT_ID}}`
             > You need to replace `{{state.fx-resource-frontend-hosting.domain}}` with actual placeholder that represents your tab's endpoint
 
+    > When copying values from `config.{env}.json` and `state.{env}.json`, make sure you copied every environment's values to corresponding .env files.
 
 6. We recommend you to move following files to new positions so Teams Toolkit can find them automatically when executing certain commands:
     1. Move `templates/appPackage/aad.template.json` to `aad.manifest.json` if your project contains this file
