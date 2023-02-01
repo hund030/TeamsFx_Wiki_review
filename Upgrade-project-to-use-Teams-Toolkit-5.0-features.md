@@ -83,7 +83,11 @@ If any error occurs during upgrade, you can follow these steps to initialize you
 
 2. Set environment variable `TEAMSFX_V3` to `true`
 
-3. Update the placeholders in `templates/appPackage/manifest.template.json`, `templates/aad.template.json` (if have) and `.fx/configs/azure.parameters.{env}.json` (if have). The old placeholders `{{xxx}}` and `{{{xxx}}}` in these files need to be replaced with new format `${{ENV_NAME}}`.
+3. Create a backup folder (for example `.backup`) and move `.fx` folder to it.
+
+4. Run `teamsfx init infra` and `teamsfx init debug` under your project root folder
+
+5. Update the placeholders in `templates/appPackage/manifest.template.json`, `templates/aad.template.json` (if have) and `.fx/configs/azure.parameters.{env}.json` (if have). The old placeholders `{{xxx}}` and `{{{xxx}}}` in these files need to be replaced with new format `${{ENV_NAME}}`.
     1. For `{{config.xxx}}` placeholders, you can give them a preferred environment variable name using the new format. And put their values to `env/.env.{env}` files. The values can be found in `.fx/configs/config.{env}.json`.
     2. For `{{state.xxx}}` placeholders, if they exist in below mapping table, you can replace them directly. And put their values to `env/.env.{env}` files if you have provisioned the environment. The values can be found in `.fx/states/state.{env}.json`.
 
@@ -126,12 +130,12 @@ If any error occurs during upgrade, you can follow these steps to initialize you
             > You need to replace `{{state.fx-resource-frontend-hosting.domain}}` with actual placeholder that represents your tab's endpoint
 
 
-4. We recommend you to move following files to new positions so Teams Toolkit can find them automatically when executing certain commands:
+6. We recommend you to move following files to new positions so Teams Toolkit can find them automatically when executing certain commands:
     1. Move `templates/appPackage/aad.template.json` to `aad.manifest.json` if your project contains this file
     2. Move `templates/appPackage/*` to `appPackage/*` and rename `manifest.template.json` under `appPackage` folder to `manifest.json`
-    > You need to update the paths in `teamsapp.yml` and `teamsapp.local.yml` in step 5 and 6 if you changes the file location and name.
+    > You need to update the paths in `teamsapp.yml` and `teamsapp.local.yml` in step 7 and 8 if you changes the file location and name.
 
-5. Run `teamsfx init infra` under your project root and follow the instructions to update your remote environment configurations. You can visit https://aka.ms/teamsfx-actions to learn the syntax of each action when authoring teamsapp.yml.
+7. Follow the instructions in https://aka.ms/teamsfx-infra to update your remote environment configurations. You can visit https://aka.ms/teamsfx-actions to learn the syntax of each action when authoring teamsapp.yml.
    <details>
       <summary>If you're building app hosted on Azure, you can refer following sample when authoring `teamsapp.yml`</summary>
 
@@ -308,7 +312,7 @@ If any error occurs during upgrade, you can follow these steps to initialize you
       ```
    </details>
 
-6. Run `teamsfx init debug` under your project root and follow the instructions to update your debug configurations
+8. Follow the instructions in https://aka.ms/teamsfx-debug to update your debug configurations
    <details>
       <summary>If you're building app hosted on Azure, you can refer following sample when authoring `teamsapp.local.yml`</summary>
 
