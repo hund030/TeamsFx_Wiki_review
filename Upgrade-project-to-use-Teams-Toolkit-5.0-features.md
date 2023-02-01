@@ -343,14 +343,14 @@ If any error occurs during upgrade, you can follow these steps to initialize you
             channels:
               - name: msteams
 
-      configureApp:
-        - uses: file/updateEnv
+        - uses: file/updateEnv # ARM deployment will output some environment variables to .env.{env} for Teams app manifest and AAD app manifest. You need to set these environment variables manually when run your app in local. Following environment variables are just examples. Please change the environment variable name and value accordingly.
           with:
-            envs: # Add necessary environment variables for your app here
+            envs:
               PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__DOMAIN: localhost:53000
               PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT: https://localhost:53000
               PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__INDEXPATH: /index.html#
 
+      configureApp:
         - uses: aadApp/update
           with:
             manifestPath: ./templates/aad.template.json
