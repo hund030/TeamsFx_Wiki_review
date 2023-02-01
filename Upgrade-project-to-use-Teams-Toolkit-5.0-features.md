@@ -157,8 +157,8 @@ If any error occurs during upgrade, you can follow these steps to initialize you
         resourceGroupName: ${{AZURE_RESOURCE_GROUP_NAME}}
         templates:
         - path: ./templates/azure/main.bicep
-            parameters: ./templates/azure/azure.parameters.${{TEAMSFX_ENV}}.json # We recommend you move `.fx/configs/azure.parameters.xxx.json` to `templates/azure` folder (or other places as you wish), because you need to delete `.fx` folder later.
-            deploymentName: teams_toolkit_deployment
+          parameters: ./templates/azure/azure.parameters.${{TEAMSFX_ENV}}.json # We recommend you move `.fx/configs/azure.parameters.xxx.json` to `templates/azure` folder (or other places as you wish), because you need to delete `.fx` folder later.
+          deploymentName: teams_toolkit_deployment
         bicepCliVersion: v0.4.613 
         
     - uses: azureStorage/enableStaticWebsite # You can remove this if your project does not contain a tab.
