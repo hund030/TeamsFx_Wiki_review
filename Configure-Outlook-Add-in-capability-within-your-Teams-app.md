@@ -146,11 +146,11 @@ The Teams app's manifest is generated at debug-and-sideload time (or build time)
 - Copy markup from the add-in's manifest to the Teams app's manifest template.
 - Edit the configuration files. 
 
-Unless specified otherwise, the file you change is \appPackage\manifest.template.json.
+Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 1. Copy the "$schema" and "manifestVersion" property values from the add-in's manifest to the corresponding properties of the Teams app's manifest.template.json file.
 1. Adjust the "name.full", "description.short", and "description.full" property values as needed to take account of the fact that an Outlook add-in is part of the app. 
-1. Leave the "name.short" with the placeholder value, `${{TEAMS_APP_NAME}}`,that it already has. To adjust this value, open the files .env.dev and .env.local in the \teamsfx folder. In both files, change the value of the `TEAMS_APP_NAME` variable. The maximum length of the variable is 30 characters. (If the value has spaces, enclose it in quotes.) 
+1. Leave the "name.short" with the placeholder value, `${{TEAMS_APP_NAME}}`,that it already has. To adjust this value, open the files .env.dev and .env.local in the \env folder. In both files, change the value of the `TEAMS_APP_NAME` variable. The maximum length of the variable is 30 characters. (If the value has spaces, enclose it in quotes.) 
 
     **Notes**:
     It is a good practice to append "-local" onto the end of the name in the .env.local file.
@@ -241,6 +241,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     |-- |-- webpack.config.js
     |-- appPackage/
     |-- build\appPackage/
+    |-- env/
     |-- infra/
     |-- node_modules/
     |-- tab/
@@ -250,8 +251,10 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
     |-- |-- package-lock.json
     |-- |-- package.json
     |-- |-- tsconfig.json
-    |-- teamsfx/
     |-- gitignore
+    |-- package.json
+    |-- teamsapp.local.yml
+    |-- teamsapp.yml
     ```
 
 ## Edit the tooling configuration files
@@ -273,7 +276,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
 1. Open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
 1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
-1. In the Teams app project, open the teamsfx/app.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
+1. In the Teams app project, open the teamsapp.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
 
     ```
     configureApp:
@@ -342,7 +345,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
         "request": "attach",
         "port": 9229,
         "timeout": 600000,
-        "webRoot": "${workspaceRoot}//add-in",
+        "webRoot": "${workspaceRoot}/add-in/",
         "preLaunchTask": "Start Add-in Locally",
         "postDebugTask": "Stop Debug"
     },
@@ -362,7 +365,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.template
 
 ## Move the application to Azure
 
-1. Open the teamsfx\app.yml file. Replace the entire `deploy:` section with the following code. These changes take account of the new folder structure and the fact that both add-in and tab files need to be deployed.
+1. Open the teamsapp.yml file in the root of the project. Replace the entire `deploy:` section with the following code. These changes take account of the new folder structure and the fact that both add-in and tab files need to be deployed.
 
     ```
     deploy:
