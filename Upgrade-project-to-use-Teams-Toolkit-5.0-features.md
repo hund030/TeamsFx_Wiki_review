@@ -19,8 +19,9 @@ Teams Toolkit performs the following changes to your project during upgrade.
 2. Moved environment files in `.fx` to `.env.{env}` in `env` folder
     > The environment files in old project contains `state.{env}.json`, `config.{env}.json` and `{env}.userdata`
 3. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
+    > This step also renamed `appPackage/manifest.template.json` to `appPackage/manifest.json`
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
-4. Moved `templates/appPackage/aad.template.json` to `aad.manifest.template.json` and updated placeholders in it per latest tooling's requirement.
+4. Moved `templates/appPackage/aad.template.json` to `aad.manifest.json` and updated placeholders in it per latest tooling's requirement.
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
 5. Updated `.vscode/tasks.json` and `.vscode/launch.json`.
 6. Updated `.gitignore` to ignore new environment files.
