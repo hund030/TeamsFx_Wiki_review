@@ -451,4 +451,32 @@ This action will create a new AAD app for Bot Registration if either environment
 
 # General Errors
 ## ActionNotFoundError
-This error means there's unknown action in the yaml file. Please check whether the action type in 'uses' field are supported. 
+This error means there's an unknown action in the yaml file. Please check whether the action type in 'uses' fields are supported. 
+## YamlParsingError
+This error means the syntax of the yaml file is invalid. Please check your syntax again.
+## InvalidLifecycleError
+This error means the format of the lifecycle is invalid. A lifecycle needs to be a yaml map. A typical example of this error is shown as follows:
+```yaml
+provision:
+```
+In this case, the value of lifecycle 'provision' will be interpreted as an empty string, which is invalid. If you want to remove all actions in provision, please remove it entirely, including the 'provision:' line.
+## InvalidEnvFolderPath
+This error means the 'environmentFolderPath' field is invalid. Please make sure it's a valid path.
+## InvalidEnvFieldError
+This error means the 'env' field of an action is invalid. 'env' field is used to define environment variables for a certain action. So, it's expected to contain key-value pairs, whose value is of type string.
+Here is a valid example
+```yaml
+  - uses: botAadApp/create # Creates a new AAD app for Bot Registration.
+    env:
+        BOT_ID: SOME_FAKE_ID
+    with:
+      name: bot # The display name of bot.
+```
+Below is an invalid example.
+```yaml
+  - uses: botAadApp/create # Creates a new AAD app for Bot Registration.
+    env:
+        BOT_ID: 123 # 123 is a number, not a string.
+    with:
+      name: bot # The display name of bot.
+```
