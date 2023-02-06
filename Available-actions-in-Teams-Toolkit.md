@@ -448,3 +448,7 @@ This action will create a new AAD app for Bot Registration if either environment
 ## Output:
 * BOT_ID: the AAD app client id created for Bot Registration.
 * SECRET_BOT_PASSWORD: the AAD app client secret created for Bot Registration.
+
+# General Errors
+## ActionNotFoundError
+This error means there's unknown action in the yaml file. Please check whether the action type in 'uses' field are supported. 
