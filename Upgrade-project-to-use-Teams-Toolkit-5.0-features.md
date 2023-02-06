@@ -30,7 +30,7 @@ Teams Toolkit performs the following changes to your project during upgrade.
 
 > All existing files will be moved into `.backup` folder for your reference. You can safely delete the `.backup` folder after you reviewed the changes.
 
-## Restore your project configuration
+## How to roll back
 
 If you still want to restore your project configuration after the upgrade is successful and continue to use old version Teams Toolkit, you can:
 1. Copy every folder / file under `.backup` folder to your project root path
