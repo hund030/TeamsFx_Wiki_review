@@ -310,5 +310,5 @@ These tasks are standard VS Code shell tasks to execute npm commands on project,
             "endsPattern": "Compiled|Failed"
         }
     }
-}# 
+}
 ```
