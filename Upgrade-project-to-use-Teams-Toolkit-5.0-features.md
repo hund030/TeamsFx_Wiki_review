@@ -314,8 +314,8 @@ The detailed steps to update the older placeholders are:
             resourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}} # you need to change ${{TAB_AZURE_STORAGE_RESOURCE_ID}} to ${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__STORAGERESOURCEID}}
         ```
 
-## Migration
-### MigrationAppPackageNotExist
-The project to be migrated has no appPackage folder under templates which is required for migration. 
-### ManifestTemplateNotExist
-The project to be migrated has no manifest.template.json file under templates/appPackage which is required for migration. 
+## Upgrade
+### UpgradeAppPackageNotExist
+The project to be migrated has no appPackage folder under templates which is required for Upgrade. 
+### UpgradeManifestTemplateNotExist
+The project to be migrated has no manifest.template.json file under templates/appPackage which is required for Upgrade. 
