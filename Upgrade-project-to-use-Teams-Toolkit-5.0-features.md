@@ -316,6 +316,6 @@ The detailed steps to update the older placeholders are:
 
 ## Upgrade
 ### UpgradeAppPackageNotExist
-The project to be migrated has no appPackage folder under templates which is required for Upgrade. 
+The project to be upgraded has no appPackage folder under templates which is required for Upgrade. 
 ### UpgradeManifestTemplateNotExist
-The project to be migrated has no manifest.template.json file under templates/appPackage which is required for Upgrade. 
+The project to be upgraded has no manifest.template.json file under templates/appPackage which is required for Upgrade. 
