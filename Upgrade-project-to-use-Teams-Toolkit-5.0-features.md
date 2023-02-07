@@ -1,7 +1,9 @@
 Teams Toolkit continuously evolves to offer more powerful features for developers. Teams Toolkit 5.0 provides following new features to help you better build your existing Teams app project using Teams Toolkit:
-1. Customizing Teams Toolkit's lifecycle definition
-2. Integrating with environment variables
-3. More customizable VS Code tasks to local debug your app
+* Use an existing Teams app ID
+* Use an existing Azure AD app registration ID
+* Use a different tunneling solution or customize the defaults
+* Use existing infrastructure, resource groups, and more when provisioning
+* Add custom steps to debugging, provisioning, deploying, publishing, etc.
 
 These new features will require an update to your existing project structure. Teams Toolkit can automatically upgrade your project with your consent.
 
