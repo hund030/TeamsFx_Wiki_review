@@ -171,9 +171,10 @@ If your project contains multiple capabilities, for example, has both tab and bo
 1. Download sample project based on your project's capabilities
     | Capabilities | Sample project location |
     | --- | --- |
-    | tab, api | [sample project](https://github.com/OfficeDev/TeamsFx/tree/chyuan/add-manual-upgrad-sample-project/docs/vscode-extension/5.0-multi-capability-sample/tab-and-api) |
-    | tab, bot / message extension  | [sample project]() |
-    | tab, api, bot / message extension | [sample project]() |
+    | tab, api, SSO | [sample project](https://github.com/OfficeDev/TeamsFx/tree/chyuan/add-manual-upgrad-sample-project/docs/vscode-extension/5.0-multi-capability-sample/tab-and-api-with-sso) |
+    | tab, bot / message extension  | [sample project](https://github.com/OfficeDev/TeamsFx/tree/chyuan/add-manual-upgrad-sample-project/docs/vscode-extension/5.0-multi-capability-sample/tab-and-bot) |
+    | tab, bot / message extension, SSO | [sample project](https://github.com/OfficeDev/TeamsFx/tree/chyuan/add-manual-upgrad-sample-project/docs/vscode-extension/5.0-multi-capability-sample/tab-and-bot-with-sso) |
+    | tab, api, bot / message extension, SSO | [sample project](https://github.com/OfficeDev/TeamsFx/tree/chyuan/add-manual-upgrad-sample-project/docs/vscode-extension/5.0-multi-capability-sample/tab-api-and-bot-with-sso) |
 
 2. Copy your project's source code to the new project
     1. If your project contains a tab, copy everything under `tab` folder to the new project's `tab` folder
