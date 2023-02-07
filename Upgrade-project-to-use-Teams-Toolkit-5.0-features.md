@@ -191,8 +191,6 @@ If your project contains multiple capabilities, for example, has both tab and bo
 
     4. Copy `.fx/configs/azure.parameters.{env}.json` to the new project's `infra` folder.
 
-    5. Update the new project's `teamsapp.yml` file, change `parameters: ./infra/azure.parameters.json` to `parameters: ./infra/azure.parameters.${{TEAMSFX_ENV}}.json`
-
 4. Copy your Teams manifest to the new project
 
     1. Remove everything under the new project's `appPackage` folder
