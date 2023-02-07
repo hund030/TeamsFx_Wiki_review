@@ -90,7 +90,25 @@ If you're using VS Code Teams Toolkit, there're some changes to existing feature
 
 1. When you provision a new environment, you need to provide values for `STATE__FX_RESOURCE_AZURE_SQL__ADMIN` and `SECRET_FX_RESOURCE_AZURE_SQL__ADMINPASSWORD` in `.env.{env_name}` which are required inputs for creating SQL databases.
     > If you're provisioning an existing environment, you don't need this step.
-2. You need to grant permission to user assigned identity manually after provisioning a new environment. This [document](https://aka.ms/teamsfx-add-azure-sql) includes tutorials about how to access SQL databases using user assigned identity.
+2. You need to grant permission to user assigned identity manually after provisioning a new environment. Here're the steps:
+   1. Go to `env/.env.{envName}` and find SQL Server resource id. The resource id usually saved in `PROVISIONOUTPUT__AZURESQLOUTPUT__SQLRESOURCEID` environment variable and has this pattern: `/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{sql_server_name}`. Record the resource group name and SQL Server name, they will be used later.
+   2. Go to `env/.env.{envName}` and find SQL Server database name. The database name usually saved in `PROVISIONOUTPUT__AZURESQLOUTPUT__DATABASENAME` environment variable.
+   3. Go to `env/.env.{envName}` and find User Assigned Identity resource id. The resource id usually saved in `PROVISIONOUTPUT__IDENTITYOUTPUT__IDENTITYRESOURCEID` environment variable and has this pattern `/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.ManagedIdentity/userAssignedIdentities/{user_assigned_identity_name}`. Record the User Assigned Identity name, it will be used later.
+   4. Configure AAD admin in SQL Database. You can follow [set AAD admin](https://docs.microsoft.com/en-us/azure/azure-sql/database/authentication-aad-configure?tabs=azure-powershell#provision-azure-ad-admin-sql-database) to set AAD admin for the SQL Server found in step i. Usually you can use the **account logged-in Azure** as AAD admin.
+   5. Go to your SQL Database found in step ii, login using the AAD admin
+![image](https://user-images.githubusercontent.com/16605901/217272776-36aeb5ba-ceb7-4922-ae22-c9553f3bb501.png)
+
+   6. Create contained database users. Replace `{user_assigned_identity_name}` with the value from step iii in following Transact-SQL and execute:
+      ```
+      CREATE USER [{user_assigned_identity_name}] FROM EXTERNAL PROVIDER;
+      go
+      sp_addrolemember  'db_datareader',  '{user_assigned_identity_name}';
+      go
+      sp_addrolemember  'db_datawriter',  '{user_assigned_identity_name}';
+      go
+      ```
+
+   7. If there are multiple databased in your project, add User Assigned Identity to all of them.
 
 ### Provision APIM service
 
