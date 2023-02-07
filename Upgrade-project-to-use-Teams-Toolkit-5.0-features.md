@@ -1,10 +1,32 @@
-Teams Toolkit continuously evolves to offer more powerful features for developers. A group of new features has been made available in the latest VS Code Teams Toolkit pre-release, such as customizing Teams Toolkit's lifecycle definition. These new features will require an update to your existing project structure. Teams Toolkit can automatically upgrade your project.
+Teams Toolkit continuously evolves to offer more powerful features for developers. Teams Toolkit 5.0 provides following new features to help you better build your existing Teams app project using Teams Toolkit:
+1. Customizing Teams Toolkit's lifecycle definition
+2. Integrating with environment variables
+3. More customizable VS Code tasks to local debug your app
 
-> Please note that the new features will be enabled by default in the future release of Teams Toolkit. We thrive to make Teams Toolkit compatible with existing projects but long term backwards compatibility is not 100% guaranteed, thus we strongly recommend updating your project configurations to continue using the latest Teams Toolkit.
+These new features will require an update to your existing project structure. Teams Toolkit can automatically upgrade your project with your consent.
+
+> Please note that the new features will be enabled by default in the future release of Teams Toolkit. We thrive to make Teams Toolkit compatible with existing projects but long-term backwards compatibility is not 100% guaranteed, thus we strongly recommend updating your project configurations to continue using the latest Teams Toolkit.
+
+## FAQ about the upgrade
+### Q: Will the upgrade impact my source code?
+
+A: No. The upgrade only changes the files used by Teams Toolkit. You can refer [File Structure Change](#file-structure-change) to learn more about the possible changes.
+
+### Q: Can I go back to previous project?
+
+A: Yes. The upgrade will backup changed files in your project. You can refer [How to roll back](#how-to-roll-back) to roll back the changes.
+
+### Q: Can I postpone the upgrade?
+
+A: If you do not want to upgrade temporary, you can use VS Code Teams Toolkit 4.X / TeamsFx CLI 1.X / Visual Studio 2022 17.4 to develop your projects.
 
 ## How to Upgrade
 
-Teams Toolkit automatically upgrades your project without changing your existing application code.
+Teams Toolkit can automatically upgrade your project with your consent. To trigger upgrade, you can:
+1. Trigger any Teams Toolkit command, Teams Toolkit will pop up dialog to confirm upgrade.
+    > You need to trigger the expected command again after upgrade.
+2. Open VS Code command palette (Shift + Command + P (Mac) / Ctrl + Shift + P (Windows/Linux)) and run `Teams: Upgrade project` command.
+3. Click Teams Toolkit sidebar in VS Code, and click `Upgrade project` button.
 
 > We recommend using git to track changes during upgrade.
 
@@ -21,7 +43,7 @@ Teams Toolkit performs the following changes to your project during upgrade.
 3. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
     > This step also renamed `appPackage/manifest.template.json` to `appPackage/manifest.json`
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
-4. Moved `templates/appPackage/aad.template.json` to `aad.manifest.json` and updated placeholders in it per latest tooling's requirement.
+4. If your project contains `templates/appPackage/aad.template.json`, moved it to `aad.manifest.json` and updated placeholders in it per latest tooling's requirement.
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
 5. Updated `.vscode/tasks.json` and `.vscode/launch.json`.
 6. Updated `.gitignore` to ignore new environment files.
@@ -37,8 +59,8 @@ If you still want to restore your project configuration after the upgrade is suc
     > You can safely overwrite any existing files if you didn't change the files after upgrade.
 2. Remove the new folders / files mentioned in [File Changes](#file-changes) section:
     * teamsapp.yml and teamsapp.local.yml
-    * aad.manifest.template.json
-    * teamsAppEnv folder
+    * aad.manifest.json
+    * env folder
     * appPackage folder
 
 ## Known issues
