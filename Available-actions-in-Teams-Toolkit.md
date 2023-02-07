@@ -58,7 +58,7 @@ This action will create a new Teams app for you if TEAMS_APP_ID environment vari
 * TEAMS_APP_TENANT_ID: The tenant id for M365 account.
 
 # teamsApp/update
-Apply the Teams app manifest to an existing Teams app. Will use the app id in manifest.json file to determine which Teams app to update.
+Apply the Teams app manifest to an existing Teams app in Teams Developer Portal. Will use the app id in manifest.json file to determine which Teams app to update.
 
 ## Syntax:
 ```
