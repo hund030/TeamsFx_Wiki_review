@@ -5,11 +5,16 @@ Teams Toolkit checks the following prerequisites during the debug process:
 * Node.js, applicable for the following project types:
   |Project type|Node.js LTS version|
   | --- | --- |
-  |Tab | 14, **16 (recommended)** |
-  |SPFx Tab with SPFx v1.15 | 14, **16 (recommended)**|
-  |SPFx Tab with SPFx v1.16-beta.1 | **16 (recommended)**|
-  |Bot |  14, **16 (recommended)** |
-  |Message extension | 14, **16 (recommended)** |
+  | Notification Bot (Restify) | 14, 16, 18 |
+  | Notification Bot (Http Trigger / Timer Trigger) | 14, 16, 18 (preview) |
+  | Command Bot | 14, 16, 18 |
+  | Workflow Bot| 14, 16, 18 |
+  | Dashboard Tab | 14, 16, 18 |
+  | SSO-enabled Tab | 14, 16, 18 |
+  | SPFx Tab | 16 |
+  | Tab | 14, 16, 18 |
+  | Bot |  14, 16, 18 |
+  | Message extension | 14, 16, 18 |
   
 * Microsoft 365 account with valid credentials, the Teams toolkit prompts you to sign in to Microsoft 365 account, if you haven't signed in.
 
@@ -55,13 +60,18 @@ In case the Teams Toolkit fails to install prerequisites for you, you can manual
 
 Go to [the official site](https://nodejs.org/en/about/releases/) to download and install the node.js. You may check for the node.js version requirements for differnet project types:
 
-|Project type|Node.js LTS version|
-| --- | --- |
-|Tab | 14, **16 (recommended)** |
-|SPFx Tab with SPFx v1.15 | 14, **16 (recommended)**|
-|SPFx Tab with SPFx v1.16-beta.1 | **16 (recommended)**|
-|Bot |  14, **16 (recommended)** |
-|Message extension | 14, **16 (recommended)** |
+  |Project type|Node.js LTS version|
+  | --- | --- |
+  | Notification Bot (Restify) | 14, 16, 18 |
+  | Notification Bot (Http Trigger / Timer Trigger) | 14, 16, 18 (preview) |
+  | Command Bot | 14, 16, 18 |
+  | Workflow Bot| 14, 16, 18 |
+  | Dashboard Tab | 14, 16, 18 |
+  | SSO-enabled Tab | 14, 16, 18 |
+  | SPFx Tab | 16 |
+  | Tab | 14, 16, 18 |
+  | Bot |  14, 16, 18 |
+  | Message extension | 14, 16, 18 |
 
 > Note: Please restart all your Visual Studio Code instances after the installation is finished.
 
@@ -92,7 +102,7 @@ Go to [the official website](https://docs.microsoft.com/azure/azure-resource-man
 
 ### NodeNotFound
 
-> Cannot find Node.js. Go to https://nodejs.org/about/releases/ to install Node.js (v16 is recommended).
+> Cannot find Node.js. Go to https://nodejs.org/about/releases/ to install Node.js.
 
 As the Teams Toolkit project is implemented by `Node.js`, it's required to install the npm pacakges and run the project in local.  
 
@@ -100,7 +110,7 @@ To resolve this, please refer to [How to install Node.js?](#how-to-install-nodej
 
 ### NodeNotSupported (Azure hosting)
 
-> Node.js (*node_version*) is not in the supported version list (v14, v16).
+> Node.js (*node_version*) is not in the supported version list (v14, v16, v18).
 
 When `Azure` is selected as the hosting type and the project does not contain Azure Functions, only LTS versions (v14 and v16) of Node.js are supported by Teams Toolkit currently, please make sure the installed Node.js meets this requirement. In addition, **Node v16 (LTS)** would be recommended to be installed.
 
@@ -108,9 +118,9 @@ To resolve this, please refer to [How to install Node.js?](#how-to-install-nodej
 
 ### NodeNotSupported (Azure Functions)
 
-> Node.js (*node_version*) is not in the supported version list (v14, v16).
+> Node.js (*node_version*) is not in the supported version list (v14, v16, v18).
 
-When `Azure` is selected as the hosting type and the project contains Azure Functions, only LTS versions (v14 and v16) of Node.js are supported by Teams Toolkit currently, please make sure the installed Node.js meets this requirement. In addition, **Node v16 (LTS)** would be recommended to be installed.
+When `Azure` is selected as the hosting type and the project contains Azure Functions, only LTS versions (v14, v16, v18) of Node.js are supported by Teams Toolkit currently, please make sure the installed Node.js meets this requirement. In addition, **Node v16 (LTS)** would be recommended to be installed.
 
 To resolve this please refer to [How to install Node.js?](#how-to-install-nodejs) to install the supported version of `Node.js`.
 
