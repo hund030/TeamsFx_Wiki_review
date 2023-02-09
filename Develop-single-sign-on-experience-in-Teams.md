@@ -28,7 +28,7 @@ In this tutorial you will learn:
 
 > Note: You can find detail info about Azure AD app manifest [here](https://learn.microsoft.com/azure/active-directory/develop/reference-app-manifest).
 
-Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-tab) to `./`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
+Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-tab) to `./aad.manifest.json`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
 
 ### Teams app manifest
 
@@ -83,10 +83,10 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 ```yml
 - uses: aadApp/update
   with:
-    manifestPath: "./aad.manifest.template.json"
+    manifestPath: "./aad.manifest.json"
     outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
 ```
-> Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.template.json`) if you have modify the path of this file.
+> Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.json`) if you have modify the path of this file.
 
 > Note: For local you need to place `aad/update` after `file/updateEnv` action since `aad/update` will consume output of `file/updateEnv`.
 
@@ -133,7 +133,7 @@ You can also find sample for SSO enabled Tab [here](https://github.com/OfficeDev
 ### Azure AD app manifest
 > Note: You can find detail info about Azure AD app manifest [here](https://learn.microsoft.com/azure/active-directory/develop/reference-app-manifest).
 
-Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-bot) to `./`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
+Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-bot) to `./aad.manifest.json`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
 
 ### Teams app manifest
 
@@ -201,10 +201,10 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 ```yml
 - uses: aadApp/update
   with:
-    manifestPath: "./aad.manifest.template.json"
+    manifestPath: "./aad.manifest.json"
     outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
 ```
-> Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.template.json`) if you have modify the path of this file.
+> Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.json`) if you have modify the path of this file.
 
 #### `script/run.js`
 Open `teamsfx/script/run.js` and add following lines in `set up environment variables` section:
