@@ -313,11 +313,10 @@ You can find your existing messaging endpoint in your "Azure Bot Service" -> "Co
 
 ![image](https://user-images.githubusercontent.com/103554011/218385031-5e93ed85-e136-4d7f-88cd-335043b36c38.png)
 
+You can set `BOT_DOMAIN` in environment files under the `env` folder.
 
+![image](https://user-images.githubusercontent.com/103554011/218389668-9983862d-2292-49b7-9602-7da4038e2633.png)
 
+If you are upgrading a project created by Teams Toolkit v4.x.x, `BOT_DOMAIN` can be found in `.fx/states/state.{env}.json` under `fx-resource-bot.domain`.
 
-
-
-
-
-
+![image](https://user-images.githubusercontent.com/103554011/218391009-d439be60-b62e-4c10-b833-196b37c1bd7d.png)
