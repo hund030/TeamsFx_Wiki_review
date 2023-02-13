@@ -349,7 +349,7 @@ This action will create or update the bot registration on [dev.botframework.com]
       channels: # Optional. The channel configurations of the bot registration.
         - name: msteams # Required. The name of Microsoft Teams channel.
           callingWebhook: <your-calling-webhook> # Optional. The calling webhook of Microsoft Teams channel.
-        - name: outlook # Required. The name of Outlook channel.
+        - name: m365extensions # Required. The name of Microsoft 365 Extensions channel.
 ```
 
 ## Output:
