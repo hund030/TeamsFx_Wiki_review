@@ -1,4 +1,4 @@
-Teams Toolkit enables developers to build Teams applications that bring their existing LOB / ISV / SaaS application into Teams with Teams-native integration constructs such as messaging notifications, messaging interactions, and tab support.
+Teams Toolkit enables developers to bring their existing internal and SaaS applications into Teams with Teams-native integration constructs such as messaging notifications, messaging interactions, and tab support.
 
 At the same time, Teams Toolkit helps developers simplify the cloud infrastructure and deployment processes that are required to run their application. Developers can leverage existing cloud resources, leverage existing cloud infrastructure source code, or use Teams Toolkit’s opinionated templates to provision and deploy their application.
 
