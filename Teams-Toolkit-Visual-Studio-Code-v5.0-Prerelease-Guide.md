@@ -304,3 +304,20 @@ Teams Toolkit scaffolded projects leverage ARM templates for provisioning. You c
 `AZURE_SUBSCRIPTION_ID` and `AZURE_RESOURCE_GROUP_NAME` are referenced by the `arm/deploy` action in `teamsapp.yml`. <b>[Learn more about how to customize actions](https://aka.ms/teamsfx-actions)</b>
 
 <img src='https://user-images.githubusercontent.com/103554011/217990688-4c4ee481-2020-4b44-9488-99d4756823c9.png' width='400px' />
+
+## Using existing Azure Bot Service Messaging Endpoint
+
+Teams Toolkit scaffolded bot projects use Azure Bot Service when provisioning remote resources. You can follow [Using existing Azure Active Directory app ID for bot](https://aka.ms/teamsfx-v5.0-guide#using-existing-azure-active-directory-app-id-for-bot) to use the existing bot ID and bot password. However, unlike configuring the debugging process, where `BOT_DOMAIN` is set to a tunneling URL that changes frequently, for deploying to an existing remote bot service, you need to leverage the existing `BOT_DOMAIN`.
+
+You can find your existing messaging endpoint in your "Azure Bot Service" -> "Configuration" -> "Messaging endpoint". The value for `BOT_DOMAIN` is the URL between `https://` and `/api/messages`, it should look like `resourcegroup123.azurewebsites.net`.
+
+![image](https://user-images.githubusercontent.com/103554011/218385031-5e93ed85-e136-4d7f-88cd-335043b36c38.png)
+
+
+
+
+
+
+
+
+
