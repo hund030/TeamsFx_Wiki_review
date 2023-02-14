@@ -1,4 +1,4 @@
-Follow the steps to update your teams-toolkit to the latest version. You can refer to [this](https://github.com/OfficeDev/TeamsFx/wiki/Upgrade-project-to-use-Teams-Toolkit-5.0-features) to get Teams Toolkit 5.0 features.
+Follow the steps to update your vscode teams-toolkit to the latest version. You can refer to [this](https://github.com/OfficeDev/TeamsFx/wiki/Upgrade-project-to-use-Teams-Toolkit-5.0-features) to get Teams Toolkit 5.0 features.
 # Update from vscode extension market (ready after the official release in market)
 # Update by vsix file
 1. Download vsix from [here](https://github.com/OfficeDev/TeamsFx/releases/download/vscode-extension-V3-4.99.2023021100/ms-teams-vscode-extension-4.99.2023021100.vsix)
