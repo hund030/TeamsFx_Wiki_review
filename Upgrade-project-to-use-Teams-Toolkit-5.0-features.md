@@ -231,7 +231,7 @@ The latest Teams Toolkit can resolve environment variables in your manifest / pa
 1. Add new environment variables to `env/.env.{env}` files. Each environment variable represents an old placeholders in your project.
     > If `.fx/configs/config.{env}.json` or `.fx/states/state.{env}.json` contains value for the old placeholder, you also need to copy the value to corresponding environment variable in `env/.env.{env}` files.
 
-2. Replace the old placeholders `{{xxx}}` and `{{{xxx}}}` in your manifest / parameter files with new format `${{ENV_NAME}}`. The `ENV_NAME` in the new placeholder should be same with what you added in above step.
+2. Replace the old placeholders `{{xxx}}` and `{{{xxx}}}` in your manifest / parameter files with new format `${{xxx}}`. The name used in the new placeholder should be same with the environment variable name you added in above step.
 
 The detailed steps to update the older placeholders are:
 
