@@ -140,7 +140,9 @@ If your project only contains 1 tab, bot or message extension, follow these step
 
     2. If your project is a bot app or message extension app, copy everything under `bot` folder to the new project's root folder
 
-3. Copy your ARM template to the new project
+3. Find project id under `.fx/configs/projectSettings.json`, put the value to the new project's `teamsapp.yml`'s `projectId` property
+
+4. Copy your ARM template to the new project
 
     1. Remove `azure.bicep` and `azure.parameters.json` under the new project's `infra` folder. 
 
@@ -152,7 +154,7 @@ If your project only contains 1 tab, bot or message extension, follow these step
 
     5. Update the new project's `teamsapp.yml` file, change `parameters: ./infra/azure.parameters.json` to `parameters: ./infra/azure.parameters.${{TEAMSFX_ENV}}.json`
 
-4. Copy your Teams manifest to the new project
+5. Copy your Teams manifest to the new project
 
     1. Remove everything under the new project's `appPackage` folder
 
@@ -160,9 +162,9 @@ If your project only contains 1 tab, bot or message extension, follow these step
 
     3. Rename `appPackage/manifest.template.json` to `appPackage/manifest.json`.
 
-5. If your existing project contains `templates/appPackage/aad.template.json`, copy the content of this file to `aad.manifest.json` (under root of the project folder) in your new project.
+6. If your existing project contains `templates/appPackage/aad.template.json`, copy the content of this file to `aad.manifest.json` (under root of the project folder) in your new project.
 
-6. Refer [Step 2: transform the placeholders to new format](#step-2-transform-the-placeholders-to-new-format) to update placeholders in `appPackage/manifest.json`, `aad.manifest.json` (if have) and `infra/azure.parameters.{env}.json`.
+7. Refer [Step 2: transform the placeholders to new format](#step-2-transform-the-placeholders-to-new-format) to update placeholders in `appPackage/manifest.json`, `aad.manifest.json` (if have) and `infra/azure.parameters.{env}.json`.
 
 #### Project with multiple Teams capability that hosted on Azure
 
@@ -181,7 +183,9 @@ If your project contains multiple capabilities, for example, has both tab and bo
     2. If your project contains api, copy everything under `api` folder to the new project's `api` folder
     3. If your project contains a bot or/and message extension, copy everything under `bot` folder to the new project's `bot` folder
 
-3. Copy your ARM template to the new project
+3. Find project id under `.fx/configs/projectSettings.json`, put the value to the new project's `teamsapp.yml`'s `projectId` property
+
+4. Copy your ARM template to the new project
 
     1. Remove `azure.bicep` and `azure.parameters.json` under the new project's `infra` folder. 
 
@@ -191,7 +195,7 @@ If your project contains multiple capabilities, for example, has both tab and bo
 
     4. Copy `.fx/configs/azure.parameters.{env}.json` to the new project's `infra` folder.
 
-4. Copy your Teams manifest to the new project
+5. Copy your Teams manifest to the new project
 
     1. Remove everything under the new project's `appPackage` folder
 
@@ -199,9 +203,9 @@ If your project contains multiple capabilities, for example, has both tab and bo
     
     3. Rename `appPackage/manifest.template.json` to `appPackage/manifest.json`.
 
-5. If your existing project contains `templates/appPackage/aad.template.json`, copy the content of this file to `aad.manifest.json` (under root of the project folder) in your new project.
+6. If your existing project contains `templates/appPackage/aad.template.json`, copy the content of this file to `aad.manifest.json` (under root of the project folder) in your new project.
 
-6. Refer [Step 2: transform the placeholders to new format](#step-2-transform-the-placeholders-to-new-format) to update placeholders in `appPackage/manifest.json`, `aad.manifest.json` (if have) and `infra/azure.parameters.{env}.json`.
+7. Refer [Step 2: transform the placeholders to new format](#step-2-transform-the-placeholders-to-new-format) to update placeholders in `appPackage/manifest.json`, `aad.manifest.json` (if have) and `infra/azure.parameters.{env}.json`.
 
 #### SPFx tab project
 
@@ -210,6 +214,8 @@ If you build your Teams app using SPFx, follow these steps:
 1. Use Teams Toolkit 5.0.0 to create a new SPFx tab project
 
 2. Copy everything under your project's `SPFx` folder to the new proejct's root folder
+
+3. Find project id under `.fx/configs/projectSettings.json`, put the value to the new project's `teamsapp.yml`'s `projectId` property
 
 4. Copy your Teams manifest to the new project
 
@@ -275,7 +281,7 @@ The detailed steps to update the older placeholders are:
     ```
     > You need to change the values to the actual one for your project. The values can be found in `.fx/states/state.{env}.json`. If there is no `state.{env}.json` file or `state.{env}.json` does not contain a property for the placeholder, leave the environment variable value empty.
 
-    > Value of `SECRET_AAD_APP_CLIENT_SECRET` and `SECRET_BOT_PASSWORD` can be found in `.fx/states/{env}.userdata`. You need to use Teams Toolkit 4.X to inspect the encrypted secret in this file.
+    > Value of `SECRET_AAD_APP_CLIENT_SECRET` and `SECRET_BOT_PASSWORD` can be found in `.fx/states/{env}.userdata`. You can copy the encrypted value to new place directly.
 
     > You should not change the environment variable names in above sample.
 
