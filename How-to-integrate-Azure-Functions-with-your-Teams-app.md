@@ -128,24 +128,40 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
     }
     ```
 
-1. Copy the script [run.api.js](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/script/run.api.js) to `./script` folder, and add NPM scripts for the function app start.
+1. Add `file/updateEnv` actions to deploy lifecycle in `./teamsapp.local.yml` file. This action generates environment variables.
+
+      ```yml
+      deploy:
+        - uses: file/updateEnv # Generate runtime environment variables for backend
+          with:
+            target: ./api/.localSettings
+            envs:
+              M365_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+              M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
+              M365_TENANT_ID: ${{AAD_APP_TENANT_ID}}
+              M365_AUTHORITY_HOST: ${{AAD_APP_OAUTH_AUTHORITY_HOST}}
+              ALLOWED_APP_IDS: 1fec8e78-bce4-4aaf-ab1b-5451cc387264;5e3ce6c0-2b1f-4285-8d4b-75ee78787346;0ec893e0-5785-4de6-99da-4ed124e5296c;4345a7b9-9a63-4910-a426-35363201d503;4765445b-32c6-49b0-83e6-1d93765276ca;d3590ed6-52b3-4102-aeff-aad2292ab01c;00000002-0000-0ff1-ce00-000000000000;bc59ab01-8403-45c6-8796-ac3ef710b3e3
+      ```
+
+
+1. Add NPM scripts for the function app start. It is recommended to leverage [env-cmd](https://www.npmjs.com/package/env-cmd) to using the environment from the env file.
 
       ```json
       "scripts": {
-        "dev:teamsfx": "node ../script/run.api.js ../ ../env/.env.local",
+        "dev:teamsfx": "env-cmd --silent -f .localSettings npm run dev",
         "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
         ...
       }
       ```
 
-1. Add a cli/runNpmCommand action in deploy stage in `./teamsapp.local.yml` file. This action trigger `npm install` before launching your function app.
+1. Add a cli/runNpmCommand action to deploy lifecycle in `./teamsapp.local.yml` file. This action trigger `npm install` before launching your function app.
 
       ```yml
       deploy:
         - uses: cli/runNpmCommand # Run npm command
           with:
             args: install --no-audit
-            workingDirectory: ./api
+            workingDirectory: api
       ```
 
 1. Start debugging, you will find your tab app launching with function app running behind.
