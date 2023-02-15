@@ -144,7 +144,7 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
       ```
 
 
-1. Add NPM scripts for the function app start. It is recommended to leverage [env-cmd](https://www.npmjs.com/package/env-cmd) to using the environment from the env file.
+1. Add NPM scripts to `./api/package.json` for the function app start. It is recommended to leverage [env-cmd](https://www.npmjs.com/package/env-cmd) to using the environment from the env file.
 
       ```json
       "scripts": {
