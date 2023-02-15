@@ -34,7 +34,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
 
 ### Configure Message Extension capability in Teams application manifest
 
-1. You can configure message extension in `appPackage/manifest.template.json`. You can also refer to [message extension schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#composeextensions) if you want to customize.
+1. You can configure message extension in `appPackage/manifest.json`. You can also refer to [message extension schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#composeextensions) if you want to customize.
 
     Example:
     ```json
@@ -160,7 +160,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
 
 ### Configure Message Extension capability in Teams application manifest
 
-1. You can configure message extension in `appPackage/manifest.template.json`. You can also refer to [message extension schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#composeextensions) if you want to customize.
+1. You can configure message extension in `appPackage/manifest.json`. You can also refer to [message extension schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#composeextensions) if you want to customize.
 
     Example:
     ```json
