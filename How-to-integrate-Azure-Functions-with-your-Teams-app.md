@@ -166,7 +166,7 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
         "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
         ...
       }
-      ```
+      ```F
 
 1. Add a cli/runNpmCommand action to deploy lifecycle in `./teamsapp.local.yml` file. This action trigger `npm install` before launching your function app.
 
@@ -423,7 +423,7 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
       }
     }
 
-    // The output will be persisted in .env.{envName}. Visit https://aka.ms/teamsfx-provision-arm#output for more details.
+    // The output will be persisted in .env.{envName}. Visit https://aka.ms/teamsfx-actions/arm-deploy for more details.
     output API_FUNCTION_ENDPOINT string = apiEndpoint
     output API_FUNCTION_RESOURCE_ID string = functionApp.id
     ```
