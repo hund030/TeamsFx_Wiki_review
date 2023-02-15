@@ -75,7 +75,7 @@ Apply the Teams app manifest to an existing Teams app in Teams Developer Portal.
 # teamsApp/validate
 This action will render Teams app manifest template with environment variables, validate Teams app manifest file against its schema.
 
-!NOTE: This action is currently skipped as the manifest schema has been changed. See https://github.com/OfficeDev/TeamsFx/issues/7737
+!NOTE: This action is currently skipped as the manifest schema has been changed. See [issue 7737](https://github.com/OfficeDev/TeamsFx/issues/7737). Will be supported in the future version.
 
 ## Syntax:
 ```
