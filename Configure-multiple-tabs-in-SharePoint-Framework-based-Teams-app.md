@@ -12,10 +12,10 @@ To add additional SPFx tab, please make sure:
 - You have a Microsoft 365 account to test the application. 
 
 Following are steps to add additional SPFx tab:
-1. [Scaffold additional web part](https://github.com/OfficeDev/TeamsFx/wiki/_new#scaffold-additional-web-part)
-2. [Configure SPFx tab capability in Teams application manifest](https://github.com/OfficeDev/TeamsFx/wiki/_new#configure-spfx-tab-capability-in-teams-application-manifest)
-3. [Run the capability locally](https://github.com/OfficeDev/TeamsFx/wiki/_new#run-the-capability-locally)
-4. [Move the application to cloud](https://github.com/OfficeDev/TeamsFx/wiki/_new#move-the-application-to-cloud)
+1. [Scaffold additional web part](#scaffold-additional-web-part)
+2. [Configure SPFx tab capability in Teams application manifest](#configure-spfx-tab-capability-in-teams-application-manifest)
+3. [Run the capability locally](#run-the-capability-locally)
+4. [Move the application to cloud](#move-the-application-to-cloud)
 
 ### Scaffold additional web part
 Teams Toolkit leverages Yeoman to scaffold SPFx solution and add web part. Before we start, the two packages are needed to run Yeoman:
@@ -35,7 +35,7 @@ You can use packages that are globally installed by yourself or locally installe
 ### Configure SPFx tab capability in Teams application manifest
 Teams app is represented by its manifest, where SPFx tab capability is defined. Follow these steps to add additional SPFx tab
 1. Get the new web part id from web part manifest (located at `src\src\webparts\${webPartName}\${webPartName}.manifest.json`) `id` field. 
-2. Configure your new web part in local environment by adding following static tab in `staticTabs` section in the `appPackage\manifest.template.local.json` file (Replace `${componentId}` and `${webPartName}` variable with actual value).
+2. Configure your new web part in local environment by adding following static tab in `staticTabs` section in the `appPackage\manifest.local.json` file (Replace `${componentId}` and `${webPartName}` variable with actual value).
 ```
         {
             "entityId": "${componentId}",
@@ -47,7 +47,7 @@ Teams app is represented by its manifest, where SPFx tab capability is defined. 
             ]
         }
 ```
-3. Configure your new web part in other environments by adding following static tab in `staticTabs` section in the `appPackage\manifest.template.json` file (Replace `${componentId}` and `${webPartName}` variable with actual value).
+3. Configure your new web part in other environments by adding following static tab in `staticTabs` section in the `appPackage\manifest.json` file (Replace `${componentId}` and `${webPartName}` variable with actual value).
 ```
         {
             "entityId": "${componentId}",
