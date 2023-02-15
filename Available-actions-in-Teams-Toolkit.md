@@ -320,15 +320,28 @@ This action will copy the Teams App zipped package to `teams` folder in SPFx dir
 ## Output:
 NA
 
+# m365Title/acquire
+This action will upload your app as M365 title, so it can be viewed on Outlook and Office.
+
+## Syntax
+```yml
+  - uses: m365Title/acquire
+    with:
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. The relative path to the built app package.
+```
+
+## Output
+- M365_TITLE_ID: the ID of M365 title.
+
 # file/updateJson
-This action will override or add environment viriables to target file (e.g., appsettings.Development.json)
+This action will override or add application settings to target file, in JSON format (e.g., appsettings.Development.json)
 
 ## Syntax:
-```
+```yml
   - uses: file/updateJson
     with:
-      target: ./appsettings.Development.json # Required. The relative path of project configuration file
-      appsettings: # Required.
+      target: ./appsettings.Development.json # Required. The relative path of settings file
+      appsettings: # Required. The appsettings to be generated
         BOT_ID: ${{BOT_ID}}
         BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
 ```
