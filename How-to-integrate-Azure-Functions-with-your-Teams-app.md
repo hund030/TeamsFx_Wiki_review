@@ -81,7 +81,9 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
       ]
       ```
 
-1. In `tasks.json` file, add `Start backend` and `Watch backend` tasks, and ensure `Start services` is depended by `Start services` task.
+1. In `tasks.json` file, add `Start backend` and `Watch backend` tasks.
+
+    ※ `Watch backend` task is dedicated for TypeScript project. It is no need to add it if you are using JavaScript.
 
     ```
     {
@@ -126,6 +128,18 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
         "reveal": "silent"
       }
     }
+    ```
+
+1. Add `Start backend` task to the dependsOn list of `Start application` task.
+
+    ```json
+    {
+        "label": "Start application",
+        "dependsOn": [
+            "Start frontend",
+            "Start backend"
+        ]
+    },
     ```
 
 1. Add `file/updateEnv` actions to deploy lifecycle in `./teamsapp.local.yml` file. This action generates environment variables.
@@ -203,21 +217,19 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
 
 1. We recommend setting function endpoint and function name in environment variables. In `teamsapp.local.yml` file, find the action `file/updateEnv` and add new envs.
     ```yml
-    - uses: file/updateEnv # Generate env to .env file
+    - uses: file/updateEnv # Generate runtime environment variables for tab
       with:
+        target: ./.localSettings
         envs:
-          TAB_DOMAIN: localhost:53000
-          TAB_ENDPOINT: https://localhost:53000
-          FUNC_NAME: getUserProfile
-          FUNC_ENDPOINT: http://localhost:7071
-    ```
-
-    Then update `script/run.js` script to set the environment variable in tab app service process.
-    M365_CLIENT_ID should already be set to environment.
-
-    ```js
-    process.env.REACT_APP_FUNC_NAME = envs.FUNC_NAME;
-    process.env.REACT_APP_FUNC_ENDPOINT = envs.FUNC_ENDPOINT;
+          BROWSER: none
+          HTTPS: true
+          PORT: 53000
+          SSL_CRT_FILE: ${{SSL_CRT_FILE}}
+          SSL_KEY_FILE: ${{SSL_KEY_FILE}}
+          REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+          REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
+          REACT_APP_FUNC_NAME: ${{FUNC_NAME}}
+          REACT_APP_FUNC_ENDPOINT: ${{FUNC_ENDPOINT}}
     ```
 
 1. Call your Azure Function with TeamsFx SDK.
