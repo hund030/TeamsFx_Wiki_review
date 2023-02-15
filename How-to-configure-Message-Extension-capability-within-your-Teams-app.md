@@ -157,6 +157,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
     |   |-- teamsBot.ts
     |   |-- package.json
     |-- tab/           <!--move your current source code to a new sub folder-->
+    |   |-- public/
     |   |-- src/
     |   |   |-- index.tsx
     |   |-- package.json
@@ -206,9 +207,9 @@ Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3
 Since message extensions are implemented on top of the Bot support architecture within Teams, adding Message Extension to a bot Teams app is simpler than adding to a tab Teams app.
 
 Following are the steps to add Message Extension capability to a bot app:
-1. [Create a message extension Teams app using Teams Toolkit](#create-a-message-extension-app-using-teams-toolkit).
-1. [Update manifest file](#configure-message-extension-capability-in-teams-application-manifest).
-1. [Bring message extension code to your project](#bring-message-extension-code-to-your-project).
+1. [Create a message extension Teams app using Teams Toolkit](#create-a-message-extension-app-using-teams-toolkit-1).
+1. [Update manifest file](#configure-message-extension-capability-in-teams-application-manifest-1).
+1. [Bring message extension code to your project](#bring-message-extension-code-to-your-project-1).
 
 ### Create a message extension app using Teams Toolkit
 
@@ -340,6 +341,15 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
         // Link Unfurling.
         public async handleTeamsAppBasedLinkQuery(context: TurnContext, query: any): Promise<any> {}
       }
+
+
+        async function createCardCommand(context: TurnContext, action: MessagingExtensionAction): Promise<MessagingExtensionResponse> {
+      }
+
+        async function shareMessageCommand(context: TurnContext, action: MessagingExtensionAction): Promise<MessagingExtensionResponse> {
+      }
+
+
     ```
 
 ## What’s next
