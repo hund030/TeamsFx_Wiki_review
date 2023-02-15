@@ -228,8 +228,8 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
           SSL_KEY_FILE: ${{SSL_KEY_FILE}}
           REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
           REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
-          REACT_APP_FUNC_NAME: ${{FUNC_NAME}}
-          REACT_APP_FUNC_ENDPOINT: ${{FUNC_ENDPOINT}}
+          REACT_APP_FUNC_NAME: getUserProfile
+          REACT_APP_FUNC_ENDPOINT: http://localhost:7071
     ```
 
 1. Call your Azure Function with TeamsFx SDK.
