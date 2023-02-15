@@ -193,7 +193,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
 
 ### Setup local debug environment
 
-1. Manually merge the content in `.vscode/` and `teamsapp.local.yml` folders with yours. Update the `teams.local.yml` to target your message extension code.
+1. Manually merge the content in `.vscode/` and `teamsapp.local.yml` folders with yours. Update the `teamsapp.local.yml` to target your message extension code.
 Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab) for reference.
 
 
