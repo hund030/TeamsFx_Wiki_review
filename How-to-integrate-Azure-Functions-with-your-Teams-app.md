@@ -166,7 +166,7 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
         "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
         ...
       }
-      ```F
+      ```
 
 1. Add a cli/runNpmCommand action to deploy lifecycle in `./teamsapp.local.yml` file. This action trigger `npm install` before launching your function app.
 
