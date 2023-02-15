@@ -195,7 +195,7 @@ Here are the steps to add authorization.
     }
     ```
 
-Remember in [run.api.js](#setup-local-debug-environment-in-vsc), we have set variables M365_CLIENT_ID and ALLOWED_APP_IDS in environment.
+Remember in [./teamsapp.local.yml](#setup-local-debug-environment-in-vsc), we have set variables M365_CLIENT_ID and ALLOWED_APP_IDS in environment.
 Now the Function App can only be called by those client whose client id is in the list of ALLOWED_APP_IDS or equals to M365_CLIENT_ID.
 M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab app is able to call your function.
 
@@ -249,7 +249,7 @@ You can find a complete sample [here](https://github.com/OfficeDev/TeamsFx-Sampl
    > npm i @microsoft/teamsfx & isomorphic-fetch
    ```
 
-1. Here is an example for calling the Graph API with TeamsFx SDK. We have set the environment variables in [run.api.js](#setup-local-debug-environment-in-vsc).
+1. Here is an example for calling the Graph API with TeamsFx SDK. We have set the environment variables in [./teamsapp.local.yml](#setup-local-debug-environment-in-vsc).
 
     ```ts
     import "isomorphic-fetch";
