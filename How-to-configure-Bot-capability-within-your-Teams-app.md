@@ -82,9 +82,11 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 1. Bring your own bot app code into your project. If you don't have one, you can use the bot app project previously created and copy the source code to into your current project. We suggest you to copy them into a `bot/` folder. Your folder structure will be like:
     ```
+    |-- .vscode/
     |-- appPackage/
     |-- env/
     |-- infra/
+    |--public/
     |-- bot/           <!--bot source code-->
     |   |-- index.ts
     |   |-- config.ts
@@ -98,6 +100,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     ```
     We suggest you to re-organize the folder structure and create a root package.json as:
      ```
+    |-- .vscode/
     |-- appPackage/
     |-- env/
     |-- infra/
@@ -106,7 +109,8 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     |   |-- config.ts
     |   |-- teamsBot.ts
     |   |-- package.json
-    |-- tab/           <!--move your current source code to a new sub folder-->
+    |-- tab/        <!--move your current source code to a new sub folder-->
+    |   |-- public/         
     |   |-- src/
     |   |   |-- index.tsx
     |   |-- package.json
@@ -137,7 +141,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 ### Setup local debug environment
 
-1. Manually merge the content in `.vscode/` and `teamsapp.local.yml` folders with yours. Update the `teamsapp.local.yml` and `run.js` to target your bot code.
+1. Manually merge the content in `.vscode/` and `teamsapp.local.yml` folders with yours. Update the `teamsapp.local.yml` to target your bot code.
 Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab) for reference.
 
 
@@ -158,9 +162,9 @@ Here is an [sample project](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3
 Since bot and message extension are both implemented on top of the Bot support architecture within Teams, adding bot to a message extension Teams app is simpler than adding to a tab Teams app.
 
 Following are the steps to add bot capability to a message extension app:
-1. [Create a bot Teams app using Teams Toolkit](#create-a-bot-app-using-teams-toolkit).
-1. [Update manifest file](#configure-bot-capability-in-teams-application-manifest).
-1. [Bring bot code to your project](#bring-bot-code-to-your-project).
+1. [Create a bot Teams app using Teams Toolkit](#create-a-bot-app-using-teams-toolkit-1).
+1. [Update manifest file](#configure-bot-capability-in-teams-application-manifest-1).
+1. [Bring bot code to your project](#bring-bot-code-to-your-project-1).
 
 ### Create a bot app using Teams Toolkit
 
