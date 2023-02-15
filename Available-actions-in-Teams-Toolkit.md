@@ -320,12 +320,12 @@ This action will copy the Teams App zipped package to `teams` folder in SPFx dir
 ## Output:
 NA
 
-# file/updateAppSettings
+# file/updateJson
 This action will override or add environment viriables to target file (e.g., appsettings.Development.json)
 
 ## Syntax:
 ```
-  - uses: file/updateAppSettings
+  - uses: file/updateJson
     with:
       target: ./appsettings.Development.json # Required. The relative path of project configuration file
       appsettings: # Required.
