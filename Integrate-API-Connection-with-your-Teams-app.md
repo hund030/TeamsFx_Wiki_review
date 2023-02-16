@@ -1,7 +1,7 @@
 Teams Toolkit helps you to access existing APIs for building Teams applications. These APIs are developed by your organization or third-party. 
 
 # Requirement
-Make sure that your project contains backend service, such as Azure Function or Azure bot service.
+Make sure that your project contains backend service, such as **Azure Function** or **Azure Bot Service**.
 
 # Steps to add API Connection
 The following steps help you to add API connection manually:
