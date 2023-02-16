@@ -8,7 +8,7 @@ The following steps help you to add API connection manually:
 - [Step 1: Add SDK to project](#step-1-add-sdk-to-project)
 - [Step 2: Provide ApiClient for project](#step-2-provide-apiclient-for-project)
 - [Step 3: Add Configuration for local debugging](#step-3-add-configuration-for-local-debugging)
-
+- [Step 4: Add Configuration for provision](#step-4-add-configuration-for-provision)
 
 ## Step 1: Add SDK to project
 Add a reference to the `@microsoft/teamsfx` package to `package.json`.
@@ -256,5 +256,221 @@ Append your Api connection configuration to `env/.env.local`
 ...
 // set up environment variables required by teamsfx
 TEAMSFX_API_ENDPOINT=
+```
+</details>
+
+
+## Step 4: Add Configuration for provision
+According to the `apiClient` created in Step 2, append the corresponding configuration values to to the `*.bicep` file for remote runnnig.
+
+Before provision, make sure the project already contains function or bot service. Then add the `apiClient` to the correspoing service according to your design.
+
+If the `apiClient` host in the Azure Function, please append following appSettings to `infra/azure.bicep`;
+
+If the `apiClient` host in the Bot Service, please append following appSettings to `infra/botRegistration/azurebot.bicep`;
+
+<details>
+<summary><b>Basic Auth
+</b></summary>
+
+- Host in the Azure Function, append following values to `infra/azure.bicep`
+```bicep
+...
+// Azure Functions that hosts your function code
+resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
+  ...
+      appSettings: [
+        {
+          name: 'TEAMSFX_API_ENDPOINT',
+          value: ''
+        }
+        {
+          name: 'TEAMSFX_API_USERNAME',
+          value: ''
+        }
+        {
+          name: 'TEAMSFX_API_USERNAME',
+          value: ''
+        }
+        ...
+```
+
+- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+```bicep
+...
+// Register your web service as a bot with the Bot Framework
+resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
+  ...
+  properties: {
+    TEAMSFX_API_ENDPOINT: ''
+    TEAMSFX_API_USERNAME: ''
+    TEAMSFX_API_USERNAME: ''
+    ...
+  }
+```
+</details>
+<details>
+<summary><b>Certification
+</b></summary>
+
+- Host in the Azure Function, append following values to `infra/azure.bicep`
+```bicep
+...
+// Azure Functions that hosts your function code
+resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
+  ...
+      appSettings: [
+        {
+          name: 'TEAMSFX_API_ENDPOINT',
+          value: ''
+        }
+        ...
+```
+
+- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+```bicep
+...
+// Register your web service as a bot with the Bot Framework
+resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
+  ...
+  properties: {
+    TEAMSFX_API_ENDPOINT: ''
+    ...
+  }
+```
+</details>
+<details>
+<summary><b>Azure Active Directory
+</b></summary>
+
+- Host in the Azure Function, append following values to `infra/azure.bicep`
+```bicep
+...
+// Azure Functions that hosts your function code
+resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
+  ...
+      appSettings: [
+        {
+          name: 'TEAMSFX_API_ENDPOINT',
+          value: ''
+        }
+        // Scenario 1
+        {
+          name: 'TEAMSFX_API_TENANT_ID',
+          value: ''
+        }
+        {
+          name: 'TEAMSFX_API_CLIENT_ID',
+          value: ''
+        }
+        {
+          name: 'TEAMSFX_API_CLIENT_SECRET',
+          value: ''
+        }
+        {
+          name: 'AAD_APP_OAUTH_AUTHORITY_HOST',
+          value: ''
+        }
+
+        // Scenario 2
+        {
+          name: 'TEAMSFX_API_TENANT_ID',
+          value: ''
+        }
+        {
+          name: 'TEAMSFX_API_CLIENT_ID'
+          value: '' 
+        }
+        {
+          name: 'TEAMSFX_API_CLIENT_SECRET',
+          value: ''
+        }
+        ...
+```
+
+- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+```bicep
+...
+// Register your web service as a bot with the Bot Framework
+resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
+  ...
+  properties: {
+    TEAMSFX_API_ENDPOINT: ''
+    // Scenario 1
+    TEAMSFX_API_TENANT_ID = 
+    TEAMSFX_API_CLIENT_ID = 
+    TEAMSFX_API_CLIENT_SECRET = 
+    AAD_APP_OAUTH_AUTHORITY_HOST = 
+    // Scenario 2
+    TEAMSFX_API_TENANT_ID =
+    TEAMSFX_API_CLIENT_ID =
+    TEAMSFX_API_CLIENT_SECRET =
+    ...
+  }
+```
+</details>
+<details>
+<summary><b>API Key
+</b></summary>
+
+- Host in the Azure Function, append following values to `infra/azure.bicep`
+```bicep
+...
+// Azure Functions that hosts your function code
+resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
+  ...
+      appSettings: [
+        {
+          name: 'TEAMSFX_API_ENDPOINT',
+          value: ''
+        }
+        {
+          name: 'TEAMSFX_API_API_KEY',
+          value: ''
+        }
+        ...
+```
+
+- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+```bicep
+...
+// Register your web service as a bot with the Bot Framework
+resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
+  ...
+  properties: {
+    TEAMSFX_API_ENDPOINT: ''
+    TEAMSFX_API_API_KEY: ''
+    ...
+  }
+```
+</details>
+<details>
+<summary><b>Custom Auth Implementation
+</b></summary>
+
+- Host in the Azure Function, append following values to `infra/azure.bicep`
+```bicep
+...
+// Azure Functions that hosts your function code
+resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
+  ...
+      appSettings: [
+        {
+          name: 'TEAMSFX_API_ENDPOINT',
+          value: ''
+        }
+        ...
+```
+
+- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+```bicep
+...
+// Register your web service as a bot with the Bot Framework
+resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
+  ...
+  properties: {
+    TEAMSFX_API_ENDPOINT: ''
+    ...
+  }
 ```
 </details>
