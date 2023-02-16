@@ -1,3 +1,30 @@
+# Table of Contents
+
+* [Overview](#overview)
+* [Core concepts](#core-concepts)
+  * [Teams Toolkit project](#teams-toolkit-project)
+  * [Project files](#project-files)
+  * [Lifecycles](#lifecycles)
+  * [Actions](#actions)
+  * [Environments](#environments)
+  * [Environment file definition](#environment-file-definition)
+  * [Environment file location](#environment-file-location)
+  * [Local environments](#local-environments)
+* [Reference](#reference)
+  * [yml definition](#yml-definition)
+* [Debug (F5) in Visual Studio Code](#debug-f5-in-visual-studio-code)
+* [Examples](#examples)
+  * [Customize your Ngrok configuration for debug](#customize-your-ngrok-configuration-for-debug)
+  * [Use your existing Teams app ID](#use-your-existing-teams-app-id)
+  * [Use your existing Azure Active Directory app ID](#use-your-existing-azure-active-directory-app-id)
+    * [Using existing Azure Active Directory app ID for bot](#using-existing-azure-active-directory-app-id-for-bot)
+    * [Using existing Azure Active Directory app ID for SSO](#using-existing-azure-active-directory-app-id-for-sso)
+  * [Customize Azure subscription ID and resource group](#customize-azure-subscription-id-and-resource-group)
+  * [Using existing Azure Bot Service Messaging Endpoint](#using-existing-azure-bot-service-messaging-endpoint)
+
+
+# Overview
+
 Teams Toolkit enables developers to bring their existing internal and SaaS applications into Teams with Teams-native integration constructs such as messaging notifications, messaging interactions, and tab support.
 
 At the same time, Teams Toolkit helps developers simplify the cloud infrastructure and deployment processes that are required to run their application. Developers can leverage existing cloud resources, leverage existing cloud infrastructure source code, or use Teams Toolkit’s opinionated templates to provision and deploy their application.
