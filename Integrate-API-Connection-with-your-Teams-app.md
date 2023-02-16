@@ -261,16 +261,17 @@ TEAMSFX_API_ENDPOINT=
 
 
 ## Step 4: Add Configuration for provision
-Before provision, make sure the project already contains Azure Function or Bot Service to hosting your API connection. Then add the `apiClient` to the correspoing service according to your design.
+Before provision, make sure the project has **Azure Function** or **Bot Service** to host your API connection. Then add the `apiClient` to the correspoing service according to your design.
 
-If hosting in the Azure Function, please append following appSettings to `infra/azure.bicep`;
+If hosting in the **Azure Function**, please append following appSettings to `infra/azure.bicep`
 
-If hosting in the Bot Service, please append following appSettings to `infra/botRegistration/azurebot.bicep`;
+If hosting in the **Bot Service**, please append following appSettings to `infra/botRegistration/azurebot.bicep`
+
 <details>
 <summary><b>Basic Auth
 </b></summary>
 
-- Host in the Azure Function, append following values to `infra/azure.bicep`
+- Host in the **Azure Function**, append following values to `infra/azure.bicep`
 ```bicep
 ...
 // Azure Functions that hosts your function code
@@ -292,7 +293,7 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         ...
 ```
 
-- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+- Host in the **Bot Service**, append following values to `infra/botRegistration/azurebot.bicep`
 ```bicep
 ...
 // Register your web service as a bot with the Bot Framework
@@ -310,7 +311,7 @@ resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
 <summary><b>Certification
 </b></summary>
 
-- Host in the Azure Function, append following values to `infra/azure.bicep`
+- Host in the **Azure Function**, append following values to `infra/azure.bicep`
 ```bicep
 ...
 // Azure Functions that hosts your function code
@@ -324,7 +325,7 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         ...
 ```
 
-- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+- Host in the **Bot Service**, append following values to `infra/botRegistration/azurebot.bicep`
 ```bicep
 ...
 // Register your web service as a bot with the Bot Framework
@@ -340,7 +341,7 @@ resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
 <summary><b>Azure Active Directory
 </b></summary>
 
-- Host in the Azure Function, append following values to `infra/azure.bicep`
+- Host in the **Azure Function**, append following values to `infra/azure.bicep`
 ```bicep
 ...
 // Azure Functions that hosts your function code
@@ -385,7 +386,7 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         ...
 ```
 
-- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+- Host in the **Bot Service**, append following values to `infra/botRegistration/azurebot.bicep`
 ```bicep
 ...
 // Register your web service as a bot with the Bot Framework
@@ -410,7 +411,7 @@ resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
 <summary><b>API Key
 </b></summary>
 
-- Host in the Azure Function, append following values to `infra/azure.bicep`
+- Host in the **Azure Function**, append following values to `infra/azure.bicep`
 ```bicep
 ...
 // Azure Functions that hosts your function code
@@ -428,7 +429,7 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         ...
 ```
 
-- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+- Host in the **Bot Service**, append following values to `infra/botRegistration/azurebot.bicep`
 ```bicep
 ...
 // Register your web service as a bot with the Bot Framework
@@ -445,7 +446,7 @@ resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
 <summary><b>Custom Auth Implementation
 </b></summary>
 
-- Host in the Azure Function, append following values to `infra/azure.bicep`
+- Host in the **Azure Function**, append following values to `infra/azure.bicep`
 ```bicep
 ...
 // Azure Functions that hosts your function code
@@ -459,7 +460,7 @@ resource functionApp 'Microsoft.Web/sites@2021-02-01' = {
         ...
 ```
 
-- Host in the Bot Service, append following values to `infra/botRegistration/azurebot.bicep`
+- Host in the **Bot Service**, append following values to `infra/botRegistration/azurebot.bicep`
 ```bicep
 ...
 // Register your web service as a bot with the Bot Framework
