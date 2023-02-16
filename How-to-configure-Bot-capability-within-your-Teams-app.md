@@ -225,7 +225,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
             }
         ]
     ```
-1. Modify `.vscode/task.json`. Add 2 new tasks: `Start local tunnel` and `Start bot`. Add `Start bot` to task `Build project`'s `dependOn`. Config `Start bot` and `Start frondend`'s `cwd` option since we already move tab and bot's code to `tab/` and `bot/` folder separately.
+1. Modify `.vscode/task.json`. Add 2 new tasks: `Start local tunnel` and `Start bot`. Add `Start bot` to task `Start application`'s `dependOn`. Config `Start bot` and `Start frondend`'s `cwd` option since we already move tab and bot's code to `tab/` and `bot/` folder separately.
     ```
      "tasks":[
             {
