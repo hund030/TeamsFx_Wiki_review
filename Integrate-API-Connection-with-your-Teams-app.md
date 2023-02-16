@@ -8,7 +8,7 @@ The following steps help you to add API connection manually:
 - [Step 1: Add SDK to project](#step-1-add-sdk-to-project)
 - [Step 2: Provide ApiClient for project](#step-2-provide-apiclient-for-project)
 - [Step 3: Add Configuration for local debugging](#step-3-add-configuration-for-local-debugging)
-- [Step 4: Add Configuration for provision](#step-4-add-configuration-for-provision)
+- [Step 4: Add Configuration for Azure](#step-4-add-configuration-for-azure)
 
 ## Step 1: Add SDK to project
 Add a reference to the `@microsoft/teamsfx` package to `package.json`.
@@ -260,7 +260,7 @@ TEAMSFX_API_ENDPOINT=
 </details>
 
 
-## Step 4: Add Configuration for provision
+## Step 4: Add Configuration for Azure
 Before provision, make sure the project has **Azure Function** or **Bot Service** to host your API connection. Then add the `apiClient` to the correspoing service according to your design.
 
 If hosting in the **Azure Function**, please append following appSettings to `infra/azure.bicep`
