@@ -19,7 +19,7 @@ Create a function app project with HTTP trigger in the `api` folder with Azure F
     ```
     > mkdir api
     > cd ./api
-    > func new --template "Http Trigger" --name getUserProfile
+    > func new --template "Http Trigger" --name getUserProfile --authlevel anonymous
     ```
 
 After adding function app project, your folder structure may be like:
