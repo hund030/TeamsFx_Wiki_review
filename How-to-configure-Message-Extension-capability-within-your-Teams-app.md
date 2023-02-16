@@ -145,6 +145,8 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
     |   |-- teamsBot.ts
     |   |-- package.json
     |   |-- tsconfig.json
+    |   |-- web.config
+    |   |-- .webappignore
     |-- src/            <!--your current source code-->
     |   |-- index.ts
     |-- package.json
