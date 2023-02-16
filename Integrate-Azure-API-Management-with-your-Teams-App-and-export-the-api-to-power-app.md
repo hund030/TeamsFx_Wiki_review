@@ -8,10 +8,10 @@ Azure API Management enables professional developers to publish their Teams App 
 - A client Azure AD app used to visit the backend API. You can register a new Azure AD app add a client secret according to this [document](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app). Both the client app and the web API app must be registered in the same tenant.
 
 ## Add Azure API Management resource in Azure
-1. Add the the client id and client secret of the client Azure AD app to `teamsfx/.env.dev`.
+1. Add the the client id and client secret of the client Azure AD app to `env/.env.dev`.
    ```
-   APIM_CLIENT_AAD_CLIENT_ID=
-   APIM_CLIENT_AAD_CLIENT_SECRET=
+   APIM_CLIENT_AAD_CLIENT_ID=<your-apim-client-aad-client-id>
+   APIM_CLIENT_AAD_CLIENT_SECRET=<your-apim-client-aad-client-secret>
    ```
 1. Update the parameter file `infra/azure.parameters.json`.
    ```
@@ -147,7 +147,7 @@ Azure API Management enables professional developers to publish their Teams App 
     ```
 
 ## Configure the AAD created by Teams Toolkit
-Add the client id of the client AAD to the `knownClientApplications` in the file `aad.manifest.template.json`.
+Add the client id of the client AAD to the `knownClientApplications` in the file `aad.manifest.json`.
 ```
 {
   "id": "${{AAD_APP_OBJECT_ID}}",
@@ -205,7 +205,7 @@ Add the OpenAPI document of the backend APIs to `infra/openapi.json`. The follow
 Run Teams: Provision in the cloud command in Visual Studio Code to apply the bicep to Azure.
 
 ## Create the service principle for the AAD created by Teams Toolkit
-1. The value of `AAD_APP_CLIENT_ID` can be found in environment file `teamsfx/.env.dev`.
+1. The value of `AAD_APP_CLIENT_ID` can be found in environment file `env/.env.dev`.
 1. Create the service principle.
    - Use Azure CLI
      Login with M365 account.
