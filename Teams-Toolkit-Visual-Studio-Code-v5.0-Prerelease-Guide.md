@@ -141,6 +141,8 @@ These map to the lifecycle stages in this way:
 * Deploy -> runs `deploy`
 * Publish -> runs `publish`
 
+![image](https://user-images.githubusercontent.com/103554011/219279376-89e5de4f-1d0e-4cac-b3d3-135182ff6f1a.png)
+
 # Debug (F5) in Visual Studio Code
 
 There are three files defining the details F5 steps, `.vscode/launch.json`, `.vscode/tasks.json`, and `teamsapp.local.yml`.
