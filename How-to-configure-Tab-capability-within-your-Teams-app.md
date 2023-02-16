@@ -106,15 +106,13 @@ Your folder structure may be like:
         - launch.json
         - settings.json
         - tasks.json
-      script/
-        - run.js
       env/
         - .env.local
       teamsapp.local.yml
       teamsapp.yml
     : Yes
     ```
-1. Manually merge the content in `.vscode-teamsfx`, `env` folder and `teamsapp.local.yml` file with yours. Update the `teamsapp.local.yml` and `run.js` to target your tab app code.
+1. Manually merge the content in `.vscode-teamsfx`, `env` folder and `teamsapp.local.yml` file with yours.
 Here is an sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 1. Try local debug with Visual Studio Code.
