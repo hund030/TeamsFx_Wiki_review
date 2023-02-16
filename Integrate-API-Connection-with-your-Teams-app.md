@@ -261,14 +261,11 @@ TEAMSFX_API_ENDPOINT=
 
 
 ## Step 4: Add Configuration for provision
-According to the `apiClient` created in Step 2, append the corresponding configuration values to to the `*.bicep` file for remote runnnig.
+Before provision, make sure the project already contains Azure Function or Bot Service to hosting your API connection. Then add the `apiClient` to the correspoing service according to your design.
 
-Before provision, make sure the project already contains function or bot service. Then add the `apiClient` to the correspoing service according to your design.
+If hosting in the Azure Function, please append following appSettings to `infra/azure.bicep`;
 
-If the `apiClient` host in the Azure Function, please append following appSettings to `infra/azure.bicep`;
-
-If the `apiClient` host in the Bot Service, please append following appSettings to `infra/botRegistration/azurebot.bicep`;
-
+If hosting in the Bot Service, please append following appSettings to `infra/botRegistration/azurebot.bicep`;
 <details>
 <summary><b>Basic Auth
 </b></summary>
