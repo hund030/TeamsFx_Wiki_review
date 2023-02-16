@@ -1,6 +1,6 @@
 > The content in this page is under construction and may change in the future.
 
-The page describes the available actions that can be used in `app.yml` in Teams Toolkit.
+The page describes the available actions that can be used in `teamsapp.yml` and `teamsapp.local.yml` in Teams Toolkit.
 
 # aadApp/create
 This action will create a new AAD app for you if AAD_APP_CLIENT_ID environment variable is empty.
@@ -377,14 +377,14 @@ This action will generate environment variables to `.env` file.
 ```yml
   - uses: file/updateEnv
     with: 
-      target: /path/to/your/.env/file # Optional. The path of a `.env` file. The default value is `./teamsfx/.env.${TEAMSFX_ENV}`.
+      target: /path/to/your/.env/file # Optional. If specified, this action will generate envs to the specified path. If not specified, this action will regard envs as outputs which will be persisted in current environment's .env file.
       envs: 
         <your-env-key-1>: <your-env-value-1>
         <your-env-key-2>: <your-env-value-2>
 ```
 
 ## Output:
-NA
+If `target` is specified, NA. If `target` is not specified, `envs`.
 
 # prerequisite/install
 This action will install the developing tools that are required to debug a Teams app.
