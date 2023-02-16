@@ -191,28 +191,24 @@ According to the `apiClient` created in Step 2, select the corresponding type to
 <summary><b>Basic Auth
 </b></summary>
 
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
+Append your Api connection configuration to `env/.env.local`
+```
 ...
-const envs = await utils.loadEnv(args[0], args[1]);
-
 // set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
-process.env.TEAMSFX_API_USERNAME =
-process.env.TEAMSFX_API_PASSWORD =
+TEAMSFX_API_ENDPOINT =
+TEAMSFX_API_USERNAME =
+TEAMSFX_API_PASSWORD =
 ```
 </details>
 <details>
 <summary><b>Certification
 </b></summary>
 
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
+Append your Api connection configuration to `env/.env.local`
+```
 ...
-const envs = await utils.loadEnv(args[0], args[1]);
-
 // set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
+TEAMSFX_API_ENDPOINT =
 ```
 </details>
 <details>
@@ -223,45 +219,42 @@ There are 2 scenarios here, please choose one of them.
 - Scenario 1 is reusing the project AAD app, make sure your project contains an existing AAD app.
 - Scenario 2 is using an existing AAD App.
 
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
+Append your Api connection configuration to `env/.env.local`
+```
 ...
-const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
+TEAMSFX_API_ENDPOINT =
 // Scenario 1
-process.env.TEAMSFX_API_TENANT_ID = envs.AAD_APP_TENANT_ID
-process.env.TEAMSFX_API_CLIENT_ID = envs.AAD_APP_CLIENT_ID
-process.env.TEAMSFX_API_CLIENT_SECRET = envs.SECRET_AAD_APP_CLIENT_SECRET
-process.env.AAD_APP_OAUTH_AUTHORITY_HOST = envs.AAD_APP_OAUTH_AUTHORITY_HOST
+TEAMSFX_API_TENANT_ID = 
+TEAMSFX_API_CLIENT_ID = 
+TEAMSFX_API_CLIENT_SECRET = 
+AAD_APP_OAUTH_AUTHORITY_HOST = 
 // Scenario 2
-process.env.TEAMSFX_API_TENANT_ID =
-process.env.TEAMSFX_API_CLIENT_ID =
-process.env.TEAMSFX_API_CLIENT_SECRET =
+TEAMSFX_API_TENANT_ID =
+TEAMSFX_API_CLIENT_ID =
+TEAMSFX_API_CLIENT_SECRET =
 ```
 </details>
 <details>
 <summary><b>API Key
 </b></summary>
 
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
+Append your Api connection configuration to `./env/.env.local`
+```
 ...
-const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT =
-process.env.TEAMSFX_API_API_KEY =
+TEAMSFX_API_ENDPOINT =
+TEAMSFX_API_API_KEY =
 ```
 </details>
 <details>
 <summary><b>Custom Auth Implementation
 </b></summary>
 
-Add your Api connection configuration to `teamsfx/script/run.js`
-```javascript
+Append your Api connection configuration to `env/.env.local`
+```
 ...
-const envs = await utils.loadEnv(args[0], args[1]);
 // set up environment variables required by teamsfx
-process.env.TEAMSFX_API_ENDPOINT=
+TEAMSFX_API_ENDPOINT=
 ```
 </details>
