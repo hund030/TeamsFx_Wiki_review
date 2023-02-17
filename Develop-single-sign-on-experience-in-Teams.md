@@ -392,8 +392,8 @@ server.get(
 );
 ```
 3. Override `handleTeamsMessagingExtensionQuery` interface under `src/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithSSO` to do your own query logic.
-4. Open `package.json`, ensure that `@microsoft/teamsfx` version >= 1.2.0
-5. Install `isomorphic-fetch` npm packages in your bot project.
+4. Install `@microsoft/teamsfx` in your project.
+5. Install `isomorphic-fetch` in your project.
 6. (For ts only) Install `copyfiles` npm packages in your bot project, add or update the `build` script in `src/package.json` as following
 
 ```json
