@@ -30,29 +30,33 @@ Alternative ways to send notifications to Teams:
 
 ### In Visual Studio Code
 
-1. From Teams Toolkit side bar click `Create a new Teams app` or select `Teams: Create a new Teams app` from the command palette.
+1. From Teams Toolkit side bar click `Create a new app` or select `Teams: Create a new app` from the command palette.
 
-![image](https://user-images.githubusercontent.com/11220663/165435370-99aa79b8-044f-44ea-b2a9-e42a055a3f6c.png)
+![image](notification/create-vsc-1.png)
 
-2. Select `Create a new Teams app`.
+2. Select `Start with a Teams capability`.
   
-![image](https://user-images.githubusercontent.com/11220663/168242250-34ca599f-1c9b-4c0c-80a7-ac07ebe10a1a.png)
+![image](notification/create-vsc-2.png)
 
 3. Select `Notification bot` from Scenario-based Teams app section.
 
-![image](https://user-images.githubusercontent.com/11220663/168242197-189ee9ac-79e4-4525-941d-99f6af44d8a4.png)
+![image](notification/create-vsc-3.png)
 
 4. Select triggers. You can choose from `HTTP Trigger` or `Timer Trigger`. The triggers are based on `Restify Server` (means the created app code is a restify web app) or `Azure Functions` (means the created app code is Azure Functions).
   
-![image](https://user-images.githubusercontent.com/11220663/165435740-cd795eb4-8723-4ad0-b7a2-91ebb49180e8.png)
+![image](notification/create-vsc-4.png)
 
 5. Select programming language
 
-![image](https://user-images.githubusercontent.com/11220663/165435816-e6d46074-6e0a-4186-804b-c83bfbe12b6f.png)
+![image](notification/create-vsc-5.png)
 
-6. Enter an application name and then press enter.
+6. Select a folder where to create you project. The default one is `${HOME}/TeamsApps/`.
 
-![image](https://user-images.githubusercontent.com/11220663/165435852-686deaef-119e-4311-9343-d8ef4b335516.png)
+![image](notification/create-vsc-6.png)
+
+7. Enter an application name and then press enter.
+
+![image](notification/create-vsc-7.png)
 
 ### In Visual Studio
 
@@ -89,27 +93,26 @@ The created app is a normal TeamsFx project that will contain following folders:
 
 | Folder | Contents |
 | - | - |
-| `.fx` | Project level settings and configurations |
-| `.vscode` | VSCode files for local debug |
-| `bot` | The bot source code |
-| `templates` |Templates for Teams app manifest and corresponding Azure resources|
+| `teamsapp.yml`, `teamsapp.local.yml`, `env/` | Project level settings and configurations |
+| `.vscode/` | VSCode files for local debug |
+| `appPackage/` | Templates for Teams app manifest |
+| `infra/` | Templates for Azure resources |
+| `src/` | The source code |
 
 #### Restify hosted Bot
 
-If you select `(Restify)` trigger(s), the `bot/` folder is restify web app with following content:
+If you select `(Restify)` trigger(s), the `src/` folder is restify web app with following content:
 
 | File / Folder | Contents |
 | - | - |
 | `src/adaptiveCards/` | Adaptive card templates |
 | `src/internal/` | Generated initialize code for notification functionality |
-| `src/cardModels.*s` | Adaptive card data models |
 | `src/index.*s` | The entrypoint to handle bot messages and send notifications |
-| `.gitignore` | The git ignore file to exclude local files from bot project |
-| `package.json` | The NPM package file for bot project |
+| `src/teamsBot.*s` | An empty implementation of Teams activity handler that can be extended to other bot scenarios |
 
 #### Azure Functions hosted Bot
 
-If you select `(Azure Functions)` trigger(s), the `bot/` folder is azure functions app with following content:
+If you select `(Azure Functions)` trigger(s), the `src/` folder contains azure functions code, and you will also see some other folders:
 
 | File / Folder | Contents |
 | - | - |
@@ -117,13 +120,11 @@ If you select `(Azure Functions)` trigger(s), the `bot/` folder is azure functio
 | `*Trigger/` | The function to trigger notification |
 | `src/adaptiveCards/` | Adaptive card templates |
 | `src/internal/` | Generated initialize code for notification functionality |
-| `src/cardModels.*s` | Adaptive card data models |
 | `src/*Trigger.*s` | The entrypoint of each notification trigger |
+| `src/teamsBot.*s` | An empty implementation of Teams activity handler that can be extended to other bot scenarios |
 | `.funcignore` | The azure functions ignore file to exclude local files |
-| `.gitignore` | The git ignore file to exclude local files from bot project |
 | `host.json` | The azure functions host file |
 | `local.settings.json` | The azure functions local setting file |
-| `package.json` | The NPM package file for bot project |
 
 ### For CSharp project (In Visual Studio)
 
@@ -131,13 +132,14 @@ If you selected WebApi Http trigger, the project structure would like this:
 
 | Folder | Contents |
 | - | - |
-| `Properties` | LaunchSetting file for local debug |
-| `.fx` | Project level settings and configurations |
-| `Controllers` | BotController and NotificationControllers to handle the message content |
-| `Models` | Adaptive card data models |
-| `Resources` | Adaptive card templates |
-| `Templates` | Templates for Teams app manifest and corresponding Azure resources |
-| `appsettings` | The Bot settings |
+| `teamsapp.yml`, `teamsapp.local.yml`, `env/` | Project level settings and configurations |
+| `Properties/` | LaunchSetting file for local debug |
+| `Controllers/` | BotController and NotificationControllers to handle the message content |
+| `Models/` | Adaptive card data models |
+| `Resources/` | Adaptive card templates |
+| `appPackage/` | Templates for Teams app manifest |
+| `infra/` | Templates for Azure resources |
+| `appsettings.*.json` | The runtime settings |
 | `GettingStarted.txt` | Instructions on minimal steps to wonderful|
 | `Program.cs` | Create the Teams Bot instance |
 | `TeamsBot.cs` | An empty Bot handler |
@@ -179,11 +181,15 @@ When notifying, TeamsFx SDK creates new conversation from the selected conversat
 /** Typescript **/
 // list all installation targets
 for (const target of await bot.notification.installations()) {
-    // call Bot Framework's adapter.continueConversation()
-    await target.adapter.continueConversation(target.conversationReference, async (context) => {
-        // your own bot logic
-        await context...
-    });
+    // call Bot Framework's adapter.continueConversationAsync()
+    await target.adapter.continueConversationAsync(
+        target.botAppId,
+        target.conversationReference,
+        async (context) => {
+            // your own bot logic
+            await context...
+        }
+    );
 }
 ```
 
@@ -398,13 +404,14 @@ await member?.sendAdaptiveCard(...);
 To send notification, you need to create `ConversationBot` first. (Code already generated in project)
 
 ``` typescript
-/** Javascript/Typescript: bot/src/internal/initialize.*s **/
+/** Javascript/Typescript: src/internal/initialize.*s **/
 const bot = new ConversationBot({
-    // The bot id and password to create BotFrameworkAdapter.
+    // The bot id and password to create CloudAdapter.
     // See https://aka.ms/about-bot-adapter to learn more about adapters.
     adapterConfig: {
-        appId: process.env.BOT_ID,
-        appPassword: process.env.BOT_PASSWORD,
+        MicrosoftAppId: config.botId,
+        MicrosoftAppPassword: config.botPassword,
+        MicrosoftAppType: "MultiTenant",
     },
     // Enable notification
     notification: {
@@ -452,7 +459,7 @@ You can initialize with your own adapter, or customize after initialization.
 ``` typescript
 /** Typescript **/
 // Create your own adapter
-const adapter = new BotFrameworkAdapter(...);
+const adapter = new CloudAdapter(...);
 
 // Customize your adapter, e.g., error handling
 adapter.onTurnError = ...
@@ -480,11 +487,12 @@ const myStorage = new MyStorage(...);
 
 // initialize ConversationBot with notification enabled and customized storage
 const bot = new ConversationBot({
-    // The bot id and password to create BotFrameworkAdapter.
+    // The bot id and password to create CloudAdapter.
     // See https://aka.ms/about-bot-adapter to learn more about adapters.
     adapterConfig: {
-        appId: process.env.BOT_ID,
-        appPassword: process.env.BOT_PASSWORD,
+        MicrosoftAppId: config.botId,
+        MicrosoftAppPassword: config.botPassword,
+        MicrosoftAppType: "MultiTenant",
     },
     // Enable notification
     notification: {
@@ -519,9 +527,13 @@ builder.Services.AddSingleton(sp =>
 
 **[This Sample](https://github.com/OfficeDev/TeamsFx-Samples/blob/ga/adaptive-card-notification/bot/src/storage/blobsStorage.ts)** provides a sample implementation that persists to Azure Blob Storage.
 
-> Note: It's recommended to use your own shared storage for production environment. If `storage` is not provided, a default local file storage will be used, which stores notification connections into:
+> Note-1: It's recommended to use your own shared storage for production environment. If `storage` is not provided, a default local file storage will be used, which stores notification connections into:
 >   - *.notification.localstore.json* if running locally
 >   - *${process.env.TEMP}/.notification.localstore.json* if `process.env.RUNNING_ON_AZURE` is set to "1"
+
+> Note-2: The `NotificationTargetStorage` is different from Bot Framework SDK's [*Custom Storage*](https://learn.microsoft.com/azure/bot-service/bot-builder-custom-storage).
+> The notification storage requires `read`, `write`, `delete`, `list` functionalities but Bot Framework SDK's storage usually only has `read`, `write`, `delete`, no `list`.
+> So, if you already implement your own Bot Framework SDK's storage, e.g., `botbuilder-azure-blobs.BlobsStorage`, you may still need to implement another for notification. They can share the same Blob Connection String but use different Containers.
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
 
@@ -553,7 +565,7 @@ There are two options to fix this:
 - **Send a message to your *Personal* bot or mention your bot in *GroupChat* / *Channel***. (This is to re-reach the bot service with correct installation information)
 - **Uninstall the bot app from Teams then re-debug/re-launch again**. (This is to re-send the installation event to bot service)
 
-Technically, notification target connections are stored in the persistence storage. If you are using the default local file storage, all installations will be stored under `bot/.notification.localstore.json`. Or refer to [Customize Storage](#customize-storage) to add your own storage.
+Technically, notification target connections are stored in the persistence storage. If you are using the default local file storage, all installations will be stored under `.notification.localstore.json`. Or refer to [Customize Storage](#customize-storage) to add your own storage.
 
 ### Why BadRequest/BadArgument error occurs when sending notification?
 
@@ -591,11 +603,11 @@ In the notification project, it uses persistence storage to store installation t
 
 ### How to customize the azurite listening ports?
 If azurite exits due to port in use, you can [specify another listening port](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#blob-listening-port-configuration) and update the [connection string](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azurite?tabs=visual-studio#http-connection-strings
-) of `AzureWebJobsStorage` in `bot/local.settings.json`
+) of `AzureWebJobsStorage` in `local.settings.json`
 
 ### How to extend my notification bot to support command and response
 
-1. Go to `bot\src\internal\initialize.ts(js)`, update your `conversationBot` initialization to enable command-response feature:
+1. Go to `src\internal\initialize.ts(js)`, update your `conversationBot` initialization to enable command-response feature:
 
    ![enable-command](https://user-images.githubusercontent.com/10163840/165430233-04648a2a-d637-41f0-bb17-b34ddbd609f7.png)
 
@@ -632,7 +644,7 @@ Here's the comparison of the two approaches to help you make the decision.
 ## Notification via Incoming Webhook
 Incoming Webhooks help in posting messages from apps to Teams. If Incoming Webhooks are enabled for a team in any channel, it exposes the HTTPS endpoint, which accepts correctly formatted JSON and inserts the messages into that channel. For example, you can create an Incoming Webhook in your DevOps channel, configure your build, and simultaneously deploy and monitor services to send alerts.
 
-Teams Framework has built a [sample](https://github.com/OfficeDev/TeamsFx-Samples/tree/ga/incoming-webhook-notification) that walks you through:
+Teams Framework has built a [sample](https://github.com/OfficeDev/TeamsFx-Samples/tree/release/incoming-webhook-notification) that walks you through:
 * How to create an incoming webhook in Teams.
 * How to send notifications using incoming webhooks with adaptive cards.
 
