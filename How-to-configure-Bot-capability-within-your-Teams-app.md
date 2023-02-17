@@ -32,7 +32,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 ### Configure bot capability in Teams application manifest
 
-1. You can configure bot in `appPackage/manifest.template.json`. You can also refer to [bot schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#bots) if you want to customize.
+1. You can configure bot in `appPackage/manifest.json`. You can also refer to [bot schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#bots) if you want to customize.
 
     Example: 
     ```json
@@ -151,7 +151,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 ### Setup local debug environment
 
-1. Modify `.vscode/launch.json`. Add a `Attach to Bot` configuration and config it under other configurations and compounds. You can also find this `Attach to Bot` configuration in previously created message extension project.
+1. Modify `.vscode/launch.json`. Add a `Attach to Bot` configuration and config it under other configurations and compounds. You can also find this `Attach to Bot` configuration in previously created bot project.
     ```
    "configurations":[
         ...
@@ -305,7 +305,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     deploy:
     - uses: file/updateEnv # Generate runtime environment variables
         with:
-    +      target: ./tab/.localSettings
+          target: ./tab/.localSettings
         envs:
             BROWSER: none
             HTTPS: true
@@ -315,7 +315,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
     - uses: file/updateEnv # Generate runtime environment variables
         with:
-    +      target: ./bot/.localSettings
+          target: ./bot/.localSettings
         envs:
             BOT_ID: ${{BOT_ID}}
             BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
@@ -349,7 +349,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 ### Configure bot capability in Teams application manifest
 
-1. You can configure bot in `appPackage/manifest.template.json`. You can also refer to [bot schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#bots) if you want to customize.
+1. You can configure bot in `appPackage/manifest.json`. You can also refer to [bot schema](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#bots) if you want to customize.
 
     Example:  
     ```json
@@ -397,7 +397,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 
 ### Bring bot code to your project
 
-1. If you are adding bot to a bot Teams app, then you should already have a class that extends `TeamsActivityHandler`. Bring your own bot code, or copy code from your previously created bot app to your own class. Below is an example if you copy code from Teams Toolkit created bot app:
+1. If you are adding bot to a message extension Teams app, then you should already have a class that extends `TeamsActivityHandler`. Bring your own bot code, or copy code from your previously created bot app to your own class. Below is an example if you copy code from Teams Toolkit created bot app:
 
     ```ts
       public class YourHandler extends TeamsActivityHandler{
