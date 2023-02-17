@@ -60,7 +60,7 @@ You can find your Teams Toolkit configuration files `./.yml`. AAD related change
   * For adding following environment variables when local debug:
     * REACT_APP_CLIENT_ID: AAD app client id
     * REACT_APP_START_LOGIN_PAGE_URL: AAD app client secret
-- update `script/run.js`
+- update `file/updateEnv`
   * For adding following environment variables when local debug:
     * REACT_APP_CLIENT_ID: AAD app client id
     * REACT_APP_START_LOGIN_PAGE_URL: Login start page for authentication
@@ -98,13 +98,13 @@ env:
   REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
 ```
 
-#### `script/run.js`
-Open `teamsfx/script/run.js` and add following env for local debug
-following lines in `set up environment variables` section:
-
-```env
-process.env.REACT_APP_CLIENT_ID = envs.AAD_APP_CLIENT_ID;
-process.env.REACT_APP_START_LOGIN_PAGE_URL = `${envs.TAB_ENDPOINT}/auth-start.html`;
+#### `file/updateEnv`
+Find `file/updateEnv` action for deploy in `app.local.yml` and add following env:
+```yml
+env:
+  ...
+  REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+  REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
 ```
 
 ### Update Source Code
@@ -206,16 +206,17 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 ```
 > Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.json`) if you have modify the path of this file.
 
-#### `script/run.js`
-Open `teamsfx/script/run.js` and add following lines in `set up environment variables` section:
-
-```env
-process.env.M365_CLIENT_ID = envs.AAD_APP_CLIENT_ID;
-process.env.M365_CLIENT_SECRET = envs.SECRET_AAD_APP_CLIENT_SECRET;
-process.env.M365_TENANT_ID = envs.AAD_APP_TENANT_ID;
-process.env.INITIATE_LOGIN_ENDPOINT = `${envs.BOT_ENDPOINT}/auth-start.html`;
-process.env.M365_AUTHORITY_HOST = envs.AAD_APP_OAUTH_AUTHORITY_HOST;
-process.env.M365_APPLICATION_ID_URI = `api://botid-${envs.BOT_ID}`;
+#### `file/updateEnv`
+Find `file/updateEnv` action in `app.local.yml` and add following env:
+```yml
+env:
+  ...
+  M365_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+  M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
+  M365_TENANT_ID: ${{AAD_APP_TENANT_ID}}
+  INITIATE_LOGIN_ENDPOINT: ${{BOT_ENDPOINT}}/auth-start.html
+  M365_AUTHORITY_HOST: ${{AAD_APP_OAUTH_AUTHORITY_HOST}}
+  M365_APPLICATION_ID_URI: api://botid-${{BOT_ID}}
 ```
 
 ### Update Infra
