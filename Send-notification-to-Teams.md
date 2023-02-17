@@ -531,8 +531,8 @@ builder.Services.AddSingleton(sp =>
 >   - *.notification.localstore.json* if running locally
 >   - *${process.env.TEMP}/.notification.localstore.json* if `process.env.RUNNING_ON_AZURE` is set to "1"
 
-> Note-2: The `NotificationTargetStorage` is different from Bot Framework SDK's [*Custom Storage*](https://learn.microsoft.com/azure/bot-service/bot-builder-custom-storage).
-> The notification storage requires `read`, `write`, `delete`, `list` functionalities but Bot Framework SDK's storage usually only has `read`, `write`, `delete`, no `list`.
+> Note-2: The `NotificationTargetStorage` is different from Bot Framework SDK's [*Custom Storage*](https://learn.microsoft.com/azure/bot-service/bot-builder-custom-storage).<br/>
+> The notification storage requires `read`, `write`, `delete`, `list` functionalities but Bot Framework SDK's storage usually only has `read`, `write`, `delete`, no `list`.<br/>
 > So, if you already implement your own Bot Framework SDK's storage, e.g., `botbuilder-azure-blobs.BlobsStorage`, you may still need to implement another for notification. They can share the same Blob Connection String but use different Containers.
 
 <p align="right"><a href="#in-this-tutorial-you-will-learn">back to top</a></p>
