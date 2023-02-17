@@ -164,6 +164,16 @@ You can set following values if you are using TeamsFx Bot template.
 }
 ```
 
+#### Valid Domains
+[`validDomains`](https://learn.microsoft.com/en-us/microsoftteams/platform/resources/schema/manifest-schema#validdomains) contains valid domains for websites the app expects to load within the Teams client.
+
+You can set following values if you are using TeamsFx Bot template.
+```json
+"validDomains": [
+  "${{BOT_DOMAIN}}"
+]
+```
+
 ### Teams Toolkit configuration files
 
 You can find your Teams Toolkit configuration files `./.yml`. AAD related changes and configs needs to be added into your configuration files:
