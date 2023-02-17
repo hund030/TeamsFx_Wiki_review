@@ -355,7 +355,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
     deploy:
     - uses: file/updateEnv # Generate runtime environment variables
         with:
-    +      target: ./tab/.localSettings
+          target: ./tab/.localSettings
         envs:
             BROWSER: none
             HTTPS: true
@@ -365,7 +365,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
 
     - uses: file/updateEnv # Generate runtime environment variables
         with:
-    +      target: ./bot/.localSettings
+          target: ./bot/.localSettings
         envs:
             BOT_ID: ${{BOT_ID}}
             BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
