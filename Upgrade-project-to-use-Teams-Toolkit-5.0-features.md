@@ -73,7 +73,7 @@ If your project only contains a bot, an error might occur saying `STATE__FX_RESO
 
 ## Feature changes that impact your development flow
 
-If you're using VS Code Teams Toolkit, there're some changes to existing features you should be aware of:
+There're some changes to existing features you should be aware of:
 
 ### Environment management
 
@@ -84,9 +84,11 @@ If you're using VS Code Teams Toolkit, there're some changes to existing feature
 
 ### Launch your app
 
-1. When launching your app for a remote environment, Teams Toolkit will no longer ask you to select an environment. You need to manually change environment name for `${dev:teamsAppId}` in `.vscode/launch.json` to launch your app for a certain environment.
+1. When launching your app for a remote environment in VS Code, Teams Toolkit will no longer ask you to select an environment. You need to manually change environment name for `${dev:teamsAppId}` in `.vscode/launch.json` to launch your app for a certain environment.
 
 ### Provision SQL databases
+
+If you didn't use Teams Toolkit to add SQL databases to your project, these changes won't impact your project.
 
 1. When you provision a new environment, you need to provide values for `STATE__FX_RESOURCE_AZURE_SQL__ADMIN` and `SECRET_FX_RESOURCE_AZURE_SQL__ADMINPASSWORD` in `.env.{env_name}` which are required inputs for creating SQL databases.
     > If you're provisioning an existing environment, you don't need this step.
@@ -112,6 +114,8 @@ If you're using VS Code Teams Toolkit, there're some changes to existing feature
 
 ### Provision APIM service
 
+If you didn't use Teams Toolkit to add API Management service to your project, these changes won't impact your project.
+
 1. When you provision an environment, you need to provide values for `APIM__PUBLISHEREMAIL` and `APIM__PUBLISHERNAME` in `.env.{env_name}` which are required inputs for creating or updating APIM services.
 2. You need to manually create an Azure Active Directory app for APIM service when provisioning a new environment. This [document](https://aka.ms/teamsfx-add-azure-apim) includes tutorials about how to create an Azure Active Directory app for APIM service.
 3. Teams Toolkit no longer support deploy API spec to APIM any more.
@@ -120,21 +124,32 @@ Teams Toolkit will reuse your provisioned resource when upgrading (except Bot Se
 ## Upgrade your projects manually
 
 
-This section helps you understand how to upgrade the old project template (created by Teams Toolkit 4.X) to latest structure. If you have customized the project after creation, you can make additional changes during the upgrade steps for your customized part. In general, the upgrade process contains 2 steps:
+This section helps you understand how to upgrade the old project template (created by Teams Toolkit 4.X) to latest structure. If you have customized the project after creation, you can make additional changes during the upgrade steps for your customized part.
+
+### Overview
+
+In general, the upgrade process contains 2 steps:
 
 1. Create a new project using latest Teams Toolkit and copy your source code to it
+   > Refer [Step 1: create a new project and copy your source code to it](#step-1-create-a-new-project-and-copy-your-source-code-to-it) for detailed steps
 
 2. Transform the placeholders used by old Teams Toolkit to new format
+   > Refer [Step 2: transform the placeholders to new format](#step-2-transform-the-placeholders-to-new-format) for detailed steps
 
 ### Step 1: create a new project and copy your source code to it
 
+Based on the Teams capabilities in your project, choose the guide that suitable to your project:
+* If your project only contains 1 capability (tab, bot or message extension), follow the steps in [Project with single Teams capability that hosted on Azure](#project-with-single-teams-capability-that-hosted-on-azure)
+* If your project contains multiple capabilities (tab, bot, message extension) or contains a backend api, follow the steps in [Project with multiple Teams capability that hosted on Azure](#project-with-multiple-teams-capability-that-hosted-on-azure)
+* If your project is a SPFx tab, follow the steps in [SPFx tab project](#spfx-tab-project)
+
 #### Project with single Teams capability that hosted on Azure
 
-If your project only contains 1 tab, bot or message extension, follow these steps:
+The steps in this section is prepared for project that contains only 1 capability (tab, bot or message extension).
 
-1. Use Teams Toolkit 5.0.0 to create a new project with same capability
+1. Trigger "Teams: Create a new app" command using Teams Toolkit 5.0.0 to create a new project with same capability or same scenario as your current project.
 
-2. Copy your project's source code to the new project
+2. Remove source code in the new project and copy your current project's source code to the new project
 
     1. If your project is a tab app, copy everything under `tab` folder to the new project's root folder
 
@@ -144,9 +159,9 @@ If your project only contains 1 tab, bot or message extension, follow these step
 
 4. Copy your ARM template to the new project
 
-    1. Remove `azure.bicep` and `azure.parameters.json` under the new project's `infra` folder. 
+    1. Remove everything under the new project's `infra` folder. 
 
-    2. Copy everything under `templates/azure` to the new project's `infra` folder. 
+    2. Copy everything under `templates/azure` in your current project to the new project's `infra` folder. 
 
     3. Rename `main.bicep` to `azure.bicep`.
 
@@ -158,7 +173,7 @@ If your project only contains 1 tab, bot or message extension, follow these step
 
     1. Remove everything under the new project's `appPackage` folder
 
-    2. Copy everything under your existing project's `templates/appPackage` folder to `appPackage` in your new project
+    2. Copy everything except `aad.template.json` (if have) under your existing project's `templates/appPackage` folder to `appPackage` in your new project
 
     3. Rename `appPackage/manifest.template.json` to `appPackage/manifest.json`.
 
@@ -168,7 +183,7 @@ If your project only contains 1 tab, bot or message extension, follow these step
 
 #### Project with multiple Teams capability that hosted on Azure
 
-If your project contains multiple capabilities, for example, has both tab and bot, follow these steps:
+The steps in this section is prepared for project that contains multiple 1 capabilities (tab, bot or message extension), or contains a backend api.
 
 1. Download sample project based on your project's capabilities
     | Capabilities | Sample project location |
@@ -187,9 +202,9 @@ If your project contains multiple capabilities, for example, has both tab and bo
 
 4. Copy your ARM template to the new project
 
-    1. Remove `azure.bicep` and `azure.parameters.json` under the new project's `infra` folder. 
+    1. Remove everything under the new project's `infra` folder. 
 
-    2. Copy everything under `templates/azure` to the new project's `infra` folder. 
+    2. Copy everything under `templates/azure` in your current project to the new project's `infra` folder. 
 
     3. Rename `main.bicep` to `azure.bicep`.
 
@@ -199,7 +214,7 @@ If your project contains multiple capabilities, for example, has both tab and bo
 
     1. Remove everything under the new project's `appPackage` folder
 
-    2. Copy everything under your existing project's `templates/appPackage` folder to `appPackage` in your new project
+    2. Copy everything except `aad.template.json` (if have) under your existing project's `templates/appPackage` folder to `appPackage` in your new project
     
     3. Rename `appPackage/manifest.template.json` to `appPackage/manifest.json`.
 
@@ -209,11 +224,11 @@ If your project contains multiple capabilities, for example, has both tab and bo
 
 #### SPFx tab project
 
-If you build your Teams app using SPFx, follow these steps:
+The steps in this section is prepared SPFx tab project.
 
-1. Use Teams Toolkit 5.0.0 to create a new SPFx tab project
+1. Trigger "Teams: Create a new app" command using Teams Toolkit 5.0.0 to create a new SPFx tab project
 
-2. Copy everything under your project's `SPFx` folder to the new proejct's root folder
+2. Copy everything under your project's `SPFx` folder to the new project's root folder
 
 3. Find project id under `.fx/configs/projectSettings.json`, put the value to the new project's `teamsapp.yml`'s `projectId` property
 
@@ -232,64 +247,112 @@ If you build your Teams app using SPFx, follow these steps:
 
 ### Step 2: transform the placeholders to new format
 
-The latest Teams Toolkit can resolve environment variables in your manifest / parameter files, which can be easily integrated with different engineering system. This requires you to update the placeholders in your existing manifest / parameter files. For every file, you need to:
+The latest Teams Toolkit can resolve environment variables in your manifest / parameter files, which can be easily integrated with different engineering system. This requires you to update the placeholders in your existing manifest / parameter files. 
 
-1. Add new environment variables to `env/.env.{env}` files. Each environment variable represents an old placeholders in your project.
+#### Overview
+For every manifest or parameter file, you need to do following things. This is just an overview, you can find more details in [Steps to update the old placeholders](#steps-to-update-the-old-placeholders). If you're not familiar with 
+
+1. Add new environment variables to `env/.env.{env}` files. Each environment variable represents an old placeholder in your project.
     > If `.fx/configs/config.{env}.json` or `.fx/states/state.{env}.json` contains value for the old placeholder, you also need to copy the value to corresponding environment variable in `env/.env.{env}` files.
 
 2. Replace the old placeholders `{{xxx}}` and `{{{xxx}}}` in your manifest / parameter files with new format `${{xxx}}`. The name used in the new placeholder should be same with the environment variable name you added in above step.
 
-The detailed steps to update the older placeholders are:
+#### Steps to update the old placeholders
 
-1. Replace `{{config.xxx}}` placeholders in your manifest / parameter files. Copy following sample snippet to `env/.env.{env}` and update your manifest / parameter files to reference the environment variables in the samples.
-    ```
-    COLOR_ICON=resources/color.png # use ${{COLOR_ICON}} to replace the old placeholder {{config.manifest.icons.color}}
-    OUTLINE_ICON=resources/outline.png # use ${{OUTLINE_ICON}} to replace the old placeholder {{config.manifest.icons.outline}}
-    DESCRIPTION_SHORT=Short description of myapp # use ${{DESCRIPTION_SHORT}} to replace the old placeholder {{config.manifest.appName.short}}
-    DESCRIPTION_FULL=Full description of myapp # use ${{DESCRIPTION_FULL}} to replace the old placeholder {{config.manifest.appName.full}}
-    APP_NAME_SHORT=myapp # use ${{APP_NAME_SHORT}} to replace the old placeholder {{config.manifest.description.short}}
-    APP_NAME_FULL=Full name for myapp # use ${{APP_NAME_FULL}} to replace the old placeholder {{config.manifest.description.full}}
-    ```
-    > You need to change the values to the actual one for your project. The values can be found in `.fx/configs/config.{env}.json`. You can also change the environment variable names as you want.
+1. Replace `{{config.xxx}}` placeholders in `appPackage/manifest.json`, `aad.manifest.json` and `infra/azure.parameters.{env}.json` files.
+    1. Copy following sample snippet to `env/.env.{env}`.
+        ```
+        COLOR_ICON=resources/color.png
+        OUTLINE_ICON=resources/outline.png
+        DESCRIPTION_SHORT=Short description of myapp
+        DESCRIPTION_FULL=Full description of myapp
+        APP_NAME_SHORT=myapp
+        APP_NAME_FULL=Full name for myapp
+        ```
+        > You need to change the values to the actual one for your project. The values can be found in `.fx/configs/config.{env}.json`. You can also change the environment variable names as you want.
+        > Your project may not use all the placeholders in the sample, you can delete the unused one.
 
-    > Your project may not use all the placeholders in the sample, you can delete the unused one.
-    
-    > If your project uses additional `{{config.xxx}}` placeholders, you can refer the sample to add additional environment variables.
+    2. Open `manifest.json`, `aad.manifest.json` and `azure.parameters.{env}.json`, replace every old placeholder in below table to the new one.
+        | Old placeholder | New placeholder |
+        | --- | --- |
+        | {{config.manifest.icons.color}} | ${{COLOR_ICON}} |
+        | {{config.manifest.icons.outline}} | ${{OUTLINE_ICON}} |
+        | {{config.manifest.appName.short}} | ${{DESCRIPTION_SHORT}} |
+        | {{config.manifest.appName.full}} | ${{DESCRIPTION_FULL}} |
+        | {{config.manifest.description.short}} | ${{APP_NAME_SHORT}} |
+        | {{config.manifest.description.full}} | ${{APP_NAME_FULL}} |
+        
+        > If your project uses additional `{{config.xxx}}` placeholders, you can refer the sample to add additional environment variables.
 
-2. Replace `{{{state.fx-resource-aad-app-for-teams.applicationIdUris}}}` placeholder.
-    1. If your project only enables SSO for tab, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/${{AAD_APP_CLIENT_ID}}`
-    2. If your project only enables SSO for bot or message extension, convert it to `api://botid-${{BOT_ID}}`
-    3. If your project enables SSO for both and bot / message extension, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/botid-${{BOT_ID}}`
-        > The `{{state.fx-resource-frontend-hosting.domain}}` with be replaced again in later step, don't worry on having this placeholder temporary
+2. Replace `{{{state.fx-resource-aad-app-for-teams.applicationIdUris}}}` placeholder in `appPackage/manifest.json`, `aad.manifest.json` and `infra/azure.parameters.{env}.json` files.
+    * If you do not use any SSO functionality and your project does not require an AAD application, you can remove following redundant things in your project
+        1. Remove `aad.manifest.json` file
+        2. Remove `aadApp/create` and `aadApp/update` actions in `teamsapp.yml` and `teamsapp.local.yml`
+        3. Remove `webApplicationInfo` property in `appPackage/manifest.json`
+    * If your project only enables SSO for tab, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/${{AAD_APP_CLIENT_ID}}`
+    * If your project only enables SSO for bot or message extension, convert it to `api://botid-${{BOT_ID}}`
+    * If your project enables SSO for both and bot / message extension, convert it to `api://{{state.fx-resource-frontend-hosting.domain}}/botid-${{BOT_ID}}`
 
-3. Replace `{{state.fx-resource-aad-app-for-teams.frontendEndpoint}}` to `{{state.fx-resource-frontend-hosting.endpoint}}`
+    > The `{{state.fx-resource-frontend-hosting.domain}}` with be replaced again in later step, don't worry on having this placeholder temporary
+
+3. Replace following placeholders to the new one in `aad.manifest.json` file.
+    | Old placeholder | New placeholder |
+    | --- | --- |
+    | {{state.fx-resource-aad-app-for-teams.frontendEndpoint}} | {{state.fx-resource-frontend-hosting.endpoint}} |
+    | {{state.fx-resource-aad-app-for-teams.botEndpoint}} | {{state.fx-resource-bot.siteEndpoint}} |
+
     > The new placeholder will be replaced again in later step, don't worry on having this placeholder temporary
 
-3. Replace part of `{{state.xxx}}` placeholders generated by Teams Toolkit. Copy following sample snippet to `env/.env.{env}` and update your manifest / parameter files to reference the environment variables in the samples.
-    ```
-    TEAMS_APP_TENANT_ID=00000000-0000-0000-0000-000000000000 # use ${{TEAMS_APP_TENANT_ID}} to replace the old placeholder {{state.fx-resource-appstudio.tenantId}}
-    TEAMS_APP_ID=00000000-0000-0000-0000-000000000000 # use ${{TEAMS_APP_ID}} to replace the old placeholder {{state.fx-resource-appstudio.teamsAppId}}
-    AAD_APP_CLIENT_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_CLIENT_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.clientId}} or {{state.aad-app.clientId}}
-    SECRET_AAD_APP_CLIENT_SECRET=your-aad-app-secret # use ${{SECRET_AAD_APP_CLIENT_SECRET}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.clientSecret}} or {{state.aad-app.clientSecret}}
-    AAD_APP_OBJECT_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_OBJECT_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.objectId}} or {{state.aad-app.objectId}}
-    AAD_APP_ACCESS_AS_USER_PERMISSION_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.oauth2PermissionScopeId}} or {{state.aad-app.oauth2PermissionScopeId}}
-    AAD_APP_TENANT_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_TENANT_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.tenantId}} or {{state.aad-app.tenantId}}
-    AAD_APP_OAUTH_AUTHORITY_HOST=https://login.microsoftonline.com # use ${{AAD_APP_OAUTH_AUTHORITY_HOST}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.oauthHost}} or {{state.aad-app.oauthHost}}
-    AAD_APP_OAUTH_AUTHORITY=https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_OAUTH_AUTHORITY}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.oauthAuthority}} or {{state.aad-app.oauthAuthority}}
-    BOT_ID=00000000-0000-0000-0000-000000000000 # use ${{BOT_ID}} to replace the old placeholder {{state.fx-resource-bot.botId}} or {{state.teams-bot.botId}}
-    SECRET_BOT_PASSWORD=your-aad-app-secret # use ${{SECRET_BOT_PASSWORD}} to replace the old placeholder {{state.fx-resource-bot.botPassword}} or {{state.teams-bot.botPassword}}
-    ```
-    > You need to change the values to the actual one for your project. The values can be found in `.fx/states/state.{env}.json`. If there is no `state.{env}.json` file or `state.{env}.json` does not contain a property for the placeholder, leave the environment variable value empty.
+4. Replace `{{state.xxx}}` placeholders in `appPackage/manifest.json`, `aad.manifest.json` and `infra/azure.parameters.{env}.json` files.
+    1. Copy following sample snippet to `env/.env.{env}` and update your manifest / parameter files to reference the environment variables in the samples.
+        ```
+        TEAMS_APP_TENANT_ID=00000000-0000-0000-0000-000000000000 # use ${{TEAMS_APP_TENANT_ID}} to replace the old placeholder {{state.fx-resource-appstudio.tenantId}}
+        TEAMS_APP_ID=00000000-0000-0000-0000-000000000000 # use ${{TEAMS_APP_ID}} to replace the old placeholder {{state.fx-resource-appstudio.teamsAppId}}
+        AAD_APP_CLIENT_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_CLIENT_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.clientId}} or {{state.aad-app.clientId}}
+        SECRET_AAD_APP_CLIENT_SECRET=your-aad-app-secret # use ${{SECRET_AAD_APP_CLIENT_SECRET}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.clientSecret}} or {{state.aad-app.clientSecret}}
+        AAD_APP_OBJECT_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_OBJECT_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.objectId}} or {{state.aad-app.objectId}}
+        AAD_APP_ACCESS_AS_USER_PERMISSION_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.oauth2PermissionScopeId}} or {{state.aad-app.oauth2PermissionScopeId}}
+        AAD_APP_TENANT_ID=00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_TENANT_ID}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.tenantId}} or {{state.aad-app.tenantId}}
+        AAD_APP_OAUTH_AUTHORITY_HOST=https://login.microsoftonline.com # use ${{AAD_APP_OAUTH_AUTHORITY_HOST}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.oauthHost}} or {{state.aad-app.oauthHost}}
+        AAD_APP_OAUTH_AUTHORITY=https://login.microsoftonline.com/00000000-0000-0000-0000-000000000000 # use ${{AAD_APP_OAUTH_AUTHORITY}} to replace the old placeholder {{state.fx-resource-aad-app-for-teams.oauthAuthority}} or {{state.aad-app.oauthAuthority}}
+        BOT_ID=00000000-0000-0000-0000-000000000000 # use ${{BOT_ID}} to replace the old placeholder {{state.fx-resource-bot.botId}} or {{state.teams-bot.botId}}
+        SECRET_BOT_PASSWORD=your-aad-app-secret # use ${{SECRET_BOT_PASSWORD}} to replace the old placeholder {{state.fx-resource-bot.botPassword}} or {{state.teams-bot.botPassword}}
+        ```
+        > You need to change the values to the actual one for your project. The values can be found in `.fx/states/state.{env}.json`. If there is no `state.{env}.json` file or `state.{env}.json` does not contain a property for the placeholder, leave the environment variable value empty.
 
-    > Value of `SECRET_AAD_APP_CLIENT_SECRET` and `SECRET_BOT_PASSWORD` can be found in `.fx/states/{env}.userdata`. You can copy the encrypted value to new place directly.
+        > Value of `SECRET_AAD_APP_CLIENT_SECRET` and `SECRET_BOT_PASSWORD` can be found in `.fx/states/{env}.userdata`. You can copy the encrypted value to new place directly.
 
-    > You should not change the environment variable names in above sample.
+        > You should not change the environment variable names in above sample.
 
-    > Your project may not use all the placeholders in the sample, you can delete the unused one.
+        > Your project may not use all the placeholders in the sample, you can delete the unused one.
 
-4. Replace remaining `{{state.xxx}}` placeholders, which is generated by ARM deployment.
-    1. Visit [arm/deploy document](https://aka.ms/teamsfx-actions/arm-deploy) to understand how Teams Toolkit convert ARM deployment output to environment variables. For example, if your project has following output in `infra/provision.bicep`
+    2. Open `appPackage/manifest.json`, `aad.manifest.json` and `infra/azure.parameters.{env}.json`, replace every old placeholder in below table to the new one.
+        | Old placeholder | New placeholder |
+        | --- | --- |
+        | {{state.fx-resource-appstudio.tenantId}} | ${{TEAMS_APP_TENANT_ID}} |
+        | {{state.fx-resource-appstudio.teamsAppId}} | ${{TEAMS_APP_ID}} |
+        | {{state.fx-resource-aad-app-for-teams.clientId}} | ${{AAD_APP_CLIENT_ID}} |
+        | {{state.aad-app.clientId}} | ${{AAD_APP_CLIENT_ID}} |
+        | {{state.fx-resource-aad-app-for-teams.clientSecret}} | ${{SECRET_AAD_APP_CLIENT_SECRET}} |
+        | {{state.aad-app.clientSecret}} | ${{SECRET_AAD_APP_CLIENT_SECRET}} |
+        | {{state.fx-resource-aad-app-for-teams.objectId}} | ${{AAD_APP_OBJECT_ID}} |
+        | {{state.aad-app.objectId}} | ${{AAD_APP_OBJECT_ID}} |
+        | {{state.fx-resource-aad-app-for-teams.oauth2PermissionScopeId}} | ${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}} |
+        | {{state.aad-app.oauth2PermissionScopeId}} | ${{AAD_APP_ACCESS_AS_USER_PERMISSION_ID}} |
+        | {{state.fx-resource-aad-app-for-teams.tenantId}} | ${{AAD_APP_TENANT_ID}} |
+        | {{state.aad-app.tenantId}} | ${{AAD_APP_TENANT_ID}} |
+        | {{state.fx-resource-aad-app-for-teams.oauthHost}} | ${{AAD_APP_OAUTH_AUTHORITY_HOST}} |
+        | {{state.aad-app.oauthHost}} | ${{AAD_APP_OAUTH_AUTHORITY_HOST}} |
+        | {{state.fx-resource-aad-app-for-teams.oauthAuthority}} | ${{AAD_APP_OAUTH_AUTHORITY}} |
+        | {{state.aad-app.oauthAuthority}} | ${{AAD_APP_OAUTH_AUTHORITY}} |
+        | {{state.fx-resource-bot.botId}} | ${{BOT_ID}} |
+        | {{state.teams-bot.botId}} | ${{BOT_ID}} |
+        | {{state.fx-resource-bot.botPassword}} | ${{SECRET_BOT_PASSWORD}} |
+        | {{state.teams-bot.botPassword}} | ${{SECRET_BOT_PASSWORD}} |
 
+5. Replace remaining `{{state.xxx}}` placeholders in `appPackage/manifest.json`, `aad.manifest.json` and `infra/azure.parameters.{env}.json` files. There placeholders are generated during ARM deployment.
+    1. Understand the rule to convert ARM deployment to environment variable names. The rule is: PROVISIONOUTPUT__`{output name in infra/provision.bicep}`__`{output property name in infra/provision.bicep}`.
+        For example, if you have following output in `infra/provision.bicep`:
         ```
         output azureStorageTabOutput object = {
             teamsFxPluginId: 'teams-tab'
@@ -299,9 +362,7 @@ The detailed steps to update the older placeholders are:
             storageResourceId: azureStorageTabProvision.outputs.storageResourceId
         }
         ```
-
-        Teams Toolkit will transform them to
-
+        Teams Toolkit will transform them to following environment variables based on the rule:
         ```
         PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__TEAMSFXPLUGINID=
         PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__DOMAIN=
@@ -309,10 +370,10 @@ The detailed steps to update the older placeholders are:
         PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__INDEXPATH=
         PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__STORAGERESOURCEID=
         ```
+        
+    2. Understand how to map `{{state.xxx.xxx}}` to ARM deployment output. The middle part in `{{state.xxx.xxx}}` represents the `teamsFxPluginId` in `infra/provision.bicep`. For example, `{{state.fx-resource-frontend-hosting.endpoint}}` comes from output with `teamsFxPluginId=fx-resource-frontend-hosting`. Follow this rule to find outputs in `infra/provision.bicep` for old placeholders and figure out their new environment variable names. Add the new environment variables to `env/.env.{env}` and replace the old placeholders to reference the new environment variables in `appPackage/manifest.json`, `aad.manifest.json` and `infra/azure.parameters.{env}.json` files.
 
-    2. The middle part in `{{state.xxx}}` represents the `teamsFxPluginId` in `infra/provision.bicep`. For example, `{{state.fx-resource-frontend-hosting.endpoint}}` comes from output with `teamsFxPluginId=fx-resource-frontend-hosting`. Follow this rule to find outputs in `infra/provision.bicep` for old placeholders and figure out the new environment variable names. Add the new environment variables to `env/.env.{env}` and replace them in your manifest / parameter files.
-
-        If you don't find plugin ID in `infra/provision.bicep`, map the plugin ID from `{{state.xxx}}` to the new one based on following table
+        If you don't find plugin ID in `infra/provision.bicep`, map the plugin ID from `{{state.xxx.xxx}}` to the new one based on following table
         | old plugin ID | new plugin ID |
         | --- | --- |
         | fx-resource-frontend-hosting | teams-tab |
@@ -320,12 +381,13 @@ The detailed steps to update the older placeholders are:
         | fx-resource-bot | teams-bot |
         | fx-resource-aad-app-for-teams | aad-app |
 
-        For example, the steps to figure out the environment variable name for placeholder `{{{state.fx-resource-frontend-hosting.endpoint}}}` are:
+        For example, the steps to replace placeholder `{{{state.fx-resource-frontend-hosting.endpoint}}}` are:
            1. The plugin id for this placeholder is `fx-resource-frontend-hosting`.
            2. Refer above table, find bicep output `azureStorageTabOutput` that contains plugin id `fx-resource-frontend-hosting` or `teams-tab`.
            3. The environment variable name should be `PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT`
+           4. Replace `{{{state.fx-resource-frontend-hosting.endpoint}}}` with `{{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT}}`
 
-    3. Find `file/updateEnv` in `teamsapp.local.yml`, add the new environment variables you figured out in this step, and provide values for them when you run your app locally. For example, add `PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT` if your project contains a tab:
+    3. Find `file/updateEnv` in `teamsapp.local.yml`, add the new environment variables you figured out in previous step, and provide expected values for them when you run your app locally. For example, `PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__ENDPOINT` is expected to be `https://localhost:53000` when you run your tab app locally:
         ```
         - uses: file/updateEnv
           with:
@@ -352,6 +414,7 @@ The detailed steps to update the older placeholders are:
             "problemMatcher": "$teamsfx-local-tunnel-watch"
         }
         ```
+        > This step is only required when your project contains bot or message extension.
 
     5. Open `teamsapp.yml`, for any placeholder not added by you, replace them based on their meaning. For example, `azureStorage/deploy` requires an Azure Storage resource id, so you need to change the placeholder to `${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__STORAGERESOURCEID}}`:
         ``` yml
@@ -360,6 +423,8 @@ The detailed steps to update the older placeholders are:
             distributionPath: ./build
             resourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}} # you need to change ${{TAB_AZURE_STORAGE_RESOURCE_ID}} to ${{PROVISIONOUTPUT__AZURESTORAGETABOUTPUT__STORAGERESOURCEID}}
         ```
+
+After above steps, you should be able to develop your Teams app with Teams Toolkit 5.0. Please read [Feature changes that impact your development flow](#feature-changes-that-impact-your-development-flow) to understand how development flow changes in Teams Toolkit 5.0.
 
 ## Upgrade
 ### UpgradeAppPackageNotExist
