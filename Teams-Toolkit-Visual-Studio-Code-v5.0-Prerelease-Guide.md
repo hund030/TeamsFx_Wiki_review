@@ -223,11 +223,13 @@ Following shows the step-by-step flow after clicking F5, and the place where eac
 
 > Note, the place holder *\${**local**:teamsAppId}* or *\${**dev**:teamsAppId}* in `launch.json` means to load Teams App ID from *local* or *dev* environment. If you creates your own environment (e.g., ***test01***), you can change that to any environment (e.g., *\${**test01**:teamsAppId}*).
 
+<b>Visit [Teams Toolkit v5 VS Code Tasks](https://aka.ms/teamsfx-tasks) for more details.</b>
+
 # Examples
 
 ## Customize your Ngrok configuration for debug
 
-Teams Toolkit use ngrok for tunneling, but you could customize the tunneling settings or use your own tunneling service by modifying .`vscode/tasks.json`. Visit [teamsfx local tunnel task](https://aka.ms/teamsfx-local-tunnel-task) for more details.
+Teams Toolkit use ngrok for tunneling, but you could customize the tunneling settings or use your own tunneling service by modifying .`vscode/tasks.json`. Visit [teamsfx local tunnel](https://aka.ms/teamsfx-tasks#start-local-tunnel) for more details.
 
 ## Use your existing Teams app ID
 
