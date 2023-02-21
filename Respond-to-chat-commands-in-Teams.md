@@ -181,122 +181,227 @@ You can use the following 4 steps to add more command and response:
 
 ### Step 1: Add a command definition in manifest
 
-You can edit the manifest template file `templates\appPackage\manifest.template.json` to include:
-    * The command `title` that user type in the message compose area to trigger the command.
-    * The `command` description for this command.
+You can edit the manifest template file `appPackage\manifest.json` to include definitions of a `doSomething` command with its title and description in the `commands` array:
 
-![manifest-add-command](https://user-images.githubusercontent.com/10163840/160374446-7fd164d6-63c9-47b2-9bf1-0d6a88731e8d.png)
+```json
+"commandLists": [
+  {
+    "commands": [
+        {
+            "title": "helloWorld",
+            "description": "A helloworld command to send a welcome message"
+        },
+        {
+            "title": "doSomething",
+            "description": "A sample do something command"
+        }
+    ]
+  }
+]
+```
 
 ### Step 2: Respond with an Adaptive Card
 
-You can build your response data in text format or follow the steps bellow to use adaptive card to render rich content in Teams:
+To respond with an Adaptive Card, define your card in its JSON format:
+* For JavaScript/TypeScript: create a new file `src/adaptiveCards/doSomethingCommandResponse.json`.
+* For .NET: create a new file `Resources/DoSomethingCommandResponse.json`.
 
-* Prepare your adaptive card content in a JSON file（e.g. myCard.json) under the `bot/adaptiveCards` folder, here is a sample adaptive card JSON payload:
+```json
+{
+  "type": "AdaptiveCard",
+  "body": [
+    {
+      "type": "TextBlock",
+      "size": "Medium",
+      "weight": "Bolder",
+      "text": "Your doSomething Command is added!"
+    },
+    {
+      "type": "TextBlock",
+      "text": "Congratulations! Your hello world bot now includes a new DoSomething Command",
+      "wrap": true
+    }
+  ],
+  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+  "version": "1.4"
+}
+```
 
-    ```json
-            {
-                "type": "AdaptiveCard",
-                "body": [
-                {
-                    "type": "TextBlock",
-                    "size": "Medium",
-                    "weight": "Bolder",
-                    "text": "Your Hello World Bot is Running"
-                },
-                {
-                    "type": "TextBlock",
-                    "text": "Congratulations! Your hello world bot is running. Click the documentation below to learn more about Bots and the Teams Toolkit.",
-                    "wrap": true
-                }
-                ],
-                "actions": [
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "Bot Framework Docs",
-                    "url": "https://docs.microsoft.com/en-us/azure/bot-service/?view=azure-bot-service-4.0"
-                },
-                {
-                    "type": "Action.OpenUrl",
-                    "title": "Teams Toolkit Docs",
-                    "url": "https://aka.ms/teamsfx-docs"
-                }
-                ],
-                "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
-                "version": "1.4"
-            }
-    ```
-          
-* Import your card content into your code file where your command handler exists: `import myCard from "./adaptiveCards/myCard.json"`
+You can use the [Adaptive Card Designer](https://adaptivecards.io/designer/) to help visually design your Adaptive Card UI.
 
-* In your `handleCommandReceived` API, use `MessageBuilder.attachAdaptiveCardWithoutData` or `MessageBuilder.attachAdaptiveCard` to build a bot message activity with the adaptive card and return the message. `return MessageBuilder.attachAdaptiveCardWithoutData(myCard);`
+> Please note:
 
-> Note: If you'd like to send adaptive card with dynamic data, please refer to [this section](#how-to-build-command-response-using-adaptive-card-with-dynamic-content).
+> - Respond with an Adaptive Card is optional, you can simply respond with plain texts.
+> - If you'd like to send adaptive card with dynamic data, please refer to [this document](#how-to-build-command-response-using-adaptive-card-with-dynamic-content).
 
 ### Step 3: Handle the command
 
-1. Add a .ts/.js file (e.g. `xxxCommandHandler.ts`) under `bot/src` to handle your bot command, and include the following boilerplate code to get-started:
+#### JavaScript / TypeScript Command handler
+The TeamsFx SDK provides a convenient class, `TeamsFxBotCommandHandler`, to handle when an command is triggered from Teams conversation message. Create a new file, `src/doSomethingCommandHandler.js(ts)`:
 
-    ```typescript
-    import { Activity, TurnContext } from "botbuilder";
-    import { CommandMessage, TeamsFxBotCommandHandler, TriggerPatterns } from "@microsoft/teamsfx";
-    import { MessageBuilder } from "@microsoft/teamsfx";
+```javascript
+/** JavaScript **/
+const doSomethingCard = require("./adaptiveCards/doSomethingCommandResponse.json");
+const { AdaptiveCards } = require("@microsoft/adaptivecards-tools");
+const { CardFactory, MessageFactory } = require("botbuilder");
 
-    export class xxxCommandHandler implements TeamsFxBotCommandHandler {
-        triggerPatterns: TriggerPatterns = "<string or RegExp pattern to trigger the command>";
+class DoSomethingCommandHandler {
+  triggerPatterns = "doSomething";
 
-        async handleCommandReceived(
-            context: TurnContext,
-            message: CommandMessage
-        ): Promise<string | Partial<Activity>> {
-            // verify the command arguments which are received from the client if needed.
-            console.log(`Bot received message: ${message.text}`);
+  async handleCommandReceived(context, message) {
+    // verify the command arguments which are received from the client if needed.
+    console.log(`App received message: ${message.text}`);
 
-            // do something to process your command and return message activity as the response.
-            // You can leverage `MessageBuilder` utilities from the `@microsoft/teamsfx` SDK 
-            // to facilitate building message with cards supported in Teams.
-        }    
-    }
-    ```
+    const cardData = {
+      title: "doSomething command is added",
+      body: "Congratulations! You have responded to doSomething command",
+    };
 
-1. Provide the `triggerPatterns` that can trigger this command handler. Usually it's the command name defined in your manifest, or you can use RegExp to handle a complex command (e.g. with some options in the command message).
+    const cardJson = AdaptiveCards.declare(doSomethingCard).render(cardData);
+    return MessageFactory.attachment(CardFactory.adaptiveCard(cardJson));
+  }
+}
 
-1. Implement `handleCommandReceived` to handle the command and return a response that will be used to notify the end users. 
-* You can retrieve useful information for the conversation from the `context` parameter if needed.
-* Parse command input if needed: 
-  * `message.text`: the use input message
-  * `message.matches`: the capture groups if you uses the RegExp for `triggerPatterns` to trigger the command.
-
-### Step 4: Register the new command
-
-Open `bot\src\internal\initialize.ts` and update the call to `ConversationBot` constructor to include your new added command handlers.
+module.exports = {
+  DoSomethingCommandHandler,
+};
+```
 
 ```typescript
-export const commandBot = new ConversationBot({
-    // The bot id and password to create BotFrameworkAdapter.
-    // See https://aka.ms/about-bot-adapter to learn more about adapters.
-    adapterConfig: {
-        appId: process.env.BOT_ID,
-        appPassword: process.env.BOT_PASSWORD,
-    },
-    command: {
-        enabled: true,
-        commands: [ new HelloWorldCommandHandler(), new xxxCommandHandler() ],
-    },
+/** TypeScript **/
+import { Activity, CardFactory, MessageFactory, TurnContext } from "botbuilder";
+import {
+  CommandMessage,
+  TeamsFxBotCommandHandler,
+  TriggerPatterns,
+  MessageBuilder,
+} from "@microsoft/teamsfx";
+import doSomethingCard from "./adaptiveCards/doSomethingCommandResponse.json";
+import { AdaptiveCards } from "@microsoft/adaptivecards-tools";
+import { CardData } from "./cardModels";
+
+export class DoSomethingCommandHandler implements TeamsFxBotCommandHandler {
+  triggerPatterns: TriggerPatterns = "doSomething";
+
+  async handleCommandReceived(
+    context: TurnContext,
+    message: CommandMessage
+  ): Promise<string | Partial<Activity>> {
+    // verify the command arguments which are received from the client if needed.
+    console.log(`App received message: ${message.text}`);
+
+    const cardData: CardData = {
+      title: "doSomething command is added",
+      body: "Congratulations! You have responded to doSomething command",
+    };
+
+    const cardJson = AdaptiveCards.declare(doSomethingCard).render(cardData);
+    return MessageFactory.attachment(CardFactory.adaptiveCard(cardJson));
+  }
+}
+```
+
+#### CSharp Command Handler
+The TeamsFx .NET SDK provides an interface `ITeamsCommandHandler` for command handler. To handle when an command is triggered from Teams conversation message. Create a new file `Commands/DoSomethingCommandHandler.cs`:
+
+```csharp
+using MyCommandApp.Models;
+using AdaptiveCards.Templating;
+using Microsoft.Bot.Builder;
+using Microsoft.Bot.Schema;
+using Microsoft.TeamsFx.Conversation;
+using Newtonsoft.Json;
+
+namespace MyCommandApp.Commands
+{
+    public class DoSomethingCommandHandler : ITeamsCommandHandler
+    {
+        private readonly ILogger<HelloWorldCommandHandler> _logger;
+        private readonly string _adaptiveCardFilePath = Path.Combine(".", "Resources", "DoSomethingCommandResponse.json");
+
+        public IEnumerable<ITriggerPattern> TriggerPatterns => new List<ITriggerPattern>
+        {
+            new RegExpTrigger("doSomething")
+        };
+
+        public HelloWorldCommandHandler(ILogger<HelloWorldCommandHandler> logger)
+        {
+            _logger = logger;
+        }
+
+        public async Task<ICommandResponse> HandleCommandAsync(ITurnContext turnContext, CommandMessage message, CancellationToken cancellationToken = default)
+        {
+            _logger?.LogInformation($"App received message: {message.Text}");
+
+            // Read adaptive card template
+            var cardTemplate = await File.ReadAllTextAsync(_adaptiveCardFilePath, cancellationToken);
+
+            // Render adaptive card content
+            var cardContent = new AdaptiveCardTemplate(cardTemplate).Expand
+            (
+                new HelloWorldModel
+                {
+                    title: "doSomething command is added",
+                    body: "Congratulations! You have responded to doSomething command",
+                }
+            );
+
+            // Build attachment
+            var activity = MessageFactory.Attachment
+            (
+                new Attachment
+                {
+                    ContentType = "application/vnd.microsoft.card.adaptive",
+                    Content = JsonConvert.DeserializeObject(cardContent),
+                }
+            );
+
+            // send response
+            return new ActivityCommandResponse(activity);
+        }
+    }
+}
+```
+
+### Step 4: Register the new command
+Each new command needs to be configured in the `ConversationBot`, which powers the conversational flow of the command bot template. 
+
+```javascript
+/** JavaScript / TypeScript **/
+/** Update ConversationBot  in src/internal/initialize.js(ts) **/
+const commandApp = new ConversationBot({
+  //...
+  command: {
+    enabled: true,
+    commands: [ 
+      new HelloWorldCommandHandler(),
+      new DoSomethingCommandHandler()], // newly added command handler
+  },
 });
 ```
 
+```csharp
+/** .NET **/
+/** Update ConversationBot in Program.cs **/
+builder.Services.AddSingleton<HelloWorldCommandHandler>();
+builder.Services.AddSingleton<DoSomethingCommandHandler>(); // Add doSomething command handler to serrvice container
+builder.Services.AddSingleton(sp =>
+{
+    var options = new ConversationOptions()
+    {
+        Adapter = sp.GetService<CloudAdapter>(),
+        Command = new CommandOptions()
+        {
+            Commands = new List<ITeamsCommandHandler>
+            { 
+                sp.GetService<HelloWorldCommandHandler>(),
+                sp.GetService<DoSomethingCommandHandler>(),  // Register doSomething command handler to ConversationBot
+            }
+        }
+    };
 
-Or, use `registerCommand`/ `registerCommands` API from your `ConversationBot` instance to incrementally add your command(s) to a command bot.
-
-```
-// register a single command
-commandBot.command.registerCommand(new xxxCommandHandler());
-
-// register a set of commands
-commandBot.command.registerCommands([
-    new xxxCommandHandler(),
-    new yyyCommandHandler()
-]);
+    return new ConversationBot(options);
+});
 ```
 
 Now, you are all done with the code development of adding a new command and response into your bot app. You can just press `F5` to local debug with the command-response bot, or use provision and deploy command to deploy the change to Azure.
