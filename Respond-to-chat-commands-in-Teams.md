@@ -12,6 +12,7 @@ Get started with Teams Toolkit and TeamsFx SDK:
 Customize the scaffolded app template:
 * [How to customize the initialization](#Customize-initialization)
 * [How to customize the installation](#Customize-installation)
+* [How to customize the adapter](#Customize-adapter)
 * [How to customize your app to add more command and response](#How-to-add-more-command-and-response)
 * [How to customize the trigger pattern](#Customize-the-trigger-pattern)
 * [How to build dynamic content in response with adaptive cards](#How-to-build-command-response-using-adaptive-card-with-dynamic-content)
@@ -170,6 +171,25 @@ A Teams bot can be installed into a team, or a group chat, or as personal app, d
   ![Installation Target](https://github.com/OfficeDev/TeamsFx/wiki/notification/addanapp.png)
 
 - See [Remove an app from Teams](https://support.microsoft.com/office/remove-an-app-from-teams-0bc48d54-e572-463c-a7b7-71bfdc0e4a9d) for uninstallation.
+
+## Customize adapter
+```typescript
+/** Typescript **/
+// Create your own adapter
+const adapter = new CloudAdapter(...);
+
+// Customize your adapter, e.g., error handling
+adapter.onTurnError = ...
+
+const bot = new ConversationBot({
+    // use your own adapter
+    adapter: adapter;
+    ...
+});
+
+// Or, customize later
+bot.adapter.onTurnError = .
+```
 
 ## How to add more command and response
 
