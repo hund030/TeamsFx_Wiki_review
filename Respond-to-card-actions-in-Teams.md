@@ -73,38 +73,46 @@ Then you can click the `DoStuff` button to invoke the action, and you will recei
 
 ## Take a tour of your app source code
 ### For JS/TS project (in Visual Studio Code)
+
 The created app is a normal TeamsFx project that will contain following folders:
-
-| Folder | Contents |
+| Folder / File | Contents |
 | - | - |
-| `.fx` | Project level settings, configurations, and environment information |
-| `.vscode` | VSCode files for local debug |
-| `bot` | The source code for the workflow bot Teams application |
-| `templates` | Templates for the Teams application manifest and for provisioning Azure resources |
+| `teamsapp.yml` | Main project file describes your application configuration and defines the set of actions to run in each lifecycle stages |
+| `teamsapp.local.yml`| This overrides `teamsapp.yml` with actions that enable local execution and debugging |
+| `env/`| Name / value pairs are stored in environment files and used by `teamsapp.yml` to customize the provisioning and deployment rules |
+| `.vscode/` | VSCode files for debugging |
+| `appPackage/` | Templates for the Teams application manifest |
+| `infra/` | Templates for provisioning Azure resources |
+| `src/` | The source code for the application |
 
-The core implementation for the Teams bot is in `bot/` folder.
-The following files under `bot/` folder provide the business logic for the workflow bot. These files can be updated to fit your business logic requirements. The default implementation provides a starting point to help you get started:
+The following files under `src/` folder provide the business logic for the workflow bot. These files can be updated to fit your business logic requirements. The default implementation provides a starting point to help you get started:
 
 | File | Contents |
 | - | - |
-| `src/index.js(ts)` | Application entry point and `restify` handlers for the workflow bot |
-| `src/adaptiveCards/helloworldCommand.json` | A generated Adaptive Card that is sent to Teams |
-| `src/commands/helloworldCommandHandler.js(ts)` | Responds to the command message |
-| `src/cardActions/doStuffActionHandler.js(ts)` | Responds to the `doStuff` card action |
-| `src/cardModels.js(ts)` | The default Adaptive Card data model |
+| `src/index.js(ts)`| Application entry point and `restify` handlers for the Workflow bot |
+| `src/teamsBot.js(ts)` | An empty teams activity handler for bot customization |
+| `src/commands/helloworldCommandHandler.js(ts)` | Implementation that handles responding to a chat command |
+| `src/cardActions/doStuffActionHandler.js(ts)` | Implements the handler for the `doStuff` button displayed in the Adaptive Card |
+| `src/adaptiveCards/helloworldCommandResponse.json` | Defines the Adaptive Card (UI) that is displayed in response to a chat command |
+| `src/adaptiveCards/doStuffActionResponse.json` | A generated Adaptive Card that is sent to Teams for the response of "doStuff" action |
 
-The following files implement the core workflow bot on the Bot Framework. You generally will not need to customize these files.
-
-| File / Folder | Contents |
-| - | - |
-| `src/internal/initialize.js(ts)` | Application initialization and bot message handling |
-
-The following files are project-related files. You generally will not need to customize these files.
-
-| File / Folder | Contents |
-| - | - |
-| `.gitignore` | Git ignore file |
-| `package.json` | NPM package file |
+### For CSharp project (In Visual Studio)
+| File name | Contents |
+|- | -|
+| `teamsapp.yml` | Main project file describes your application configuration and defines the set of actions to run in each lifecycle stages |
+| `teamsapp.local.yml`| This overrides `teamsapp.yml` with actions that enable local execution and debugging |
+| `appPackage/` | Templates for the Teams application manifest |
+| `infra/` | Templates for provisioning Azure resources |
+| `Properties/` | LaunchSetting file for local debug |
+| `Controllers/` | BotController and NotificationControllers to handle the conversation with user |
+| `Commands/` | Define the commands and how your Bot will react to these commands |
+| `CardActions/` | Define the adaptiveCard action handlers to respond to `Action.Execute` card action |
+| `Models/` | Adaptive card data models |
+| `Resources/` | Adaptive card templates |
+| `appsettings.*.json` | The runtime settings |
+| `GettingStarted.txt` | Instructions on minimal steps to wonderful|
+| `Program.cs` | Create the Teams Bot instance |
+| `TeamsBot.cs` | An empty Bot handler |
 
 <p align="right"><a href="#How-to-create-a-workflow-bot">back to top</a></p>
 
