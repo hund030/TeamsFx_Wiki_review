@@ -188,7 +188,7 @@ const bot = new ConversationBot({
 });
 
 // Or, customize later
-bot.adapter.onTurnError = .
+bot.adapter.onTurnError = ...
 ```
 
 ## How to add more command and response
