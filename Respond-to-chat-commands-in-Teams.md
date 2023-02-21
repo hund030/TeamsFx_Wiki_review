@@ -430,10 +430,6 @@ class HelloWorldCommandHandler {
     return MessageFactory.attachment(CardFactory.adaptiveCard(cardJson));
   }
 }
-
-module.exports = {
-  HelloWorldCommandHandler,
-}
 ```
 
 <p align="right"><a href="#How-to-create-a-command-response-bot">back to top</a></p>
