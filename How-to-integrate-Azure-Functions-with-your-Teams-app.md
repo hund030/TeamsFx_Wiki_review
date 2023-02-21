@@ -297,10 +297,10 @@ You can find a complete sample [here](https://github.com/OfficeDev/TeamsFx-Sampl
 
 ## Move the application to Azure
 
-1. Update bicep and azure.parameter.json to configure Azure Function App. You will need a Storage Account, an App Service Plan and a Function App Service.
+1. Update bicep to configure Azure Function App. You will need a Storage Account, an App Service Plan and a Function App Service.
 You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Samples/blob/v3/hello-world-tab-with-backend/infra/azure.bicep).
 
-    ```
+    ```bicep
     param resourceBaseName string
     param functionStorageSKU string
     param functionAppSKU string
@@ -429,7 +429,7 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
     ```
 
     Add new parameters in azure.parameter.json file.
-    ```
+    ```json
     {
       "parameters": {
         "aadAppClientId": {
