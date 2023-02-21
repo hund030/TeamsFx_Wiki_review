@@ -77,25 +77,39 @@ After you successfully created the project, you can quickly start local debuggin
 ## Take a tour of your app source code
 
 ### For JS/TS project (In Visual Studio Code)
-After scaffolding or adding a command-response bot, you will find your bot's source code under `bot/` folder:
-| File name | Contents |
-|- | -|
-|`bot/src/internal/initialize.ts`| Create the global bot adapter and initialize with Teams Frameworks|
-|`bot/src/index.ts`| Server code to host the bot app and listen on `/api/messages` to process Teams activity with Bot Framework |
-|`bot/src/helloworldCommandHandler.ts`| A hello world command handler to process a `helloworld` command and return an adaptive card as response |
-|`bot/src/adaptiveCards/*.json`| Adaptive card JSON file used as your command response |
+
+The created app is a normal TeamsFx project that will contain following folders:
+| Folder / File | Contents |
+| - | - |
+| `teamsapp.yml` | Main project file describes your application configuration and defines the set of actions to run in each lifecycle stages |
+| `teamsapp.local.yml`| This overrides `teamsapp.yml` with actions that enable local execution and debugging |
+| `env/`| Name / value pairs are stored in environment files and used by `teamsapp.yml` to customize the provisioning and deployment rules |
+| `.vscode/` | VSCode files for debugging |
+| `appPackage/` | Templates for the Teams application manifest |
+| `infra/` | Templates for provisioning Azure resources |
+| `src/` | The source code for the application |
+
+The following files can be customized and demonstrate an example command app implementation to get you started:
+| File | Contents |
+| - | - |
+| `src/index.js(ts)` | Application entry point and `restify` handlers for command and response |
+| `src/teamsBot.js(ts)` | An empty teams activity handler for bot customization |
+| `src/adaptiveCards/helloworldCommand.json` | A generated Adaptive Card that is sent to Teams |
+| `src/helloworldCommandHandler.js(ts)` | The business logic to handle a command  |
 
 ### For CSharp project (In Visual Studio)
 | File name | Contents |
 |- | -|
-| `Properties` | LaunchSetting file for local debug |
-| `.fx` | Project level settings and configurations |
-| `Commands` | Define the commands and how your Bot will react to these commands |
-| `Controllers` | BotController and NotificationControllers to handle the conversation with user |
-| `Models` | Adaptive card data models |
-| `Resources` | Adaptive card templates |
-| `Templates` | Templates for Teams app manifest and corresponding Azure resources |
-| `appsettings` | The Bot settings |
+| `teamsapp.yml` | Main project file describes your application configuration and defines the set of actions to run in each lifecycle stages |
+| `teamsapp.local.yml`| This overrides `teamsapp.yml` with actions that enable local execution and debugging |
+| `appPackage/` | Templates for the Teams application manifest |
+| `infra/` | Templates for provisioning Azure resources |
+| `Properties/` | LaunchSetting file for local debug |
+| `Controllers/` | BotController and NotificationControllers to handle the conversation with user |
+| `Commands/` | Define the commands and how your Bot will react to these commands |
+| `Models/` | Adaptive card data models |
+| `Resources/` | Adaptive card templates |
+| `appsettings.*.json` | The runtime settings |
 | `GettingStarted.txt` | Instructions on minimal steps to wonderful|
 | `Program.cs` | Create the Teams Bot instance |
 | `TeamsBot.cs` | An empty Bot handler |
@@ -110,30 +124,50 @@ Behind the scenes, the TeamsFx SDK leverages [Bot Framework Middleware](https://
 <p align="right"><a href="#How-to-create-a-command-response-bot">back to top</a></p>
 
 ## Customize initialization
-You can initialize with your own adapter or customize after initialization.
+To respond to command in chat, you need to create `ConversationBot` first. (Code already generated in project)
 
+### For JavaScript / TypeScript Command app: 
 ``` typescript
-// Create your own adapter
-const adapter = new BotFrameworkAdapter(...);
-
-// Customize your adapter, e.g., error handling
-adapter.onTurnError = ...
-
-const bot = new ConversationBot({
-    // use your own adapter
-    adapter: adapter;
-    ...
+/** JavaScript/TypeScript: src/internal/initialize.js(ts) **/
+const commandApp = new ConversationBot({
+  // The bot id and password to create CloudAdapter.
+  // See https://aka.ms/about-bot-adapter to learn more about adapters.
+  adapterConfig: {
+    MicrosoftAppId: config.botId,
+    MicrosoftAppPassword: config.botPassword,
+    MicrosoftAppType: "MultiTenant",
+  },
+  command: {
+    enabled: true,
+    commands: [new HelloWorldCommandHandler()],
+  },
 });
+```
 
-// Or, customize later
-bot.adapter.onTurnError = ...
+### For CSharp Command App:
+```csharp
+/** .NET: Program.cs **/
+builder.Services.AddSingleton<HelloWorldCommandHandler>();
+builder.Services.AddSingleton(sp =>
+{
+    var options = new ConversationOptions()
+    {
+        Adapter = sp.GetService<CloudAdapter>(),
+        Command = new CommandOptions()
+        {
+            Commands = new List<ITeamsCommandHandler> { sp.GetService<HelloWorldCommandHandler>() }
+        }
+    };
+
+    return new ConversationBot(options);
+});
 ```
 
 ## Customize installation
 A Teams bot can be installed into a team, or a group chat, or as personal app, depending on difference scopes. You can choose the installation target when adding the App.
 - See [Distribute your app](https://docs.microsoft.com/microsoftteams/platform/concepts/deploy-and-publish/apps-publish-overview) for more install options.
 
-  ![Installation Target](notification/addanapp.png)
+  ![Installation Target](https://github.com/OfficeDev/TeamsFx/wiki/notification/addanapp.png)
 
 - See [Remove an app from Teams](https://support.microsoft.com/office/remove-an-app-from-teams-0bc48d54-e572-463c-a7b7-71bfdc0e4a9d) for uninstallation.
 
