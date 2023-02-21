@@ -426,7 +426,7 @@ For every manifest or parameter file, you need to do following things. This is j
 
 After above steps, you should be able to develop your Teams app with Teams Toolkit 5.0. Please read [Feature changes that impact your development flow](#feature-changes-that-impact-your-development-flow) to understand how development flow changes in Teams Toolkit 5.0.
 
-## Upgrade
+## Troubleshooting
 ### UpgradeAppPackageNotExist
 The project to be upgraded has no appPackage folder under templates which is required for Upgrade. You can refer to [upgrade your projects manually](https://github.com/OfficeDev/TeamsFx/wiki/Upgrade-project-to-use-Teams-Toolkit-5.0-features#upgrade-your-projects-manually) to upgrade your project manually.
 
