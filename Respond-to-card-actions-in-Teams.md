@@ -121,7 +121,7 @@ To simplify the development, the TeamsFx SDK provides an adaptive card action ha
  
 ### How it works?
 The following diagram illustrated how to respond to a adaptive card action with TeamsFx SDK:
-![image](https://github.com/dooriya/WorkflowBot/blob/main/assets/card-action.png)
+![image](https://learn.microsoft.com/en-us/microsoftteams/platform/assets/images/sbs-workflow-bot/sbs-workflow-bot-action-card.png)
 
 * `Action Card`: the card where you define your action that users can invoke (click button).
 * `Response Card`: the card to respond to the action when user invoke it from the action card.
@@ -455,7 +455,7 @@ Earlier if Adaptive Cards were sent in a Teams channel / group chat, all users w
 
 ### How it works?
 The following diagram illustrated how to provide user-specific view with `refresh` model:
-![image](https://github.com/dooriya/WorkflowBot/blob/main/assets/user-specific-view.png)
+![image](https://learn.microsoft.com/en-us/microsoftteams/platform/assets/images/sbs-workflow-bot/sbs-workflow-bot-base-card.png)
 
 * `Base card`: The bot sends the message with the base version of the card. This base card can be sent as a bot notification, or command response, or any card action response. All members of the conversation can view the same. The base card will be automatically refreshed to the users defined in `userIds` in the `refresh` property of the base card. 
 * `Refresh behavior`: Teams clients will automatically trigger a refresh when a user views the message and the last refresh response is older than a minute. The user-specific view handler will be invoked to return a card view (`Response Card`) for specific user (`UserA`). And for other users in the conversation, they still view the base card. 
@@ -487,7 +487,7 @@ You can use the `refresh(refreshVerb, userIds, data)` method from the `@microsof
 import baseCard from "../adaptiveCards/baseCard.json";
 import { AdaptiveCards } from "@microsoft/adaptivecards-tools"; 
 
-export class MyCommandHandler1 implements TeamsFxBotCommandHandler {
+export class HelloWorldCommandHandler implements TeamsFxBotCommandHandler {
   triggerPatterns: TriggerPatterns = "helloWorld";
 
   async handleCommandReceived(
@@ -538,7 +538,10 @@ Here's the sample refresh action defined in `baseCard.json`:
 You need to replace `${userID}` with user MRI in code when rendering your card content.
 
 #### Step 2: add use-specific adaptive cards
-You need to design the user-specific to refresh to specific users (e.g. `responseCard.json` for userA in above sample). To get started, you can create a `responseCard.json` with the following content, and put it in `bot/src/adaptiveCards` folder:
+You need to design the user-specific to refresh to specific users (e.g. `refreshResponse.json` for userA in above sample). To get started, you can create a `refreshResponse.json` with the following content:
+
+* For TS/JS: create the adaptive card file in `src/adaptiveCards/` folder.
+* For CSharp: create the adaptive card file in `Resources/` folder.
 
 ```json
 {
@@ -557,15 +560,20 @@ You need to design the user-specific to refresh to specific users (e.g. `respons
 ```
 
 #### Step 3: add card action handler to refresh views
-Add handler that implements `TeamsFxAdaptiveCardActionHandler` to process the refresh invoke activity which is automatically triggered in Teams.
 
-```typescript
-import responseCard from "../adaptiveCards/responseCard.json"; 
+##### For JS/TS Bot App:
+Add an action handler that implements `TeamsFxAdaptiveCardActionHandler` to process the refresh invoke activity which is automatically triggered in Teams.
 
-export class Handler1 implements TeamsFxBotCardActionHandler { 
-    triggerVerb: string = "userViewRefresh";
- 
-    async handleActionInvoked(context: TurnContext, actionData: any): Promise<InvokeResponse> {
+```javascript
+/** JavaScript **/
+const { AdaptiveCards } = require("@microsoft/adaptivecards-tools");
+const { AdaptiveCardResponse, InvokeResponseFactory } = require("@microsoft/teamsfx");
+const responseCard = require("../adaptiveCards/refreshResponse.json");
+
+class RefreshActionHandler {
+  triggerVerb = "userViewRefresh";
+
+  async handleActionInvoked(context: TurnContext, actionData: any): Promise<InvokeResponse> {
       /**
        * If you have multiple userIds defined in your refresh action, for example: userIds: [ "<UserA>", "<userB>" ] ,
        * and you can return different card response for those users respectively with the following code sample.
@@ -583,18 +591,53 @@ export class Handler1 implements TeamsFxBotCardActionHandler {
       const responseCardJson = AdaptiveCards.declare(responseCard).render(actionData);
       return InvokeResponseFactory.adaptiveCard(responseCardJson);
     } 
-} 
+}
+
+module.exports = {
+  RefreshActionHandler,
+};
+
+```
+
+```typescript
+/** TypeScript **/
+const { AdaptiveCards } = require("@microsoft/adaptivecards-tools");
+const { AdaptiveCardResponse, InvokeResponseFactory } = require("@microsoft/teamsfx");
+const responseCard = require("../adaptiveCards/refreshResponse.json");
+
+export class RefreshActionHandler {
+  triggerVerb = "userViewRefresh";
+
+  async handleActionInvoked(context: TurnContext, actionData: any): Promise<InvokeResponse> {
+      /**
+       * If you have multiple userIds defined in your refresh action, for example: userIds: [ "<UserA>", "<userB>" ] ,
+       * and you can return different card response for those users respectively with the following code sample.
+        
+        const currentUserId = context.activity.from.id;
+        switch (currentUserId) {
+          case "<userA's id>":
+            const card1 = AdaptiveCards.declare(card1).render(actionData);
+            return InvokeResponseFactory.adaptiveCard(card1);
+          case "<userB's id>":
+            const card1 = AdaptiveCards.declare(card2).render(actionData);
+            return InvokeResponseFactory.adaptiveCard(card2);
+        }
+     */
+      const responseCardJson = AdaptiveCards.declare(responseCard).render(actionData);
+      return InvokeResponseFactory.adaptiveCard(responseCardJson);
+    }
+}
 ```
  
 #### Step 4: register the action handler 
 Register the refresh action handler in `bot/src/internal/initialize.js(ts)`: 
 ```typescript
-export const commandBot = new ConversationBot({ 
+export const workflowApp = new ConversationBot({ 
   ... 
   cardAction: { 
     enabled: true, 
     actions: [ 
-      new Handler1() 
+      new RefreshActionHandler () 
     ], 
   } 
 }); 
