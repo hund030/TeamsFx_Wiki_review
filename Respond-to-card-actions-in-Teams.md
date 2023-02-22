@@ -246,9 +246,9 @@ You can use the [Adaptive Card Designer](https://adaptivecards.io/designer/) to 
 ### Step 3: add action handler 
 
 #### For TypeScript / JavaScript Bot App:
-You can handle a new action invoked by Adaptive Card with TeamsFx SDK's class `TeamsFxAdaptiveCardActionHandler`. You need to customize the action in this step, such as calling an API, processing data, or any other action as per your business need.
+You can handle a new action by Adaptive Card with TeamsFx SDK's class `TeamsFxAdaptiveCardActionHandler`. You need to customize the action in this step, such as calling an API, processing data, or any other action as per your business need.
 
-You can create a new file bot `/src/cardActions/doSomethingActionHandler.js(ts)`:
+You can create a new file `/src/cardActions/doSomethingActionHandler.js(ts)`:
 
 ```javascript
 /** JavaScript **/
@@ -290,7 +290,7 @@ export class DoSomethingActionHandler {
 
 You can handle a new `Action.Execute` action invoked by implementing the TeamsFx SDK's interface `IAdaptiveCardActionHandler`. You need to customize the action in this step, such as calling an API, processing data, or any other action as per your business need.
 
-You can create a new file bot `/src/cardActions/DoSomethingActionHandler.cs`:
+You can create a new file `/CardActions/DoSomethingActionHandler.cs`:
 
 ```csharp
 using MyBotApp.Models;
@@ -463,7 +463,7 @@ The following diagram illustrated how to provide user-specific view with `refres
 The following gif illustrated how user-specific views shows in Teams:
 ![user-specific-views](https://github.com/dooriya/WorkflowBot/blob/main/assets/user-specific-views.gif)
 
-#### Steps to add user-specific view
+### Steps to add user-specific view
 Below are the steps to implement this pattern with TeamsFx SDK.
 
 1. [Step 1: enable refresh in a base adaptive card](#step-1-enable-refresh-in-a-base-adaptive-card)
@@ -472,7 +472,7 @@ Below are the steps to implement this pattern with TeamsFx SDK.
 4. [Step 4: register the action handler](#step-4-register-the-action-handler-1)
 
 #### Step 1: enable refresh in a base adaptive card
-As illustrated above, user-specific views are refreshed from a base card (e.g. the `card2` is refreshed from `card1`). So you need to enable `auto-refresh` on the base card (e.g. the `card1`). There're two options to achieve this:
+The user-specific views are refreshed from a base card, when response card is refreshed from the base card, as illustrated in the [auto-refresh user-specific view](https://learn.microsoft.com/en-us/microsoftteams/platform/bots/how-to/conversations/workflow-bot-in-teams?tabs=JS#auto-refresh-to-user-specific-view). You need to enable auto-refresh on the base card. There are two options to achieve this:
 
 **Option 1**: enable user-specific view refresh with SDK
 The base card can be sent as a command response or a card action response. So you can enable user-specific view refresh in a `handleCommandReceived` of a command handler, or in a `handleActionInvoked` of a card action handler where the base card iss returned.
@@ -538,7 +538,7 @@ Here's the sample refresh action defined in `baseCard.json`:
 You need to replace `${userID}` with user MRI in code when rendering your card content.
 
 #### Step 2: add use-specific adaptive cards
-You need to design the user-specific to refresh to specific users (e.g. `refreshResponse.json` for userA in above sample). To get started, you can create a `refreshResponse.json` with the following content:
+You need to design the user-specific Adaptive Card to refresh a specific response card such as `refreshResponse.json` for userA shown in the diagram for [refresh behavior](#Auto-refresh-to-user-specific-view).
 
 * For TS/JS: create the adaptive card file in `src/adaptiveCards/` folder.
 * For CSharp: create the adaptive card file in `Resources/` folder.
@@ -562,7 +562,7 @@ You need to design the user-specific to refresh to specific users (e.g. `refresh
 #### Step 3: add card action handler to refresh views
 
 ##### For JS/TS Bot App:
-Add an action handler that implements `TeamsFxAdaptiveCardActionHandler` to process the refresh invoke activity which is automatically triggered in Teams.
+Add an action handler that implements `TeamsFxAdaptiveCardActionHandler` to process the refresh invoke activity which is automatically triggered in Teams. You can create a new file  `/src/cardActions/refreshActionHandler.js(ts)`:
 
 ```javascript
 /** JavaScript **/
@@ -629,18 +629,103 @@ export class RefreshActionHandler {
 }
 ```
  
+##### For CSharp Bot App:
+You can handle a new refresh action by implementing the TeamsFx SDK's interface `IAdaptiveCardActionHandler`. You need to customize the action in this step, such as calling an API, processing data, or any other action as per your business need.
+
+You can create a new file `/CardActions/RefreshActionHandler.cs`:
+
+```csharp
+using MyBotApp.Models;
+using AdaptiveCards.Templating;
+using Microsoft.Bot.Builder;
+using Microsoft.TeamsFx.Conversation;
+using Newtonsoft.Json;
+
+namespace MyBotApp.CardActions
+{
+    public class RefreshActionHandler : IAdaptiveCardActionHandler
+    {
+        private readonly string _responseCardFilePath = Path.Combine(".", "Resources", "refreshActionResponse.json");
+
+        /// <summary>
+        /// A global unique string associated with the `Action.Execute` action.
+        /// The value should be the same as the `verb` property which you define in your adaptive card JSON.
+        /// </summary>
+        public string TriggerVerb => "userViewRefresh";
+
+        /// <summary>
+        /// Indicate how your action response card is sent in the conversation.
+        /// By default, the response card can only be updated for the interactor who trigger the action.
+        /// </summary>
+        public AdaptiveCardResponse AdaptiveCardResponse => AdaptiveCardResponse.ReplaceForInteractor;
+
+        public async Task<InvokeResponse> HandleActionInvokedAsync(ITurnContext turnContext, object actionData, CancellationToken cancellationToken = default)
+        {
+            // Read adaptive card template
+            var cardTemplate = await File.ReadAllTextAsync(_responseCardFilePath, cancellationToken);
+
+            // Render adaptive card content
+            var cardContent = new AdaptiveCardTemplate(cardTemplate).Expand
+            (
+                new HelloWorldModel
+                {
+                    Title = "Hello World Bot",
+                    Body = $"Congratulations! You're refreshed to a user-specific view!",
+                }
+            );
+
+            // Send invoke response with adaptive card
+            return InvokeResponseFactory.AdaptiveCard(JsonConvert.DeserializeObject(cardContent));
+        }
+    }
+}
+
+```
+
 #### Step 4: register the action handler 
 Register the refresh action handler in `bot/src/internal/initialize.js(ts)`: 
-```typescript
-export const workflowApp = new ConversationBot({ 
-  ... 
-  cardAction: { 
-    enabled: true, 
-    actions: [ 
-      new RefreshActionHandler () 
-    ], 
-  } 
-}); 
+
+```javascript
+/** JavaScript / TypeScript **/
+const { BotBuilderCloudAdapter } = require("@microsoft/teamsfx");
+const ConversationBot = BotBuilderCloudAdapter.ConversationBot;
+
+const conversationBot = new ConversationBot({
+  ...
+  cardAction: {
+    enabled: true,
+    actions: [
+      new DoStuffActionHandler(),
+      new RefreshActionHandler()    // newly added doSomething card action handler
+    ],
+  }
+});
+```
+
+```csharp
+/** CSharp **/
+...
+builder.Services.AddSingleton<DoStuffActionHandler>();
+builder.Services.AddSingleton<RefreshActionHandler>();      // Register new action handler to the service container
+builder.Services.AddSingleton(sp =>
+{
+    var options = new ConversationOptions()
+    {
+        Adapter = sp.GetService<CloudAdapter>(),
+        ...
+        CardAction = new CardActionOptions()
+        {
+            Actions = new List<IAdaptiveCardActionHandler>
+            {
+                sp.GetService<DoStuffActionHandler>(),
+                sp.GetService<RefreshActionHandler>(),     // Register new action handler to ConversationBot
+            }
+        }
+        ...
+    };
+
+    return new ConversationBot(options);
+});
 ```
 
 <p align="right"><a href="#How-to-create-a-workflow-bot">back to top</a></p>
