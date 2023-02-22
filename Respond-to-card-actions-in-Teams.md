@@ -191,11 +191,12 @@ You can use the following 4 steps to add more card action:
 4. [Step 4: register the action handler](#step-4-register-the-action-handler)
 
 ### Step 1: add an action to your Adaptive Card
-User universal action `Action.Execute` to define your action in an adaptive card, which will be rendered as a button in the card.
+Use universal action `Action.Execute` to define your action in an adaptive card, which will be rendered as a button in the card.
 Here's a sample `Action.Execute`action:
+
 ```json
-{ 
-  "type": "AdaptiveCard", 
+{
+  "type": "AdaptiveCard",
   "body": [
     ...
     {
@@ -203,22 +204,26 @@ Here's a sample `Action.Execute`action:
       "actions": [
         {
           "type": "Action.Execute",
-          "title": "DoStuff",
-          "verb": "doStuff" 
+          "title": "DoSomething",
+          "verb": "doSomething"
         }
       ]
-    }
+    },
+    ...
   ]
-  ... 
-} 
+}
 ```
 
-> **_NOTE:_**  the `verb` property is required here so that the TeamsFx conversation SDK can invoke the corresponding action handler when the action is invoked in Teams. You should provide a global unique string for the `verb` property, otherwise you may experience unexpected behavior if you're using a general string that might cause a collision with other bot actions. 
+Specifying the `type` as `Action.Execute` to define an universal action in the base card. User can click the button to perform some business task in Teams chat. Learn more about [Adaptive Card Universal Actions in the documentation](https://learn.microsoft.com/microsoftteams/platform/task-modules-and-cards/cards/universal-actions-for-adaptive-cards/overview?tabs=mobile#universal-actions).
+
+> **_NOTE:_** the `verb` property is required here so that the TeamsFx conversation SDK can invoke the corresponding action handler when the action is invoked in Teams. You should provide a global unique string for the `verb` property, otherwise you may experience unexpected behavior if you're using a general string that might cause a collision with other bot actions.
 
 ### Step 2: add adaptive card for action response
-For each action invoke, you can return a new adaptive card to display the response to end user. You can use [adaptive card designer](https://adaptivecards.io/designer/) to design your card layout according to your business needs.
 
-To get-started, you can just create a sample card (`responseCard.json`) with the following content, and put it in `bot/src/adaptiveCards` folder:
+For each action, you can display a new Adaptive Card as a response to the user. Create a new file `doSomethingResponse.json` to use as a response for the `DoSomething` action created in the previous step:
+
+* For TS/JS: create the adaptive card file in `src/adaptiveCards/` folder.
+* For CSharp: create the adaptive card file in `Resources/` folder.
 
 ```json
 {
@@ -228,7 +233,7 @@ To get-started, you can just create a sample card (`responseCard.json`) with the
       "type": "TextBlock",
       "size": "Medium",
       "weight": "Bolder",
-      "text": "This is a sample action response."
+      "text": "A sample response to DoSomething."
     }
   ],
   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
