@@ -464,6 +464,23 @@ This action will create a new AAD app for Bot Registration if either environment
 * BOT_ID: the AAD app client id created for Bot Registration.
 * SECRET_BOT_PASSWORD: the AAD app client secret created for Bot Registration.
 
+# script
+This action will execute a user defined script.
+
+## Syntax:
+```
+  - uses: script
+    with:
+     run: echo "::set-output key=value" # command to run or path to the script. Succeeds if exit code is 0.
+     workingDirectory: ./scripts # current working directory. Defaults to the directory of this file.
+     shell: bash # bash, sh, powershell(Powershell Desktop), pwsh(powershell core), cmd. Can be omitted. If omitted, it defaults to bash on Linux/MacOS, defaults to pwsh on windows.
+     timeout: 1000 # timeout in ms
+     redirectTo: paht/to/file # redirect stdout and stderr to a file
+```
+
+## Output:
+All outputs defined by "::set-output" command will be generated into .env file.
+
 # General Errors
 ## ActionNotFoundError
 This error means there's an unknown action in the yaml file. Please check whether the action type in 'uses' fields are supported. 
