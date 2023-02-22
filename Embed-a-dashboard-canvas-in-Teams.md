@@ -1019,20 +1019,7 @@ export default class SampleDashboard extends Dashboard {
 
 ### Add SSO First
 
-Before you add your logic of calling a Graph API, you should enable your dashboard project to use SSO. It is convenient to add SSO related files by using `Teams Toolkit`. Refer to the following steps to add SSO.
-
-1. Step 1: Click `Teams Toolkit` in the side bar > Click `Add features` in `DEVELOPMENT`.
-
-   ![image](https://user-images.githubusercontent.com/11220663/205840715-542f2cfb-bf70-440b-ab8a-8e9139ff3685.png)
-
-2. Step 2: Choose `Single Sign-On` to add.
-
-   ![image](https://user-images.githubusercontent.com/11220663/205840810-5906e6b0-0ff8-4587-8967-9c84dabf2683.png)
-
-3. Step 3: Move `auth-start.html` and `auth-end.html` in `auth/tab/public` folder to `public/`.
-   These two HTML files are used for auth redirects.
-
-4. Step 4: Move `sso` folder under `auth/tab` to `src/sso/`.
+Before you add your logic of calling a Graph API, you should enable your dashboard project to use SSO. For how to add an SSO to your project you can refer to [this document](https://aka.ms/teamsfx-add-sso-new);
 
 Now you have already added SSO files to your project, and you can call Graph APIs. There are two types of Graph APIs, one will be called from the front-end(most of APIs, use delegated permissions), the other will be called from the back-end(sendActivityNotification, e.g., use application permissions). You can refer to [this tutorial](https://learn.microsoft.com/en-us/graph/api/overview?view=graph-rest-beta) to check permission types of the Graph APIs you want to call.
 
@@ -1055,9 +1042,9 @@ You can refer to [the Graph API V1.0](https://learn.microsoft.com/en-us/graph/ap
 You can refer to the following code snippet:
 
 ```ts
-let teamsfx;
-teamsfx = TeamsUserCredentialContext.getTeamsFx();
-const graphClient = createMicrosoftGraphClient(teamsfx, scope);
+let credential: TeamsUserCredential;  
+credential = TeamsUserCredentialContext.getInstance().getCredential();
+const graphClient: Client = createMicrosoftGraphClientWithCredential(credential, scope);
 ```
 
 #### Step 3: Call the Graph API, and parse the response into a certain model, which will be used by front-end
@@ -1086,13 +1073,11 @@ Go to [Azure portal](https://portal.azure.com/) > Click `Azure Active Directory`
 
 #### Step 2: Add an Azure Function
 
-In the VS Code side bar, click `Add features` in `Teams Toolkit` > Choose `Azure functions` > Enter the function name
-
-   ![image](https://user-images.githubusercontent.com/11220663/205843051-38beae3e-9e02-4fde-a24d-c9dfd7d58dbd.png)
+For how to add an Azure Function to your project you can refer to [this doc](https://aka.ms/teamsfx-add-azure-function).
 
 #### Step 3: Add your logic in Azure Function
 
-In the `index.jsx`/`index.ts` under the folder named in step 2, you can add the your logic which contains back-end graph api calling with application permissions. You can refer to the following code snippet.
+In the `index.jsx`/`index.ts` under the folder named in step 2, you can add your logic which contains back-end graph api calling with application permissions. You can refer to the following code snippet.
 
 ```ts
 /**
@@ -1135,23 +1120,25 @@ Call the Azure Function by function name. You can refer to the following code sn
 
 ```ts
 const functionName = process.env.REACT_APP_FUNC_NAME || "myFunc";
-async function callFunction(teamsfx) {
-  if (!teamsfx) {
+export let taskName: string;
+
+export async function callFunction(params?: string) {
+  taskName = params || "";
+  const credential = TeamsUserCredentialContext.getInstance().getCredential();
+  if (!credential) {
     throw new Error("TeamsFx SDK is not initialized.");
   }
   try {
-    const credential = teamsfx.getCredential();
-    const apiBaseUrl = teamsfx.getConfig("apiEndpoint") + "/api/";
-    // createApiClient(...) creates an Axios instance which uses BearerTokenAuthProvider to inject token to request header
+    const apiBaseUrl = process.env.REACT_APP_FUNC_ENDPOINT + "/api/";    
     const apiClient = createApiClient(
       apiBaseUrl,
-      new BearerTokenAuthProvider(
-        async () => (await credential.getToken(""))!.token
-      )
+      new BearerTokenAuthProvider(async () => (await credential.getToken(""))!.token)
     );
     const response = await apiClient.get(functionName);
     return response.data;
-  } catch (e) {}
+  } catch (err: unknown) {
+    ...
+  }
 }
 ```
 
