@@ -432,3 +432,6 @@ The project to be upgraded has no appPackage folder under templates which is req
 
 ### UpgradeManifestTemplateNotExist
 The project to be upgraded has no manifest.template.json file under templates/appPackage which is required for Upgrade. You can refer to [upgrade your projects manually](https://github.com/OfficeDev/TeamsFx/wiki/Upgrade-project-to-use-Teams-Toolkit-5.0-features#upgrade-your-projects-manually) to upgrade your project manually.
+
+### UpgradeAadManifestTemplateNotExist
+The project to be upgraded has no aad.template.json file under templates/appPackage which is required for your project. You may be trying to upgrade a project created by Teams Toolkit <= v3.8.0. Please install Teams Toolkit v4.x and run upgrade first, or refer to [upgrade your projects manually](https://github.com/OfficeDev/TeamsFx/wiki/Upgrade-project-to-use-Teams-Toolkit-5.0-features#upgrade-your-projects-manually) to upgrade your project manually.
