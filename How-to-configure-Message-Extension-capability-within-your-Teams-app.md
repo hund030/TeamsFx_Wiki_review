@@ -198,6 +198,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
         "concurrently": "^7.6.0"
     },
     ```
+    Notice: If you are working on a javascript project, the bot doesn't need build. Please remove "build:bot" script and change "build" script to "npm run build:tab". 
 
 ### Setup local debug environment
 
