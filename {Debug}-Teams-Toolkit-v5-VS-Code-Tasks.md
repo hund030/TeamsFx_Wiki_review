@@ -56,7 +56,6 @@ This task is to validate prerequisites that will be used in following debugging 
 |----------------|------------------------------------------------------------------------------------------------------------|
 | nodejs | Validate if Node.js is installed. |
 | m365Account | Sign-in prompt for Microsoft 365 account, then validate if the account enables the sideloading permission. |
-| devCert | Install localhost SSL certificate. It's used to serve the development sites over HTTPS to debug the Tab app in Teams. |
 | portOccupancy | Validate available ports to ensure those debugging ones are not occupied. |
 
 #### Sample
