@@ -14,7 +14,7 @@ Basically you will need take care these configurations:
 For Teams Tab Application
 -------------------------
 1. Update AAD app manifest
-`TeamsFx-Auth/aad.manifest.template.json` is an Azure AD manifest template. You can copy and paste this file to any folder of your project and take notes of the path to this file. Because the path will be useful later. And you need to make the following updates in the template to create/update an Azure AD app for SSO:
+`TeamsFx-Auth/aad.manifest.template.json` is an Azure AD manifest template. You can copy and paste this file to any folder of your project, rename as `aad.manifest.json` and take notes of the path to this file. Because the path will be useful later. And you need to make the following updates in the template to create/update an Azure AD app for SSO:
 
     1. "identifierUris": Used to uniquely identify and access the resource.
     [HelpLink.](https://learn.microsoft.com/en-us/azure/active-directory/develop/reference-app-manifest#identifieruris-attribute)
@@ -73,7 +73,7 @@ For Teams Tab Application
 
     Example for TeamsFx Tab template
 
-    Open `appPackage/manifest.template.json`, and append the following object in the manifest:
+    Open `appPackage/manifest.json`, and append the following object in the manifest:
     ```
     "webApplicationInfo": {
       "id": "${{AAD_APP_CLIENT_ID}}",
@@ -89,12 +89,12 @@ For Teams Tab Application
     - add `aadApp/update` under 'configureApp'
       For updating your AAD app with AAD app manifest in step 1.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-update)
-    - update `file/updateAppSettings`
+    - update `file/updateJson`
       For adding following environment variables when local debug:
         a. ClientId: AAD app client id
         b. ClientSecret: AAD app client secret
         c. OAuthAuthority: AAD app oauth authority
-      [HelpLink](https://aka.ms/teamsfx-actions/appsettings-generate)
+      [HelpLink](https://github.com/OfficeDev/TeamsFx/wiki/Available-actions-in-Teams-Toolkit#fileupdatejson)
 
 
     Example for TeamsFx Tab template
@@ -120,17 +120,17 @@ For Teams Tab Application
       ```
       - uses: aadApp/update # Apply the AAD manifest to an existing AAD app. Will use the object id in manifest file to determine which AAD app to update.
         with:
-          manifestTemplatePath: "YOUR_PATH_TO_AAD_APP_MANIFEST" # Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app
+          manifestPath: "YOUR_PATH_TO_AAD_APP_MANIFEST" # Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app
           outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
       # Output: following environment variable will be persisted in current environment's .env file.
       # AAD_APP_ACCESS_AS_USER_PERMISSION_ID: the id of access_as_user permission which is used to enable SSO
       ```
-      > Note: Replace the value of `manifestTemplatePath` with the relative path of AAD app manifest noted in step 1. For example, `./aad.manifest.template.json`
+      > Note: Replace the value of `manifestTemplatePath` with the relative path of AAD app manifest noted in step 1. For example, `./aad.manifest.json`
 
     In `teamsfx/app.local.yml` only:
     - Add following lines under `configureApp` to add AAD related configs to local debug service.
       ```
-      - uses: file/updateAppSettings
+      - uses: file/updateJson
         with:
           target: ./appsettings.Development.json
           appsettings:
@@ -149,7 +149,7 @@ For Teams Tab Application
   
    Example for TeamsFx Tab template
 
-   Open `infra/azure.parameter.json` and add following lines into `parameters`:
+   Open `infra/azure.parameters.json` and add following lines into `parameters`:
    ```
    "tabAadAppClientId": {
      "value": "${{AAD_APP_CLIENT_ID}}"
@@ -277,7 +277,7 @@ For Teams Tab Application
 
 For Teams Bot Applications
 -------------------------
-1. Update AAD app manifest. `TeamsFx-Auth/aad.manifest.template.json` is an Azure AD manifest template. You can copy and paste this file to any folder of your project and take notes of the path to this file. Because the path will be useful later. And you need to make the following updates in the template to create/update an Azure AD app for SSO:
+1. Update AAD app manifest. `TeamsFx-Auth/aad.manifest.template.json` is an Azure AD manifest template. You can copy and paste this file to any folder of your project, rename as `aad.manifest.json` and take notes of the path to this file. Because the path will be useful later. And you need to make the following updates in the template to create/update an Azure AD app for SSO:
 
    1. "identifierUris": Used to uniquely identify and access the resource.[HelpLink.](https://learn.microsoft.com/en-us/azure/active-directory/develop/reference-app-manifest#identifieruris-attribute) You need to set correct Redirect Uris into "identifierUris" for successfully identify this app.
     
@@ -329,7 +329,7 @@ For Teams Bot Applications
 
     Example for TeamsFx Bot template
 
-    Open `appPackage/manifest.template.json`, and append the following object in the manifest:
+    Open `appPackage/manifest.json`, and append the following object in the manifest:
     ```
     "webApplicationInfo": {
       "id": "${{AAD_APP_CLIENT_ID}}",
@@ -353,7 +353,14 @@ For Teams Bot Applications
     }
     ```
 
-3. Update `teamsfx/app.yml` and `teamsfx/app.local.yml` files:
+    3. Also add bot domain to `validDomain`:
+    ```
+    "validDomains": [
+      "${{BOT_DOMAIN}}"
+    ]
+    ```
+
+3. Update `teamsapp.yml` and `teamsapp.local.yml` files:
    AAD related changes and configs needs to be added into your `yml` files:
     - add `aadApp/create` under 'registerApp':
       For creating new AAD apps used for SSO.
@@ -361,16 +368,16 @@ For Teams Bot Applications
     - add `aadApp/update` under 'configureApp'
       For updating your AAD app with AAD app manifest in step 1.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-update)
-    - update `file/updateAppSettings`
+    - update `file/updateJson`
       For adding following environment variables when local debug:
         a. ClientId: AAD app client id
         b. ClientSecret: AAD app client secret
         c. OAuthAuthority: AAD app oauth authority
-      [HelpLink](https://aka.ms/teamsfx-actions/appsettings-generate)
+      [HelpLink](https://github.com/OfficeDev/TeamsFx/wiki/Available-actions-in-Teams-Toolkit#fileupdatejson)
 
    Example for TeamsFx Bot template
 
-   In both `teamsfx/app.yml` and 'teamsfx/app.local.yml' files:
+   In both `teamsapp.yml` and `teamsapp.local.yml` files:
     - Add following lines under `registerApp` to create AAD app.
       ```
       - uses: aadApp/create # Creates a new AAD app to authenticate users if AAD_APP_CLIENT_ID environment variable is empty
@@ -391,18 +398,18 @@ For Teams Bot Applications
       ```
       - uses: aadApp/update # Apply the AAD manifest to an existing AAD app. Will use the object id in manifest file to determine which AAD app to update.
         with:
-          manifestTemplatePath: "YOUR_PATH_TO_AAD_APP_MANIFEST" # Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app
+          manifestPath: "YOUR_PATH_TO_AAD_APP_MANIFEST" # Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app
           outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
       # Output: following environment variable will be persisted in current environment's .env file.
       # AAD_APP_ACCESS_AS_USER_PERMISSION_ID: the id of access_as_user permission which is used to enable SSO
       ```
       > Note: Replace the value of "manifestTemplatePath" with the relative path of AAD app manifest noted in step 1.
-            For example, './aad.manifest.template.json'
+            For example, './aad.manifest.json'
 
    In `teamsfx/app.local.yml` only:
-    - Update `file/updateAppSettings` under `provision` to add AAD related configs to local debug service.
+    - Update `file/updateJson` under `provision` to add AAD related configs to local debug service.
       ```
-      - uses: file/updateAppSettings
+      - uses: file/updateJson
         with:
           target: ./appsettings.Development.json
           appsettings:
@@ -427,7 +434,7 @@ For Teams Bot Applications
 
    Example for TeamsFx Bot template
 
-   Open `infra/azure.parameter.json` and add following lines into `parameters`:
+   Open `infra/azure.parameters.json` and add following lines into `parameters`:
    ```
    "m365ClientId": {
      "value": "${{AAD_APP_CLIENT_ID}}"
@@ -571,7 +578,7 @@ For Teams Bot Applications
     });
     ```
     Find the following lines:
-    '''
+    ```
     builder.Services.AddSingleton<HelloWorldCommandHandler>();
     builder.Services.AddSingleton(sp =>
     {
@@ -586,9 +593,9 @@ For Teams Bot Applications
 
       return new ConversationBot(options);
     });
-    '''
+    ```
     and replace with:
-    '''
+    ```
     builder.Services.AddSingleton(sp =>
     {
       var options = new ConversationOptions()
@@ -602,7 +609,7 @@ For Teams Bot Applications
 
       return new ConversationBot(options);
     });
-    '''
+    ```
 
     Find and delete the following code:
       ```
