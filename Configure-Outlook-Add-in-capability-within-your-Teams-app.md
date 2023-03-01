@@ -42,7 +42,6 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 |-- infra/
 |-- node_modules/
 |-- public/
-|-- script/
 |-- src/
 |-- gitignore
 |-- package-lock.json
@@ -52,7 +51,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 |-- tsconfig.json
 ```
 
-**NOTE**: If you are working with a new Teams tab project, the build\appPackage folder and the package-lock.json file will not be present until after the first time you debug the project. 
+**NOTE**: If you are working with a new Teams tab project, the \node_modules folder and the package-lock.json file will not be present until you run `npm install` in the root of the project. The build\appPackage folder will not be present until after the first time you debug the project. 
 
 1. Create a folder under the root named "tab" (or "bot").
 
@@ -89,7 +88,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         "author": "Contoso",
         "scripts": {
             "build:tab": "cd tab && npm run build",
-            "dev:teamsfx": "node teamsfx/script/run.js . teamsfx/.env.local",
+            "dev:teamsfx": "env-cmd --silent -f .localSettings npm run start",
             "install": "install:add-in && install:tab",
             "install:add-in": "cd add-in && npm install",
             "install:tab": "cd tab && npm install",
@@ -103,15 +102,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
     ```
 
 1. Change the "name", "version", and "author" properties, as needed.
-1. Open the file script\run.js and find the line near the end that spawns a separate process. 
-1. Change the string "start" in that line to "start:tab". When you are done the line should look like the following:
-
-    ```
-    cp.spawn(/^win/.test(process.platform) ? "npm.cmd" : "npm", ["run", "start:tab"], {
-      stdio: "inherit",
-    });
-    ```
-
+1. Open the teamsapp.local.yml file in the root of the project and find the line `args: install --no-audit`. Change this to `args: install:tab --no-audit`
 1. Verify that you can sideload the tab with the following steps:
 
     <ol type="a">
