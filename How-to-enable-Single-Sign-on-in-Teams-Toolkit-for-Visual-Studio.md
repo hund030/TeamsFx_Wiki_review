@@ -354,6 +354,7 @@ For Teams Bot Applications
     ```
     
     Remember to delete the previous 'helloWorld' command since it is not used.
+
     3. Also add bot domain to `validDomain`:
     ```
     "validDomains": [
