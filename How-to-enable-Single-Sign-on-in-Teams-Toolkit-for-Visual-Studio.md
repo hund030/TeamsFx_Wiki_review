@@ -337,7 +337,7 @@ For Teams Bot Applications
     }
     ```
 
-    2. You can also register your command  under `commands` in `commandLists` of your bot:
+    2. You can also register your command under `commands` in `commandLists` of your bot:
     ```
     {
       "title": "YOUR_COMMAND_TITLE",
@@ -352,7 +352,8 @@ For Teams Bot Applications
       "description": "Show user profile using Single Sign On feature"
     }
     ```
-
+    
+    Remember to delete the previous 'helloWorld' command since it is not used.
     3. Also add bot domain to `validDomain`:
     ```
     "validDomains": [
