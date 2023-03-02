@@ -14,7 +14,7 @@ Preview the current application from local or remote.
 |`--open-only`|No|Work for `local` environment only. If true, directly open web client without launching local service.|
 |`--m365-host`|No|Preview the application in Teams, Outlook or the Microsoft 365 app. Options are `teams`, `outlook` and `office`. The default value is `teams`.|
 |`--browser`|No|The browser to open Teams web client. The options are `chrome`, `edge` and `default` such as system default browser and the value is `default`.|
-|`----browser-arg`|No|Argument to pass to the browser, requires --browser, can be used multiple times, for example, `--browser-args="--guest"`|
+|`--browser-arg`|No|Argument to pass to the browser, requires --browser, can be used multiple times, for example, `--browser-args="--guest"`|
 
 ## Scenarios for teamsfx preview
 The following list provides the common scenarios for`teamsfx preview:
