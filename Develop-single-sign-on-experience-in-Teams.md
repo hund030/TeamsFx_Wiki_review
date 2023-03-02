@@ -45,7 +45,7 @@ Example: You can add following object into your Teams app manifest for your Tab 
   "resource": "api://${{TAB_DOMAIN}}/${{AAD_APP_CLIENT_ID}}"
 }
 ```
-> Note: You can use `${{ENV_NAME}}` to reference variables in `teamsfx/.env.{TEAMSFX_ENV}`.
+> Note: You can use `${{ENV_NAME}}` to reference variables in `env/.env.{TEAMSFX_ENV}`.
 
 ### Teams Toolkit configuration files
 
@@ -68,7 +68,7 @@ You can find your Teams Toolkit configuration files `./.yml`. AAD related change
 You can set following values if you are using TeamsFx Tab template.
 
 #### `aad/create`
-Add following lines in `registerApp` in `app.yml` and `app.local.yml`:
+Add following lines in `registerApp` in `teamsapp.yml` and `teamsapp.local.yml`:
 ```yml
 - uses: aadApp/create
   with:
@@ -78,7 +78,7 @@ Add following lines in `registerApp` in `app.yml` and `app.local.yml`:
 > Note: Replace the value of "name" with your expected AAD app name.
 
 #### `aad/update`
-Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
+Add following lines in `configureApp` in `teamsapp.yml` and `teamsapp.local.yml`:
 
 ```yml
 - uses: aadApp/update
@@ -91,7 +91,7 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 > Note: For local you need to place `aad/update` after `file/updateEnv` action since `aad/update` will consume output of `file/updateEnv`.
 
 #### `npm/command`
-Find `npm/command` action for `build` in `app.yml` and add following env:
+Find `npm/command` action for `build` in `teamsapp.yml` and add following env:
 ```yml
 env:
   REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
@@ -99,7 +99,7 @@ env:
 ```
 
 #### `file/updateEnv`
-Find `file/updateEnv` action for deploy in `app.local.yml` and add following env:
+Find `file/updateEnv` action for deploy in `teamsapp.local.yml` and add following env:
 ```yml
 env:
   ...
@@ -151,7 +151,7 @@ Example: You can add following object into your Teams app manifest for your Tab 
   "resource": "api://botid-${{BOT_ID}}"
 }
 ```
-> Note: You can use `${{ENV_NAME}}` to reference variables in `teamsfx/.env.{TEAMSFX_ENV}`.
+> Note: You can use `${{ENV_NAME}}` to reference variables in `env/.env.{TEAMSFX_ENV}`.
 
 #### Register command in `commandLists`
 [`commandLists`](https://learn.microsoft.com/microsoftteams/platform/resources/schema/manifest-schema#botscommandlists) contains commands that your bot can recommend to users.
@@ -196,7 +196,7 @@ You can find your Teams Toolkit configuration files `./.yml`. AAD related change
 You can set following values if you are using TeamsFx Tab/Bot template.
 
 #### `aad/create`
-Add following lines in `registerApp` in `app.yml` and `app.local.yml`:
+Add following lines in `registerApp` in `teamsapp.yml` and `teamsapp.local.yml`:
 ```yml
 - uses: aadApp/create
   with:
@@ -206,7 +206,7 @@ Add following lines in `registerApp` in `app.yml` and `app.local.yml`:
 > Note: Replace the value of "name" with your expected AAD app name.
 
 #### `aad/update`
-Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
+Add following lines in `configureApp` in `teamsapp.yml` and `teamsapp.local.yml`:
 
 ```yml
 - uses: aadApp/update
@@ -217,7 +217,7 @@ Add following lines in `configureApp` in `app.yml` and `app.local.yml`:
 > Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.json`) if you have modify the path of this file.
 
 #### `file/updateEnv`
-Find `file/updateEnv` action in `app.local.yml` and add following env:
+Find `file/updateEnv` action in `teamsapp.local.yml` and add following env:
 ```yml
 env:
   ...
