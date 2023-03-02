@@ -39,7 +39,7 @@ For Teams Tab Application
       }
     ]
     ```
-    > Note: You can use `${{ENV_NAME}}` to reference variables in `teamsfx/.env.{TEAMSFX_ENV}`.
+    > Note: You can use `${{ENV_NAME}}` to reference variables in `env/.env.{TEAMSFX_ENV}`.
 
     Example for TeamsFx Tab template
     ```
@@ -69,7 +69,7 @@ For Teams Tab Application
       "resource": "SAME_AS_YOUR_IDENTIFIERURIS"
     }
     ```
-    > Note: update the value of resource to your `identifierUris` configed in step 1.i, and use `${{ENV_NAME}}` to reference envs in `teamsfx/.env.{TEAMSFX_ENV}`.
+    > Note: update the value of resource to your `identifierUris` configed in step 1.i, and use `${{ENV_NAME}}` to reference envs in `env/.env.{TEAMSFX_ENV}`.
 
     Example for TeamsFx Tab template
 
@@ -81,7 +81,7 @@ For Teams Tab Application
     }
     ```
  
-3. Update `teamsfx/app.yml` and `teamsfx/app.local.yml`
+3. Update `teamsapp.yml` and `teamsapp.local.yml`
   AAD related changes and configs needs to be added into your `yml` files:
     - add `aadApp/create` under 'registerApp':
       For creating new AAD apps used for SSO.
@@ -99,7 +99,7 @@ For Teams Tab Application
 
     Example for TeamsFx Tab template
     
-    In both `teamsfx/app.yml` and `teamsfx/app.local.yml` files:
+    In both `teamsapp.yml` and `teamsapp.local.yml` files:
     - Add following lines under `registerApp` to create AAD app.
       ```
       - uses: aadApp/create # Creates a new AAD app to authenticate users if AAD_APP_CLIENT_ID environment variable is empty
@@ -125,9 +125,9 @@ For Teams Tab Application
       # Output: following environment variable will be persisted in current environment's .env file.
       # AAD_APP_ACCESS_AS_USER_PERMISSION_ID: the id of access_as_user permission which is used to enable SSO
       ```
-      > Note: Replace the value of `manifestTemplatePath` with the relative path of AAD app manifest noted in step 1. For example, `./aad.manifest.json`
+      > Note: Replace the value of `manifestPath` with the relative path of AAD app manifest noted in step 1. For example, `./aad.manifest.json`
 
-    In `teamsfx/app.local.yml` only:
+    In `teamsapp.local.yml` only:
     - Add following lines under `configureApp` to add AAD related configs to local debug service.
       ```
       - uses: file/updateJson
@@ -287,7 +287,7 @@ For Teams Bot Applications
       "api://botid-${{BOT_ID}}"
     ]
     ```
-    > Note: You can use use `${{ENV_NAME}}` to reference variables in `teamsfx/.env.{TEAMSFX_ENV}`.
+    > Note: You can use use `${{ENV_NAME}}` to reference variables in `env/.env.{TEAMSFX_ENV}`.
 
    2. "replyUrlsWithType": List of registered redirect_uri values that Azure AD will accept as destinations when returning tokens.[HelpLink.](https://learn.microsoft.com/en-us/azure/active-directory/develop/reference-app-manifest#replyurlswithtype-attribute) You need to set necessary Redirect Uris into "replyUrlsWithType" for successfully returning token.
     
@@ -300,7 +300,7 @@ For Teams Bot Applications
       }
     ]
     ```
-    > Note: You can use use `${{ENV_NAME}}` to reference envs in `teamsfx/.env.{TEAMSFX_ENV}`.
+    > Note: You can use use `${{ENV_NAME}}` to reference envs in `env/.env.{TEAMSFX_ENV}`.
 
     Example for TeamsFx Bot template
     ```
@@ -325,7 +325,7 @@ For Teams Bot Applications
       "resource": "SAME_AS_YOUR_IDENTIFIERURIS"
     }
     ```
-    > Note: You need to update the value of resource to your `identifierUris` configed in step 1.i, and use ${{ENV_NAME}} to reference envs in `teamsfx/.env.{TEAMSFX_ENV}`.
+    > Note: You need to update the value of resource to your `identifierUris` configed in step 1.i, and use ${{ENV_NAME}} to reference envs in `env/.env.{TEAMSFX_ENV}`.
 
     Example for TeamsFx Bot template
 
@@ -405,10 +405,10 @@ For Teams Bot Applications
       # Output: following environment variable will be persisted in current environment's .env file.
       # AAD_APP_ACCESS_AS_USER_PERMISSION_ID: the id of access_as_user permission which is used to enable SSO
       ```
-      > Note: Replace the value of "manifestTemplatePath" with the relative path of AAD app manifest noted in step 1.
+      > Note: Replace the value of "manifestPath" with the relative path of AAD app manifest noted in step 1.
             For example, './aad.manifest.json'
 
-   In `teamsfx/app.local.yml` only:
+   In `teamsapp.local.yml` only:
     - Update `file/updateJson` under `provision` to add AAD related configs to local debug service.
       ```
       - uses: file/updateJson
