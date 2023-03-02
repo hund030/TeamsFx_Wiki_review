@@ -1,7 +1,7 @@
 > The content is under construction and is subject to rapid changes.
 
 # teamsfx preview
-> Before running teamsfx preview, teams provision and teamsfx deploy should be run first.
+> Before running teamsfx preview, teamsfx provision and teamsfx deploy should be run first.
 
 Preview the current application from local or remote.
 
