@@ -88,7 +88,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         "author": "Contoso",
         "scripts": {
             "build:tab": "cd tab && npm run build",
-            "dev:teamsfx": "env-cmd --silent -f .localSettings npm run start",
+            "dev:teamsfx": "env-cmd --silent -f .localSettings npm run start:tab",
             "install": "install:add-in && install:tab",
             "install:add-in": "cd add-in && npm install",
             "install:tab": "cd tab && npm install",
@@ -97,12 +97,14 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         },
         "devDependencies": {
             "@microsoft/teamsfx-run-utils": "alpha"
+            "env-cmd": "^10.1.0"
         }
     }
     ```
 
 1. Change the "name", "version", and "author" properties, as needed.
-1. Open the teamsapp.local.yml file in the root of the project and find the line `args: install --no-audit`. Change this to `args: install:tab --no-audit`
+1. Open the teamsapp.local.yml file in the root of the project and find the line `args: install --no-audit`. Change this to `args: run install:tab --no-audit`.
+1. Open **TERMINAL** in Visual Studio Code. Navigate to the root of the project and run `npm install env-cmd`.
 1. Verify that you can sideload the tab with the following steps:
 
     <ol type="a">
@@ -115,7 +117,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 ## Create an Outlook Add-in project
 
 1. Open a second instance of Visual Studio Code.
-1. With Teams Toolkit open in Visual Studio Code, select **Create a new app** under **DEVELOPMENT**.
+1. With Teams Toolkit open in Visual Studio Code, select **Create a new app**.
 1. In the **Select an option** drop down, select **Create a new Office add-in**, and then select **Outlook Taskpane Add-in (preview)**.
 1. Give a name to the project when prompted and Teams Toolkit will create the project with basic files and scaffolding. You will used this project as a source for files and markup that you add to the Teams project.
 1. Although you won't be developing this project, you should use it to verify that basic Outlook add-in sideloading from Visual Studio Code works before you continue. Use the following steps:
