@@ -251,7 +251,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 ## Edit the tooling configuration files
 
-1. Open the package.json file in the add-in folder. 
+1. Open the package.json file in the add-in folder of the Teams tab app (not the add-in project, and not the root of the Teams app). 
 1. In the "config" object, change the "dev_server_port" value to `53000`.
 1. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
 
@@ -266,9 +266,9 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ```
 
 1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
-1. Open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
+1. In the add-in folder, open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
 1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
-1. In the Teams app project, open the teamsapp.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
+1. In the root of project, open the teamsapp.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
 
     ```
     configureApp:
