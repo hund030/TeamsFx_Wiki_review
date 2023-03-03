@@ -151,12 +151,13 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     "short": "Fabrikam Tab and Add-in-${{TEAMSFX_ENV}}",
     ```
 
-    **Note**:
+    **Notes**:
     The "name.short" value appears in both the Teams tab app and the Outlook add-in. Examples: 
 
     - It is the label under the launch button of the tab app.
     - It is content of the title bar of the add-in's task pane.
 
+1. If you changed the "name.short" value from its default (which is the name of the project followed by the `${{TEAMSFX_ENV}}` variable), make exactly the same change in all places where the project name appears in the following two files in the root of the Teams project: teamsapp.yml and teamsapp.local.yml.
 1. If there is no "authorization.permissions.resourceSpecific" array in the Teams manifest template, copy it from the add-in manifest as a top-level property. If there already is one in the Teams template, copy any objects from the array in the add-in manifest to the array in the Teams template. The following is an example:
 
     ```json
