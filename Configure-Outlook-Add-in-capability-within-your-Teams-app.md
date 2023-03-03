@@ -143,20 +143,19 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 1. Copy the "$schema" and "manifestVersion" property values from the add-in's manifest to the corresponding properties of the Teams app's manifest.template.json file.
 1. Adjust the "name.full", "description.short", and "description.full" property values as needed to take account of the fact that an Outlook add-in is part of the app. 
-1. Leave the "name.short" with the placeholder value, `${{TEAMS_APP_NAME}}`,that it already has. To adjust this value, open the files .env.dev and .env.local in the \env folder. In both files, change the value of the `TEAMS_APP_NAME` variable. The maximum length of the variable is 30 characters. (If the value has spaces, enclose it in quotes.) 
-
-    **Notes**:
-    It is a good practice to append "-local" onto the end of the name in the .env.local file.
-    The "name.short" value appears in both the Teams tab app and the Outlook add-in. Examples: 
-
-    - It is the label under the launch button of the tab app.
-    - It is content of the title bar of the add-in's task pane.
+1. Do the same for the "name.short" value. We recommend that you keep the `${{TEAMSFX_ENV}}` on the end of the name. This variable is replaced with "local" in dev mode and with "dev" in production mode.
 
     The following is an example:
 
     ```
-    TEAMS_APP_NAME="FABRIKAM Tab and Add-in-local"
+    "short": "Fabrikam Tab and Add-in-${{TEAMSFX_ENV}}",
     ```
+
+    **Note**:
+    The "name.short" value appears in both the Teams tab app and the Outlook add-in. Examples: 
+
+    - It is the label under the launch button of the tab app.
+    - It is content of the title bar of the add-in's task pane.
 
 1. If there is no "authorization.permissions.resourceSpecific" array in the Teams manifest template, copy it from the add-in manifest as a top-level property. If there already is one in the Teams template, copy any objects from the array in the add-in manifest to the array in the Teams template. The following is an example:
 
