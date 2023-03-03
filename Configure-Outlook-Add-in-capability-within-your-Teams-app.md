@@ -18,6 +18,7 @@ To configure an Office Add-in as additional capability, you must meet the follow
 
 - You have a Microsoft 365 account to test the application. For example, an *.onmicrosoft.com account.
 - Your Micrsoft 365 account has been added as an account in desktop Outlook. See [Add an email account to Outlook](https://support.microsoft.com/office/add-an-email-account-to-outlook-e9da47c4-9b89-4b49-b945-a204aeea6726)
+- To deploy the Teams app to Azure as described in the last section of this article, you need an Azure account to an Azure subscription. Create your free Azure account if you don't already have one by using the link [Free Azure account](https://azure.microsoft.com/free/).
 
 ## Overview
 
@@ -390,7 +391,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
           resourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
     ```
 
-1. In Visual Studio Code open the Teams Toolkit and in the **DEPLOYMENT **section, select **Provision in the cloud** to apply the bicep to Azure.
+1. In Visual Studio Code open the Teams Toolkit and in the **ACCOUNTS** section be sure you are signed into your Azure account. For more information about signing in, open [Exercise - Create Azure resources to host a Teams tab app](https://learn.microsoft.com/training/modules/teams-toolkit-vsc-deploy-apps/03-create-azure-resources-exercise) and scroll to the **Sign in to Azure in Teams Toolkit** section.
+1. In the **DEPLOYMENT **section of Teams Toolkit, select **Provision in the cloud**. It may take several minutes.
 1. When provisioning completes, select **Deploy to the cloud** to deploy your app code to Azure.
 1. To run the tab capability from the remote deployment, select **View**| **Run** in Visual Studio Code and in the drop down, select one of the following:
 
