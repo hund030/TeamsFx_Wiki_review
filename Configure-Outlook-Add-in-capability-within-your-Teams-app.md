@@ -118,9 +118,9 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 
 1. Open a second instance of Visual Studio Code.
 1. With Teams Toolkit open in Visual Studio Code, select **Create a new app**.
-1. In the **Select an option** drop down, select **Create a new Office add-in**, and then select **Outlook Taskpane Add-in (preview)**.
-1. Give a name to the project when prompted and Teams Toolkit will create the project with basic files and scaffolding. You will used this project as a source for files and markup that you add to the Teams project.
-1. Although you won't be developing this project, you should use it to verify that basic Outlook add-in sideloading from Visual Studio Code works before you continue. Use the following steps:
+1. In the **Select an option** drop down, select **Start with an Outlook add-in**, and then select **Outlook Taskpane Add-in (preview)**.
+1. Give a name (with no spaces) to the project when prompted and Teams Toolkit will create the project with basic files and scaffolding *and open it in a separate Visual Studio Code window*. You will used this project as a source for files and markup that you add to the Teams project.
+1. Although you won't be developing this project, verify that it can be sideloaded to from Visual Studio Code works before you continue. Use the following steps:
 
     <ol type="a">
       <li><i>First, make sure Outlook desktop is closed.</i></li>
