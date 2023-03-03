@@ -305,10 +305,10 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
             "clear": true,
             "panel": "dedicated",
         },
-        "problemMatcher": []
+        "problemMatcher": [],
         "options": {
             "cwd": "${workspaceFolder}/add-in/"
-        },
+        }
     }
     ```
 
