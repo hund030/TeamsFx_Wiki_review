@@ -88,10 +88,8 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
         "version": "0.0.1",
         "author": "Contoso",
         "scripts": {
-            "build:tab": "cd tab && npm run build",
             "dev:teamsfx": "env-cmd --silent -f .localSettings npm run start:tab",
-            "install": "install:add-in && install:tab",
-            "install:add-in": "cd add-in && npm install",
+            "build:tab": "cd tab && npm run build",
             "install:tab": "cd tab && npm install",
             "start:tab": "cd tab && npm run start",
             "test": "echo \"Error: no test specified\" && exit 1"
@@ -105,7 +103,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
 
 1. Change the "name", "version", and "author" properties, as needed.
 1. Open the teamsapp.local.yml file in the root of the project and find the line `args: install --no-audit`. Change this to `args: run install:tab --no-audit`.
-1. Open **TERMINAL** in Visual Studio Code. Navigate to the root of the project and run `npm install env-cmd`.
+1. Open **TERMINAL** in Visual Studio Code. Navigate to the root of the project and run `npm install`.
 1. Verify that you can sideload the tab with the following steps:
 
     <ol type="a">
@@ -253,7 +251,20 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 ## Edit the tooling configuration files
 
-1. Open the package.json file in the add-in folder of the Teams tab app (not the add-in project, and not the root of the Teams app). 
+1. Open the package.json file *in the root of the Teams app*.
+1. Add the following scripts to the "scripts" object:
+
+    ```
+    "install:add-in": "cd add-in && npm install",
+    "build:add-in": "cd add-in && npm run build",
+    "build:add-in:dev": "cd add-in && npm run build:dev",
+    "build": "build:add-in && build:tab",
+    "postinstall": "install:add-in && install:tab"
+    ```
+
+    **NOTE**: There is no combined "start" script parallel to the combined "build" and "postinstall" scripts because simultaneous debugging of the tab app and the add-in is not currently supported.
+
+1. Open the package.json file *in the add-in folder* (not the tab folder, and not the root of the Teams app). 
 1. In the "config" object, change the "dev_server_port" value to `53000`.
 1. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
 
