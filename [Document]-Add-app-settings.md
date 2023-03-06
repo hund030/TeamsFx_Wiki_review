@@ -1,5 +1,3 @@
-> The content is under construction and is subject to change in the future.
-
 > This section describes the built-in app setting support by Teams Toolkit. You're free to use other approaches to configure your app settings.
 
 In this document, you will learn:
