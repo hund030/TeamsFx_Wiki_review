@@ -1,5 +1,3 @@
-> Note: The content is currently under construction.
-
 You may want to change the out-of-box provision behavior provided by the tooling. This section introduces what kind of customization you can achieve.
 # Use an existing AAD app for your Teams app
 You can add following configuration snippet to `.fx/configs/config.{your_env_name}.json` to use an AAD app created by yourself for your Teams app. You can follow https://aka.ms/teamsfx-existing-aad-doc to create an AAD app that can be used here.
