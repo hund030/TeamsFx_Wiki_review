@@ -311,3 +311,22 @@ These tasks are standard VS Code shell tasks to execute npm commands on project,
     }
 }
 ```
+
+### Launch Teams Web Client
+This Task is to launch you application in Teams Web Client for remote development environment (e.g. Codespaces).
+| Arguments | Type | Required | Description |
+|---|---|---|---|
+| template | string | required | File path of `.yml` template that defines the actions. |
+| env | string | required | Environment name. |
+
+#### Sample
+```json
+{
+  "label": "Launch Teams for Codespaces",
+  "type": "teamsfx",
+  "command": "launch-web-client",
+  "args": {
+    "env": "local"
+  }
+}
+```
