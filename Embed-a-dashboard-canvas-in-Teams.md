@@ -35,9 +35,9 @@ Customize the scaffolded app template:
 
 ![image](https://user-images.githubusercontent.com/107838226/220565583-7e6145f1-6f07-4072-b343-b9f76cc63162.png)
 
-2. Select `Create a new Teams app`.
+2. Select `Start with a Teams capability`.
 
-![image](https://user-images.githubusercontent.com/107838226/220566003-54ab7c82-e402-422b-b905-26605e112495.png)
+![image](https://user-images.githubusercontent.com/107838226/223345571-6b98db13-6647-454a-beba-6b97d1f95df4.png)
 
 3. Select `Dashboard tab` from Scenario-based Teams app section.
 
