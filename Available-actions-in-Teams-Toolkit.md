@@ -332,6 +332,7 @@ This action will upload your app as M365 title, so it can be viewed on Outlook a
 
 ## Output
 - M365_TITLE_ID: the ID of M365 title.
+- M365_APP_ID: the app ID of M365 title.
 
 # file/updateJson
 This action will override or add application settings to target file, in JSON format (e.g., appsettings.Development.json)
