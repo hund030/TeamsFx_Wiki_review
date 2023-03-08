@@ -95,7 +95,7 @@ Begin by segregating the source code for the tab (or bot) into its own subfolder
             "test": "echo \"Error: no test specified\" && exit 1"
         },
         "devDependencies": {
-            "@microsoft/teamsfx-run-utils": "alpha"
+            "@microsoft/teamsfx-run-utils": "alpha",
             "env-cmd": "^10.1.0"
         }
     }
