@@ -81,7 +81,10 @@ This task is to validate prerequisites that will be used in following debugging 
     }
 },
 ```
+#### Node.js
+To discover the specific versions of Node.js that are supported for a newly created Teams Toolkit project, you can refer to the 'engines.node' field within its package.json file.
 
+#### Port Occupancy
 For newly created project, there may be following ports to be validated:
 - 53000: the default port for local tab service
 - 3978: the default port for local bot service
