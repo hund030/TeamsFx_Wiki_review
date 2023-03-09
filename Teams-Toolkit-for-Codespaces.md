@@ -240,3 +240,6 @@ messagingEndpoint: https://${{CODESPACE_NAME}}-3978.${{GITHUB_CODESPACES_PORT_FO
 
 ### 5. Commit changes to GitHub repository
 Finally, you need to commit all the above code changes to your project repository so that developers can create codespaces for your Teams project.
+
+## What's Next
+TBD.
