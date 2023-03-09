@@ -54,8 +54,8 @@ To set up your repository to use a custom dev container for building apps with T
 }
 ```
 
-### Update configuration for running app in Codespaces
-1. Add the following debug tasks in `.vscode/tasks.json`:
+### 2. Update `.vscode/tasks.json`
+Add the following debug tasks in `.vscode/tasks.json`:
 ```json
 {
     "version": "2.0.0",
@@ -93,7 +93,8 @@ To set up your repository to use a custom dev container for building apps with T
 }
 ```
 
-2. added launch configuration `.vscode/launch.json` to preview your app in Codespaces:
+### 3. Update `.vscode/launch.json`
+Add launch configuration `.vscode/launch.json` to preview your app in Codespaces:
 ```json
 {
     "version": "0.2.0",
@@ -116,22 +117,23 @@ To set up your repository to use a custom dev container for building apps with T
 
 ```
 
-3. Update `TAB_DOMAIN` and `TAB_ENDPOINT` in`teamsapp.local.yml`
+### 4. Update `teamsapp.local.yml`
 
-   In contrast to a locally running app, an app running in Codespaces will have its endpoint forwarded to a publicly accessible Codespaces URL. So we need to update the `TAB_DOMAIN` and `TAB_ENDPOINT` with codespaces URL instead of using localhost:53000:
+In contrast to a locally running app, an app running in Codespaces will have its endpoint forwarded to a publicly accessible Codespaces URL. So we need to update the `TAB_DOMAIN` and `TAB_ENDPOINT` with codespaces URL instead of using `localhost:53000`:
 
 ```yml
 ...
 TAB_DOMAIN: ${{CODESPACE_NAME}}-53000.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}
-TAB_ENDPOINT: https://${{CODESPACE_NAME}}-53000.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}
+TAB_ENDPOIN`: https://${{CODESPACE_NAME}}-53000.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}
 ```
 
-Finally, you'd need to commit all the above code changes to your project repository so that developers can create codespaces for your Teams project.
+### 5. Commit changes to GitHub repository
+Finally, you need to commit all the above code changes to your project repository so that developers can create codespaces for your Teams project.
 
 ## Enable Codespaces for Bot / Message Extension
 You can enable codespaces configuration for your TeamsFx bot/ME project on GitHub by following the steps below:
 
-### Add a dev container configuration
+### 1. Add a dev container configuration
 To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the .devcontainer folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
 
 ```json
@@ -159,3 +161,77 @@ To set up your repository to use a custom dev container for building apps with T
   }
 }
 ```
+
+### 2. Update `.vscode/tasks.json`
+Add the following debug tasks in `.vscode/tasks.json`:
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        ...
+        {
+            "label": "Start Teams App in Codespaces",
+            "dependsOn": [
+                "Validate prerequisites",
+                "Configure port visibility",
+                "Provision",
+                "Deploy",
+                "Start application",
+                "Open Teams Web Client"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Configure port visibility",
+            "type": "shell",
+            "command": "gh codespace ports visibility 3978:public -c $CODESPACE_NAME"
+        },
+        {
+            // Launch Teams web client.
+            // See https://aka.ms/teamsfx-deploy-task to know the details and how to customize the args.
+            "label": "Open Teams Web Client",
+            "type": "teamsfx",
+            "command": "launch-web-client",
+            "args": {
+              "env": "local"
+            }
+        }
+        ...
+    ]
+}
+```
+
+### 3. Update `.vscode/launch.json`
+Add the following `Debug (Codespaces)` launch configuration in`.vscode/launch.json` to debug your app in Codespaces:
+```json
+{
+    "version": "0.2.0",
+    ...
+    "compounds": [
+        {
+            "name": "Debug (Codespaces)",
+            "configurations": [
+                "Attach to Bot"
+            ],
+            "preLaunchTask": "Start Teams App in Codespaces",
+            "presentation": {
+                "group": "all",
+                "order": 1
+            },
+            "stopAll": true
+        }
+    ]
+}
+```
+
+### 4. Update `teamsapp.local.yml`
+
+In contrast to a locally running app, an app running in Codespaces will have its endpoint forwarded to a publicly accessible Codespaces URL. So we need to update the `messagingEndpoint` with codespaces URL instead of using `https://localhost:3978/api/message`:
+
+```yml
+...
+messagingEndpoint: https://${{CODESPACE_NAME}}-3978.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}/api/messages
+```
+
+### 5. Commit changes to GitHub repository
+Finally, you need to commit all the above code changes to your project repository so that developers can create codespaces for your Teams project.
