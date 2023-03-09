@@ -8,6 +8,11 @@ Before getting started building Teams app with Codespaces, please make sure:
 1. You have a GitHub account which will be used to create a Codespaces instance.
 2. You have a M365 Account with sideloading permissions. You may find the setup instructions in the [Prepare your Microsoft 365 tenant](https://docs.microsoft.com/en-us/microsoftteams/platform/concepts/build-and-test/prepare-your-o365-tenant). If you don’t already have a Microsoft 365 account, you can register for a free one through the [Microsoft 365 Developer Program](https://developer.microsoft.com/en-us/microsoft-365/dev-program).
 
+## In this tutorial, you will learn
+* [Quickly Getting started Teams app with Codespaces](#getting-started-from-codespaces-enabled-sample)
+* [How to enable codespaces for TeamsFx Tab](#enable-codespaces-for-tab-app)
+* [How to enable codespaces for TeamsFx Bot / ME](#enable-codespaces-for-bot--message-extension)
+
 ## Getting started from codespaces-enabled sample
 | Sample name | Entry point |
 |-----|-----|
