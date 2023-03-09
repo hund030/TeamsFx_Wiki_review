@@ -15,7 +15,12 @@ Before getting started building Teams app with Codespaces, please make sure:
 | Notification Bot| [![Open notification app in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fnotification-app%2Fdevcontainer.json&location=SouthEastAsia) |
 | NPM Search Message Extension | Coming soon! |
 
+## Enable Codespaces for Teams app
+Besides getting started from our codespaces-enabled samples, you can enable codespaces configuration for your TeamsFx projects on GitHub by following the steps below:
 
-## Enable Codespaces for Tab App
+1. Add a dev container configuration
+2. Update `.vscode/tasks.json`
+3. Update `.vscode/launch.json`
+4. Update `teamsapp.local.yml`
+5. Commit all the above code changes to your project repository
 
-## Enable Codespaces for Bot App
