@@ -18,9 +18,113 @@ Before getting started building Teams app with Codespaces, please make sure:
 ## Enable Codespaces for Teams app
 Besides getting started from our codespaces-enabled samples, you can enable codespaces configuration for your TeamsFx projects on GitHub by following the steps below:
 
-1. Add a dev container configuration
-2. Update `.vscode/tasks.json`
-3. Update `.vscode/launch.json`
-4. Update `teamsapp.local.yml`
-5. Commit all the above code changes to your project repository
+### Add a dev container configuration
+To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the .devcontainer folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
+
+#### Sample `devcontainer.json` for JS/TS Tab App:
+```json
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+  "name": "tab-codespaces",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:16",
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    53000
+  ],
+  "portsAttributes": {
+    "53000": {
+      "label": "tab",
+      "protocol": "https"
+    }
+  },  
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "TeamsDevApp.ms-teams-vscode-extension",
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  }
+}
+```
+
+#### Sample `devcontainer.json` for JS/TS Bot App
+```json
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/javascript-node
+{
+  "name": "bot-codespaces",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:16",
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  "forwardPorts": [
+    3978
+  ],
+  "remoteUser": "node",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "TeamsDevApp.ms-teams-vscode-extension",
+      ]
+    }
+  },
+  "features": {
+    "ghcr.io/devcontainers/features/github-cli:1": {
+      "version": "latest"
+    }
+  }
+}
+```
+
+### Update TeamsFx configuration for running app in Codespaces
+1. Update `.vscode/tasks.json`
+Add the following debug tasks in `.vscode/tasks.json`:
+```json
+{
+    "version": "2.0.0",
+    "tasks": [
+        ...
+        {
+            "label": "Start Teams App in Codespaces",
+            "dependsOn": [
+                "Validate prerequisites",
+                "Configure port visibility",
+                "Provision",
+                "Deploy",
+                "Start application",
+                "Open Teams Web Client"
+            ],
+            "dependsOrder": "sequence"
+        },
+        {
+            "label": "Configure port visibility",
+            "type": "shell",
+            "command": "gh codespace ports visibility 53000:public -c $CODESPACE_NAME"
+        },
+        {
+            // Launch Teams web client.
+            // See https://aka.ms/teamsfx-deploy-task to know the details and how to customize the args.
+            "label": "Open Teams Web Client",
+            "type": "teamsfx",
+            "command": "launch-web-client",
+            "args": {
+              "env": "local"
+            }
+        }
+        ...
+    ]
+}
+```
+
+2. added launch configuration `.vscode/launch.json`:
+
+
+3. Update `teamsapp.local.yml`
+
+### Commit all the above code changes to your project repository
 
