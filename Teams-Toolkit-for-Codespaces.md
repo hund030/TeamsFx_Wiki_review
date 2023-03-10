@@ -85,7 +85,7 @@ Add the following debug tasks in `.vscode/tasks.json`:
         },
         {
             // Launch Teams web client.
-            // See https://aka.ms/teamsfx-deploy-task to know the details and how to customize the args.
+            // See https://aka.ms/teamsfx-tasks/launch-web-client to know the details and how to customize the args.
             "label": "Open Teams Web Client",
             "type": "teamsfx",
             "command": "launch-web-client",
@@ -193,7 +193,7 @@ Add the following debug tasks in `.vscode/tasks.json`:
         },
         {
             // Launch Teams web client.
-            // See https://aka.ms/teamsfx-deploy-task to know the details and how to customize the args.
+            // See https://aka.ms/teamsfx-tasks/launch-web-client to know the details and how to customize the args.
             "label": "Open Teams Web Client",
             "type": "teamsfx",
             "command": "launch-web-client",
