@@ -23,7 +23,7 @@ Before getting started building Teams app with Codespaces, please make sure:
 ## Enable Codespaces for Tab App
 You can enable codespaces configuration for your TeamsFx projects on GitHub by following the steps below:
 
-### Add a dev container configuration
+### 1. Add a dev container configuration
 
 To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the .devcontainer folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
 
