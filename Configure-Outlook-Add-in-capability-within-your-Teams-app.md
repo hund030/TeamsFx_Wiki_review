@@ -33,7 +33,7 @@ The following are the major steps to adding an Outlook Add-in to a Teams app. De
 
 ## Prepare the Teams app project
 
-Begin by segregating the source code for the tab (or bot) into its own subfolder. These instructions assume that the project initially has the following structure: 
+Begin by separating the source code for the tab (or bot) into its own subfolder. These instructions assume that the project initially has the following structure: 
 
 ```
 |-- .vscode/
