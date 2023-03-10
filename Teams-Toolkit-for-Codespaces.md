@@ -25,6 +25,7 @@ Step-by-step guide to getting started with Codespaces:
 ### 1. Creating your codespaces
 
 Click the entry point button / link from documentation to enter the creation page, and then click `Create codespace` to create a codespace for a specific sample:
+
 <img src="https://user-images.githubusercontent.com/10163840/224228193-d1d3bf5c-13d5-4b84-b922-93aac12d198e.png" width="60%" height="60%">
 
 > Note: you can customize the creation options (e.g. region, machine type) according to your needs.
