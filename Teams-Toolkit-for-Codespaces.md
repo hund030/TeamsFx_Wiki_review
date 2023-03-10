@@ -21,11 +21,11 @@ Before getting started building Teams app with Codespaces, please make sure:
 | NPM Search Message Extension | Coming soon! |
 
 ## Enable Codespaces for Tab App
-You can enable codespaces configuration for your TeamsFx projects on GitHub by following the steps below:
+You can enable codespaces configuration for your TeamsFx Tab project on GitHub by following the steps below:
 
 ### 1. Add a dev container configuration
 
-To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the .devcontainer folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
+To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the `.devcontainer` folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
 
 ```json
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
@@ -61,23 +61,15 @@ To set up your repository to use a custom dev container for building apps with T
 
 ### 2. Update `.vscode/tasks.json`
 Add the following debug tasks in `.vscode/tasks.json`:
+* `Configure port visibility` task: set the port visibility to public using the GitHub CLI.
+* `Open Teams Web Client` task: launch Teams web client to sideload your tab app.
+* `Start Teams App in Codespaces` task: the main task to start the app in Codespaces.
+
 ```json
 {
     "version": "2.0.0",
     "tasks": [
         ...
-        {
-            "label": "Start Teams App in Codespaces",
-            "dependsOn": [
-                "Validate prerequisites",
-                "Configure port visibility",
-                "Provision",
-                "Deploy",
-                "Start application",
-                "Open Teams Web Client"
-            ],
-            "dependsOrder": "sequence"
-        },
         {
             "label": "Configure port visibility",
             "type": "shell",
@@ -92,7 +84,19 @@ Add the following debug tasks in `.vscode/tasks.json`:
             "args": {
               "env": "local"
             }
-        }
+        },
+        {
+            "label": "Start Teams App in Codespaces",
+            "dependsOn": [
+                "Validate prerequisites",
+                "Configure port visibility",
+                "Provision",
+                "Deploy",
+                "Start application",
+                "Open Teams Web Client"
+            ],
+            "dependsOrder": "sequence"
+        },
         ...
     ]
 }
@@ -119,7 +123,6 @@ Add launch configuration `.vscode/launch.json` to preview your app in Codespaces
     ]
     ...
 }
-
 ```
 
 ### 4. Update `teamsapp.local.yml`
@@ -139,7 +142,7 @@ Finally, you need to commit all the above code changes to your project repositor
 You can enable codespaces configuration for your TeamsFx bot/ME project on GitHub by following the steps below:
 
 ### 1. Add a dev container configuration
-To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the .devcontainer folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
+To set up your repository to use a custom dev container for building apps with Teams Toolkit, you'll need to create a `devcontainer.json` file and place it in the `.devcontainer` folder located in the root directory of your project. You can start from using the following sample `devcontainers.json`:
 
 ```json
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
@@ -169,6 +172,10 @@ To set up your repository to use a custom dev container for building apps with T
 
 ### 2. Update `.vscode/tasks.json`
 Add the following debug tasks in `.vscode/tasks.json`:
+* `Configure port visibility` task: set the port visibility to public using the GitHub CLI.
+* `Open Teams Web Client` task: launch Teams web client to sideload your tab app.
+* `Start Teams App in Codespaces` task: the main task to start the app in Codespaces.
+
 ```json
 {
     "version": "2.0.0",
@@ -207,7 +214,7 @@ Add the following debug tasks in `.vscode/tasks.json`:
 ```
 
 ### 3. Update `.vscode/launch.json`
-Add the following `Debug (Codespaces)` launch configuration in`.vscode/launch.json` to debug your app in Codespaces:
+Add the following `Debug (Codespaces)` launch configuration in `.vscode/launch.json` to debug your app in Codespaces:
 ```json
 {
     "version": "0.2.0",
