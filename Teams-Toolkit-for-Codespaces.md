@@ -16,8 +16,8 @@ Before getting started building Teams app with Codespaces, please make sure:
 ## Getting started from codespaces-enabled sample
 | Sample name | Entry point |
 |-----|-----|
-| Hello World Tab | [![Open hello-world tab in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fhello-world-tab-codespaces%2Fdevcontainer.json&location=SouthEastAsia) |
-| Notification Bot| [![Open notification app in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fnotification-app%2Fdevcontainer.json&location=SouthEastAsia) |
+| Hello World Tab | [![Open hello-world tab in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fhello-world-tab-codespaces%2Fdevcontainer.json&location=WestUs2) |
+| Notification Bot| [![Open notification app in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fnotification-codespaces%2Fdevcontainer.json&location=WestUs2) |
 | NPM Search Message Extension | Coming soon! |
 
 Step-by-step guide to getting started with Codespaces:
@@ -26,14 +26,14 @@ Step-by-step guide to getting started with Codespaces:
 
 Click the entry point button / link from documentation to enter the creation page, and then click `Create codespace` to create a codespace for a specific sample:
 
-<img src="https://user-images.githubusercontent.com/10163840/224228193-d1d3bf5c-13d5-4b84-b922-93aac12d198e.png" width="60%" height="60%">
+<img src="https://user-images.githubusercontent.com/10163840/224228193-d1d3bf5c-13d5-4b84-b922-93aac12d198e.png" width="70%" height="70%">
 
 > Note: you can customize the creation options (e.g. region, machine type) according to your needs.
 
 ### 2. Running the sample app in codespaces
 Once your codespace is created, the TeamsFx-Samples repository will be automatically cloned into it. The sample specified in the `devcontainer.json` will be launched in Codespaces browser editor. And then select `Preview your Teams app (F5)` from Teams Toolkit or simply press `F5` to run and preview your application:
 
-<img src="https://user-images.githubusercontent.com/10163840/224229999-e032325e-24b1-4b4f-8f98-5f19462c7961.png" width="60%" height="60%">
+<img src="https://user-images.githubusercontent.com/10163840/224229999-e032325e-24b1-4b4f-8f98-5f19462c7961.png" width="70%" height="70%">
 
 ## Enable Codespaces for Tab App
 You can enable codespaces configuration for your TeamsFx Tab project on GitHub by following the steps below:
