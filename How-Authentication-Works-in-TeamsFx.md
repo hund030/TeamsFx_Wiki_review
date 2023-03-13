@@ -91,22 +91,22 @@ Step 6: Azure Function send back result to Teams Tab
 ### Use TeamsFx SDK for On-Behalf-Of flow
 1. To call Azure Function to get user information, the Teams Tab client sends an HTTP request with an SSO token in the `Authorization` header. The token can be retrieved using the TeamsFx SDK from your app's client (custom tab). Below is an example:
 
-  ```ts
-  const authConfig: TeamsUserCredentialAuthConfig = {
-    clientId: process.env.REACT_APP_CLIENT_ID!,
-    initiateLoginEndpoint: process.env.REACT_APP_START_LOGIN_PAGE_URL!,
-  };
+    ```ts
+    const authConfig: TeamsUserCredentialAuthConfig = {
+      clientId: process.env.REACT_APP_CLIENT_ID!,
+      initiateLoginEndpoint: process.env.REACT_APP_START_LOGIN_PAGE_URL!,
+    };
 
-  const teamsUserCredential = new TeamsUserCredential(authConfig);
-  const accessToken = await teamsUserCredential.getToken("");
+    const teamsUserCredential = new TeamsUserCredential(authConfig);
+    const accessToken = await teamsUserCredential.getToken("");
 
-  // note: empty string argument on the previous line is required for now, this will be fixed in a later release
-  const response = await fetch(`${functionEndpoint}/api/${functionName}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken.token}`,
-    },
-  });
-  ```
+    // note: empty string argument on the previous line is required for now, this will be fixed in a later release
+    const response = await fetch(`${functionEndpoint}/api/${functionName}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken.token}`,
+      },
+    });
+    ```
 
 2. In the Azure Function app,  use `OnBehalfOfUserCredential` to call Graph API for current user using `ssoToken` retrieved from request header as below:
 
@@ -154,18 +154,18 @@ The entire client credentials flow looks similar to the following diagram as bel
 
 2. After permissions are granted, then in the Azure Function, use `AppCredential` in TeamsFx SDK to call Graph API as below:
 
-  ```ts
-  const appAuthConfig: AppCredentialAuthConfig = {
-    authorityHost: process.env.M365_AUTHORITY_HOST,
-    clientId: process.env.M365_CLIENT_ID,
-    tenantId: process.env.M365_TENANT_ID,
-    clientSecret: process.env.M365_CLIENT_SECRET,
-  };
+    ```ts
+    const appAuthConfig: AppCredentialAuthConfig = {
+      authorityHost: process.env.M365_AUTHORITY_HOST,
+      clientId: process.env.M365_CLIENT_ID,
+      tenantId: process.env.M365_TENANT_ID,
+      clientSecret: process.env.M365_CLIENT_SECRET,
+    };
 
-  const appCredential = new AppCredential(appAuthConfig);
-  const graphClient: Client = createMicrosoftGraphClientWithCredential(appCredential, [".default"]);
-  const profile: any = await graphClient.api("/users/" + userName).get();
-  ```
+    const appCredential = new AppCredential(appAuthConfig);
+    const graphClient: Client = createMicrosoftGraphClientWithCredential(appCredential, [".default"]);
+    const profile: any = await graphClient.api("/users/" + userName).get();
+    ```
 
 
 ## References
