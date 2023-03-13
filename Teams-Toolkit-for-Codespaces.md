@@ -147,7 +147,7 @@ In contrast to a locally running app, an app running in Codespaces will have its
 ```yml
 ...
 TAB_DOMAIN: ${{CODESPACE_NAME}}-53000.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}
-TAB_ENDPOIN`: https://${{CODESPACE_NAME}}-53000.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}
+TAB_ENDPOINT`: https://${{CODESPACE_NAME}}-53000.${{GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN}}
 ```
 
 ### 5. Commit changes to GitHub repository
