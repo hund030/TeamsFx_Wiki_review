@@ -266,16 +266,29 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 1. Open the package.json file *in the add-in folder* (not the tab folder, and not the root of the Teams app). 
 1. In the "config" object, change the "dev_server_port" value to `53000`.
-1. Several of the scripts in the "scripts" object have a `manifest.json` parameter. In each of these, change the parameter to `../build/AppPackage/manifest.local.json`. For example, 
+1. Several of the scripts in the "scripts" object have a `manifest.json` parameter like the following. 
 
     ```
+    "start": "office-addin-debugging start manifest.json",
     "start:desktop": "office-addin-debugging start manifest.json desktop",
+    "start:web": "office-addin-debugging start manifest.json web",
+    "stop": "office-addin-debugging stop manifest.json",
+    "validate": "office-addin-manifest validate manifest.json",
     ```
 
-    should be changed to 
+    In the "start", "start:desktop", and "start:web" scripts, change `manifest.json` to `../build/AppPackage/appPackage.local.zip`. When you are done, they should look like this:
 
     ```
-    "start:desktop": "office-addin-debugging start ../build/AppPackage/manifest.local.json desktop",
+    "start": "office-addin-debugging start ../build/AppPackage/appPackage.local.zip",
+    "start:desktop": "office-addin-debugging start ../build/AppPackage/appPackage.local.zip desktop",
+    "start:web": "office-addin-debugging start ../build/AppPackage/appPackage.local.zip web",
+    ```
+
+    In the "validate" and "stop" scripts, change the parameter to `../build/AppPackage/manifest.local.json`. When you are done, they should look like this:
+
+    ```
+    "stop": "office-addin-debugging stop ../build/AppPackage/manifest.local.json",
+    "validate": "office-addin-manifest validate ../build/AppPackage/manifest.local.json",
     ```
 
 1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
