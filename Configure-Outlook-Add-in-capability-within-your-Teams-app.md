@@ -444,7 +444,9 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 1. In the Visual Studio Code **TERMINAL**, run `npm run build:addin:dev`.
 1. Copy the file \add-in\dist\manifest.dev.json to the \appPackage folder.
 1. Rename the copy in the \appPackage folder to "manifest.addinPreview.json".
-1. In the **TERMINAL**, run `npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json`. If you are prompted to install `office-addin-dev-settings`, respond "yes".
+1. In the **TERMINAL**, run `npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json`. If you are prompted to install `office-addin-dev-settings`, respond "yes". This process may take a couple of minutes. Eventually, Outlook desktop will open.
+1. Open the **Inbox** of *your Microsoft 365 account identity* and open any message. A **Contoso Add-in** tab with two buttons will appear on the **Home** ribbon (or the **Message** ribbon, if you have opened the message in its own window).
+1. Click the **Show Taskpane** button and a task pane opens. Click the **Perform an action button** and a small notification appears near the top of the message.
 
 ## What’s next
 
