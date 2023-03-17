@@ -259,7 +259,7 @@ For every manifest or parameter file, you need to do following things. This is j
 
 1. Add new environment variables to `env/.env.{env}` files. Each environment variable represents an old placeholder in your project.
     > If `.fx/configs/config.{env}.json` or `.fx/states/state.{env}.json` contains value for the old placeholder, you also need to copy the value to corresponding environment variable in `env/.env.{env}` files.
-
+    > If `states/{env}.userdata` contains value for the old placeholder, you also need to copy the value to corresponding environment variable in `env/.env.{env}.user` files.
 2. Replace the old placeholders `{{xxx}}` and `{{{xxx}}}` in your manifest / parameter files with new format `${{xxx}}`. The name used in the new placeholder should be same with the environment variable name you added in above step.
 
 #### Steps to update the old placeholders
