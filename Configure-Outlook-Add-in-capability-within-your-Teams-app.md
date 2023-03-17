@@ -427,6 +427,12 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 1. To run the add-in capability from the remote deployment, ... ?
 
+Copy the production URL from the TAB_ENDPOINT in env/.env.dev file.
+Edit webpack.config.js file and change urlProd to the value you just copied. Please note to add a '/' at the end of the URL.
+Run npm run build:add-in.
+Copy add-in\dist\manifest.dev.json to appPackage folder using npx ncp .\add-in\dist\manifest.dev.json .\appPackage\manifest.addinPreview.json
+Run npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json
+
 ## What’s next
 
 There are other commonly suggested next steps, for example:
