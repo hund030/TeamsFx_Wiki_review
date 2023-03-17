@@ -81,10 +81,11 @@ There're some changes to existing features you should be aware of:
 
 ### Environment management
 
-1. All the environment files will be gitignored by default. You need to sync the environment variables in `.env.{env_name}` files under `teamsfx` folder by yourselves to other machines to operate corresponding environments.
+1. All the user environment files `.env.{env_name}.user` will be gitignored by default. You need to sync the environment variables in `.env.{env_name}.user` files under `teamsfx` folder by yourselves to other machines to operate corresponding environments.
 2. When creating new environments, you need to fill customized fields in the new `.env.{env_name}` file. Usually you need to provide values for all environment values with `CONFIG__` prefix.
-3. When creating new environments, you need to manually create `templates/azure/azure.parameters.{env_name}.json` as Azure provision parameters and fill the parameter values accordingly.
-4. Some additional steps are required if you added SQL or APIM to your project. Refer [Provision SQL databases](#provision-sql-databases) and [Provision APIM service](#provision-apim-service) section to learn more.
+3. When creating new secret environments, you need to fill customized fields in the new `.env.{env_name}.user` file. Usually you need to provide values for all environment values with `CONFIG__` prefix.
+4. When creating new environments, you need to manually create `templates/azure/azure.parameters.{env_name}.json` as Azure provision parameters and fill the parameter values accordingly.
+5. Some additional steps are required if you added SQL or APIM to your project. Refer [Provision SQL databases](#provision-sql-databases) and [Provision APIM service](#provision-apim-service) section to learn more.
 
 ### Launch your app
 
@@ -94,7 +95,7 @@ There're some changes to existing features you should be aware of:
 
 If you didn't use Teams Toolkit to add SQL databases to your project, these changes won't impact your project.
 
-1. When you provision a new environment, you need to provide values for `STATE__FX_RESOURCE_AZURE_SQL__ADMIN` and `SECRET_FX_RESOURCE_AZURE_SQL__ADMINPASSWORD` in `.env.{env_name}` which are required inputs for creating SQL databases.
+1. When you provision a new environment, you need to provide values for `STATE__FX_RESOURCE_AZURE_SQL__ADMIN` and `SECRET_FX_RESOURCE_AZURE_SQL__ADMINPASSWORD` in `.env.{env_name}.user` which are required inputs for creating SQL databases.
     > If you're provisioning an existing environment, you don't need this step.
 2. You need to grant permission to user assigned identity manually after provisioning a new environment. Here're the steps:
    1. Go to `env/.env.{envName}` and find SQL Server resource id. The resource id usually saved in `PROVISIONOUTPUT__AZURESQLOUTPUT__SQLRESOURCEID` environment variable and has this pattern: `/subscriptions/{subscription_id}/resourceGroups/{resource_group_name}/providers/Microsoft.Sql/servers/{sql_server_name}`. Record the resource group name and SQL Server name, they will be used later.
