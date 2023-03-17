@@ -187,6 +187,12 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ADDIN_ENDPOINT=
    ```
    
+1. Add the following line to the end of the \infra\azure.bicep file:
+
+    ```
+    output ADDIN_DOMAIN string = siteDomain
+    ```
+
 1. In the Teams manifest template, add the placeholder `"${{ADDIN_DOMAIN}}",` to the top of the "validDomains" array. The Teams Toolkit will replace this with a localhost domain when you are developing locally. When you deploy the finished Teams app to staging or production as described below in [Move the application to Azure](#move-the-application-to-azure), Teams Toolkit will replace the placeholder with the staging/production URI. The following is an example:
 
     ```json
