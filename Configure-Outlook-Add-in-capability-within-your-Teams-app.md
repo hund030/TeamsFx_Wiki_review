@@ -187,10 +187,11 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ADDIN_ENDPOINT=
    ```
    
-1. Add the following line to the end of the \infra\azure.bicep file:
+1. Add the following two lines to the end of the \infra\azure.bicep file:
 
     ```
     output ADDIN_DOMAIN string = siteDomain
+    output ADDIN_ENDPOINT string = 'https://${siteDomain}'
     ```
 
 1. In the Teams manifest template, add the placeholder `"${{ADDIN_DOMAIN}}",` to the top of the "validDomains" array. The Teams Toolkit will replace this with a localhost domain when you are developing locally. When you deploy the finished Teams app to staging or production as described below in [Move the application to Azure](#move-the-application-to-azure), Teams Toolkit will replace the placeholder with the staging/production URI. The following is an example:
@@ -298,8 +299,10 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ```
 
 1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
-1. In the add-in folder, open the webpack.config.js file. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
-1. Near the end of the webpack.config.js file there is a line that assigns a port for the webpack dev server. Change the value from `3000` to `53000`.
+1. In the add-in folder, open the webpack.config.js file. 
+1. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
+1. Near the top of the webpack.config.js file, there is a line that assigns a port to the `urlDev` constant. Change the value from `3000` to `53000`.
+1. Near the end of the webpack.config.js file there is a line that assigns a value to the `devServer.port` property. Change the value from `3000` to `53000`.
 1. In the root of project, open the teamsapp.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
 
     ```
