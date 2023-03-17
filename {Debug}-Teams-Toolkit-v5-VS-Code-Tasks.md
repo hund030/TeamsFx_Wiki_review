@@ -13,8 +13,8 @@ Aligning with the official VS Code schema, the `tasks.json` contains **`tasks`**
 | **Start Teams App Locally** | The entry task of debugging, to be referenced by `launch.json`. |
 | **Validate prerequisites**<br>(*teamsfx:debug-check-prerequisites*) | Check prerequisites required by debugging. |
 | **Start local tunnel**<br>(*teamsfx:debug-start-local-tunnel*) | Start local tunneling for bot project. |
-| **Create resources**<br>(*teamsfx:provision*)| Create Teams app related resources required by debugging. |
-| **Build project**<br>(*teamsfx:deploy*)| Build project. |
+| **Provision**<br>(*teamsfx:provision*)| Create Teams app related resources required by debugging. |
+| **Deploy**<br>(*teamsfx:deploy*)| Build project. |
 | **Start application**<br>(*shell:npm run ...*) | Launch all local services. |
 
 > Note: Depend on your project type, your `tasks.json` may contain a subset of above tasks.
@@ -35,8 +35,8 @@ This task is the entry point of all other tasks. It represents the full flow to 
         //// comment out any step(s) you'd like to skip
         // "Validate prerequisites",
         "Start local tunnel",
-        "Create resources",
-        "Build project",
+        "Provision",
+        "Deploy",
         "Start application"
     ],
     "dependsOrder": "sequence"
@@ -223,27 +223,27 @@ provision:
         "Validate prerequisites",
         // Remove/comment out tunnel task
         // "Start local tunnel",
-        "Create resources",
-        "Build project",
+        "Provision",
+        "Deploy",
         "Start application"
     ],
     "dependsOrder": "sequence"
 }
 ```
 
-### Create resources
+### Provision
 
 This task executes lifecycle *provision* to prepare Teams app related resources required for debugging. It references `teamsapp.local.yml`, so the steps and actions can be customized in `teamsapp.local.yml`.
 
 | Arguments | Type | Required | Description |
 |---|---|---|---|
-| template | string | required | File path of `.yml` template that defines the actions. |
+| template | string | optional | File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
 
 #### Sample
 ```json
 {
-    "label": "Create resources",
+    "label": "Provision",
     "type": "teamsfx",
     "command": "provision",
     "args": {
@@ -253,13 +253,13 @@ This task executes lifecycle *provision* to prepare Teams app related resources 
 }
 ```
 
-### Build project
+### Deploy
 
 This task executes lifecycle *deploy* to build project. It references `teamsapp.local.yml`, so the steps and actions can be customized in `teamsapp.local.yml`.
 
 | Arguments | Type | Required | Description |
 |---|---|---|---|
-| template | string | required | File path of `.yml` template that defines the actions. |
+| template | string | optional| File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
 
 #### Sample
