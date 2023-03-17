@@ -41,15 +41,16 @@ Teams Toolkit performs the following changes to your project during upgrade.
 1. Created `teamsapp.yml` and `teamsapp.local.yml` in your project's root folder
     > These file contains lifecycle configuration for your project
 2. Moved environment files in `.fx` to `.env.{env}` in `env` folder
-    > The environment files in old project contains `state.{env}.json`, `config.{env}.json` and `{env}.userdata`
-3. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
+    > The environment files in old project contains `state.{env}.json`, `config.{env}.json`
+3. If your project contains file `.fx/states/{env}.userdata`, the content will be moved to `.env.{env}.user` in `env` folder
+4. Moved `templates/appPackage` to `appPackage` and updated placeholders in it per latest tooling's requirement.
     > This step also renamed `appPackage/manifest.template.json` to `appPackage/manifest.json`
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
-4. If your project contains `templates/appPackage/aad.template.json`, moved it to `aad.manifest.json` and updated placeholders in it per latest tooling's requirement.
+5. If your project contains `templates/appPackage/aad.template.json`, moved it to `aad.manifest.json` and updated placeholders in it per latest tooling's requirement.
     > The tooling now uses `${{ENV_VAR_NAME}}` to reference environment variables and all old placeholders have been renamed to environment variable
-5. Updated `.vscode/tasks.json` and `.vscode/launch.json`.
-6. Updated `.gitignore` to ignore new environment files.
-7. Removed `.fx` folder
+6. If your project contains file `.vscode/tasks.json` and `.vscode/launch.json`, they will be updated.
+7. Updated `.gitignore` to ignore new environment files.
+8. Removed `.fx` folder
     > Content under this folder is no longer used.
 
 > All existing files will be moved into `.backup` folder for your reference. You can safely delete the `.backup` folder after you reviewed the changes.
