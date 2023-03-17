@@ -427,20 +427,25 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 1. In Visual Studio Code open the Teams Toolkit and in the **ACCOUNTS** section be sure you are signed into your Azure account. For more information about signing in, open [Exercise - Create Azure resources to host a Teams tab app](https://learn.microsoft.com/training/modules/teams-toolkit-vsc-deploy-apps/03-create-azure-resources-exercise) and scroll to the **Sign in to Azure in Teams Toolkit** section.
 1. In the **DEPLOYMENT** section of Teams Toolkit, select **Provision in the cloud**. It may take several minutes.
 1. When provisioning completes, select **Deploy to the cloud** to deploy your app code to Azure.
-1. To run the tab capability from the remote deployment, select **View** | **Run** in Visual Studio Code and in the drop down, select one of the following:
+
+### Run the tab capability from the remote deployment
+
+1. Select **View** | **Run** in Visual Studio Code and in the drop down, select one of the following:
 
     - **Launch Remote (Edge)**
     - **Launch Remote (Chrome)** 
 
-    Press F5 to preview your Teams app.
+1. Press F5 to preview your Teams app.
 
-1. To run the add-in capability from the remote deployment, ... ?
+### Run the add-in capability from the remote deployment
 
-Copy the production URL from the ADDIN_ENDPOINT in env/.env.dev file.
-Edit \add-in\webpack.config.js file and change urlProd to the value you just copied. Please note to add a '/' at the end of the URL.
-Run npm run build:add-in.
-Copy add-in\dist\manifest.dev.json to appPackage folder using npx ncp .\add-in\dist\manifest.dev.json .\appPackage\manifest.addinPreview.json
-Run npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json
+1. Copy the production URL from the ADDIN_ENDPOINT in env/.env.dev file.
+1. Edit \add-in\webpack.config.js file and change `urlProd` constant value to the value you just copied. Please note to add a '/' at the end of the URL.
+1. Run npm run build:add-in.
+1. Copy add-in\dist\manifest.dev.json to the \appPackage folder.
+1. Rename the copy in the \appPackage folder to "manifest.addinPreview.json".
+1. In the Visual Studio Code **TERMINAL**, navigate to the \add-in folder.
+1. Run `npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json`.
 
 ## What’s next
 
