@@ -79,7 +79,7 @@ Begin by separating the source code for the tab (or bot) into its own subfolder.
     |-- teamsapp.yml
     ```
 
-1. In package.json that you just moved to the tab folder, delete the script named "dev:teamsfx" from the "scripts" object. This script is added to a new package.json in the next step.
+1. In the package.json that you just moved to the tab folder, delete the script named "dev:teamsfx" from the "scripts" object. This script is added to a new package.json in the next step.
 1. Create a new file named package.json *in the root of the project* and give it the following content:
 
     ```
@@ -179,7 +179,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ADDIN_ENDPOINT=https://localhost:53000
     ```
 
-    **NOTE**: During the early preview phase, this variables are set to the same string as the two `TAB_...` variables. It is not possible at this time to host the add-in and the Teams app on distinct domains.
+    **NOTE**: During the early preview phase, these variables are set to the same string as the two `TAB_...` variables. It is not possible at this time to host the add-in and the Teams app on distinct domains.
 
 1. Add the following line to the end of the .env.dev file:
 
