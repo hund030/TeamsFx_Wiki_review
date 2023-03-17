@@ -416,7 +416,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ```
 
 1. In Visual Studio Code open the Teams Toolkit and in the **ACCOUNTS** section be sure you are signed into your Azure account. For more information about signing in, open [Exercise - Create Azure resources to host a Teams tab app](https://learn.microsoft.com/training/modules/teams-toolkit-vsc-deploy-apps/03-create-azure-resources-exercise) and scroll to the **Sign in to Azure in Teams Toolkit** section.
-1. In the **DEPLOYMENT **section of Teams Toolkit, select **Provision in the cloud**. It may take several minutes.
+1. In the **DEPLOYMENT** section of Teams Toolkit, select **Provision in the cloud**. It may take several minutes.
 1. When provisioning completes, select **Deploy to the cloud** to deploy your app code to Azure.
 1. To run the tab capability from the remote deployment, select **View**| **Run** in Visual Studio Code and in the drop down, select one of the following:
 
