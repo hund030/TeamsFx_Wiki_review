@@ -142,7 +142,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 1. Copy the "$schema" and "manifestVersion" property values from the add-in's manifest to the corresponding properties of the Teams app's manifest.template.json file.
 1. Adjust the "name.full", "description.short", and "description.full" property values as needed to take account of the fact that an Outlook add-in is part of the app. 
-1. Do the same for the "name.short" value. We recommend that you keep the `${{TEAMSFX_ENV}}` on the end of the name. This variable is replaced with "local" in dev mode and with "dev" in production mode.
+1. Do the same for the "name.short" value. We recommend that you keep the `${{TEAMSFX_ENV}}` on the end of the name. This variable is replaced with "local" when you are debugging on localhost and with "dev" when you are either debugging from a remote domain or in production mode. (Historically, Office Add-in developer documentation has used the term "dev" or "dev mode" to refer to running the add-in on a localhost. It has used the term "prod" or "production mode" to refer to running the add-in on a remote host for staging or production. Teams developer documentation has used the term "local" to refer to running the add-in on a localhost, and the term "dev" to refer to running the add-in on a remote host for remote debugging, which is usually called "staging". We are working on getting the terminology consistent.)
 
     The following is an example:
 
