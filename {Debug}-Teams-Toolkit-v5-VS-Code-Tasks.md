@@ -247,7 +247,6 @@ This task executes lifecycle *provision* to prepare Teams app related resources 
     "type": "teamsfx",
     "command": "provision",
     "args": {
-        "template": "${workspaceFolder}/teamsapp.local.yml",
         "env": "local"
     }
 }
@@ -269,7 +268,6 @@ This task executes lifecycle *deploy* to build project. It references `teamsapp.
     "type": "teamsfx",
     "command": "deploy",
     "args": {
-        "template": "${workspaceFolder}/teamsapp.local.yml",
         "env": "local"
     }
 }
@@ -319,7 +317,7 @@ These tasks are standard VS Code shell tasks to execute npm commands on project,
 This Task is to launch you application in Teams Web Client for remote development environment (e.g. Codespaces).
 | Arguments | Type | Required | Description |
 |---|---|---|---|
-| template | string | required | File path of `.yml` template that defines the actions. |
+| template | string | optional | File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
 
 #### Sample
