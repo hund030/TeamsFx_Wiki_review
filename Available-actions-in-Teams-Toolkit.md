@@ -472,7 +472,7 @@ This action will execute a user defined script.
 ```
   - uses: script
     with:
-     run: $my_key="abc"; echo "set-teamsfx-env mykey=${my_key}" # command to run or path to the script. Succeeds if exit code is 0. '::set-output key=value' is a special command to generate output variables into .env file, in this case, "mykey=abc" will be added the output in the corresponding .env file.
+     run: $my_key="abc"; echo "set-teamsfx-env mykey=${my_key}" # command to run or path to the script. Succeeds if exit code is 0. 'set-teamsfx-env key=value' is a special command to generate output variables into .env file, in this case, "mykey=abc" will be added the output in the corresponding .env file.
      workingDirectory: ./scripts # current working directory. Defaults to the directory of this file.
      shell: bash # bash, sh, powershell(Powershell Desktop), pwsh(powershell core), cmd. Can be omitted. If omitted, it defaults to bash on Linux/MacOS, defaults to pwsh on windows.
      timeout: 1000 # timeout in ms
@@ -480,7 +480,7 @@ This action will execute a user defined script.
 ```
 
 ## Output:
-All stdout start with "set-teamsfx-env somekey=somevalue" will be interpreted into outputs in .env file.
+All stdout start with "set-teamsfx-env key=value" will be interpreted into outputs in .env file.
 
 # General Errors
 ## ActionNotFoundError
