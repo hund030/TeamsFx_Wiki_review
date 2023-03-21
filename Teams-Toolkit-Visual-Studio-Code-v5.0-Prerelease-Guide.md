@@ -97,7 +97,6 @@ Teams Toolkit environments are defined in a `.env` file. There are several ways 
 
 * Using the provisioning lifecycle stage. Teams Toolkit will generate an environment file for you
 * Manually. If you are not using Teams Toolkit to provision your cloud environment, you can create an environment file manually
-* Importer (not yet implemented). We plan to provide an importer that allows you to generate an environment by selecting cloud resources in a friendly manner
 
 Environments are optional.
 
