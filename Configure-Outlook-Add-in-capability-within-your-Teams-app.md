@@ -441,7 +441,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 1. Copy the production URL from the ADDIN_ENDPOINT in env/.env.dev file.
 1. Edit \add-in\webpack.config.js file and change `urlProd` constant value to the value you just copied. Please note to add a '/' at the end of the URL.
-1. In the Visual Studio Code **TERMINAL**, run `npm run build:addin:dev`.
+1. In the Visual Studio Code **TERMINAL**, run `npm run build:add-in`.
 1. Copy the file \add-in\dist\manifest.dev.json to the \appPackage folder.
 1. Rename the copy in the \appPackage folder to "manifest.addinPreview.json".
 1. In the **TERMINAL**, run `npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json`. This process may take a couple of minutes. Eventually, Outlook desktop will open. (If you are prompted to install `office-addin-dev-settings`, respond "yes".)
