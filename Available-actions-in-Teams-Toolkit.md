@@ -334,7 +334,42 @@ This action will upload your app as M365 title, so it can be viewed on Outlook a
 - M365_TITLE_ID: the ID of M365 title.
 - M365_APP_ID: the app ID of M365 title.
 
+# file/createOrUpdateEnvironmentFile
+This action will create or update variables to environment file.
+
+## Syntax:
+```yml
+  - uses: file/createOrUpdateEnvironmentFile
+    with: 
+      target: /path/to/your/env/file # Required. This action will generate envs to the specified path.
+      envs: 
+        <your-env-key-1>: <your-env-value-1>
+        <your-env-key-2>: <your-env-value-2>
+```
+
+## Output:
+NA
+
+# file/createOrUpdateJsonFile
+This action will create or update appsettings to JSON file.
+
+## Syntax:
+```yml
+  - uses: file/createOrUpdateJsonFile
+    with:
+      target: ./appsettings.Development.json # Required. The relative path of settings file
+      appsettings: # Required. The appsettings to be generated
+        BOT_ID: ${{BOT_ID}}
+        BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
+```
+
+## Output:
+NA
+
 # file/updateJson
+
+> This action is deprecated. Please use [file/createOrUpdateJsonFile](#filecreateorupdatejsonfile) instead.
+
 This action will override or add application settings to target file, in JSON format (e.g., appsettings.Development.json)
 
 ## Syntax:
@@ -372,6 +407,9 @@ This action will create or update the bot registration on [dev.botframework.com]
 NA
 
 # file/updateEnv
+
+> This action is deprecated. To generate to Teams Toolkit env file, please use [script](#script) to output. To generate to your own file, please use [file/createOrUpdateEnvironmentFile](#filecreateorupdateenvironmentfile) instead.
+
 This action will generate environment variables to `.env` file.
 
 ## Syntax:
