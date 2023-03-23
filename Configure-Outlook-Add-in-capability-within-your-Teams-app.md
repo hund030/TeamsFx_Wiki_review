@@ -25,8 +25,8 @@ To configure an Office Add-in as additional capability, you must meet the follow
 The following are the major steps to adding an Outlook Add-in to a Teams app. Details are in the sections below.
 
 1. [Prepare the Teams app project](prepare-the-teams-app-project)
-1. [Create an Office Add-in project](#create-an-outlook-add-in-project) that is initially separate from your Teams app.
-1. [Merge the manifest](#merge-the-manifest) from the Outlook Add-in project into the Teams app manifest.
+1. [Create an Office Add-in project](#create-an-outlook-add-in-project) that is initially separate from your Teams app project.
+1. [Merge the manifest](#merge-the-manifest) from the Outlook Add-in project into the unified Microsoft 365 manifest.
 1. [Copy the Outlook Add-in files to the Teams app project](#copy-the-outlook-add-in-files-to-the-teams-app-project).
 1. [Edit the tooling configuration files](#edit-the-tooling-configuration-files).
 1. [Move the application to Azure](#move-the-application-to-azure).
@@ -98,6 +98,7 @@ Begin by separating the source code for the tab (or bot) into its own subfolder.
             "@microsoft/teamsfx-cli": "^1.2.3",
             "@microsoft/teamsfx-run-utils": "alpha",
             "env-cmd": "^10.1.0",
+            "office-addin-dev-settings": "^2.0.3",
             "ncp": "^2.0.0"
         }
     }
@@ -143,7 +144,7 @@ The Teams app's manifest is generated at debug-and-sideload time (or build time)
 
 Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
-1. Copy the "$schema" and "manifestVersion" property values from the add-in's manifest to the corresponding properties of the Teams app's manifest.template.json file.
+1. Copy the "$schema" and "manifestVersion" property values from the add-in's manifest to the corresponding properties of the Teams app's manifest template file.
 1. Adjust the "name.full", "description.short", and "description.full" property values as needed to take account of the fact that an Outlook add-in is part of the app. 
 1. Do the same for the "name.short" value. We recommend that you keep the `${{TEAMSFX_ENV}}` on the end of the name. This variable is replaced with "local" when you are debugging on localhost and with "dev" when you are either debugging from a remote domain or in production mode. (Historically, Office Add-in developer documentation has used the term "dev" or "dev mode" to refer to running the add-in on a localhost. It has used the term "prod" or "production mode" to refer to running the add-in on a remote host for staging or production. Teams developer documentation has used the term "local" to refer to running the add-in on a localhost, and the term "dev" to refer to running the add-in on a remote host for remote debugging, which is usually called "staging". We are working on getting the terminology consistent.)
 
@@ -154,12 +155,12 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ```
 
     **Notes**:
-    The "name.short" value appears in both the Teams tab app and the Outlook add-in. Examples: 
+    The "name.short" value appears in both the Teams tab capability and the Outlook add-in. Examples: 
 
-    - It is the label under the launch button of the tab app.
+    - It is the label under the launch button of the Teams tab.
     - It is content of the title bar of the add-in's task pane.
 
-1. If you changed the "name.short" value from its default (which is the name of the project followed by the `${{TEAMSFX_ENV}}` variable), make exactly the same change in all places where the project name appears in the following two files in the root of the Teams project: teamsapp.yml and teamsapp.local.yml.
+1. If you changed the "name.short" value from its default (which is the name of the project followed by the `${{TEAMSFX_ENV}}` variable), make exactly the same change in all places where the project name appears in the following two files in the root of the project: teamsapp.yml and teamsapp.local.yml.
 1. If there is no "authorization.permissions.resourceSpecific" array in the Teams manifest template, copy it from the add-in manifest as a top-level property. If there already is one in the Teams template, copy any objects from the array in the add-in manifest to the array in the Teams template. The following is an example:
 
     ```json
@@ -182,7 +183,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ADDIN_ENDPOINT=https://localhost:53000
     ```
 
-    **NOTE**: During the early preview phase, these variables are set to the same string as the two `TAB_...` variables. It is not possible at this time to host the add-in and the Teams app on distinct domains.
+    **NOTE**: During the early preview phase, these variables are set to the same string as the two `TAB_...` variables. It is not possible at this time to host the add-in and the tab capability on distinct domains.
 
 1. Add the following line to the .env.dev file, just below the `TAB_ENDPOINT=` ... line:
 
@@ -197,7 +198,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     output ADDIN_ENDPOINT string = 'https://${siteDomain}'
     ```
 
-1. In the Teams manifest template, add the placeholder `"${{ADDIN_DOMAIN}}",` to the top of the "validDomains" array. The Teams Toolkit will replace this with a localhost domain when you are developing locally. When you deploy the finished Teams app to staging or production as described below in [Move the application to Azure](#move-the-application-to-azure), Teams Toolkit will replace the placeholder with the staging/production URI. The following is an example:
+1. In the Teams manifest template, add the placeholder `"${{ADDIN_DOMAIN}}",` to the top of the "validDomains" array. The Teams Toolkit will replace this with a localhost domain when you are developing locally. When you deploy the finished combined app to staging or production as described below in [Move the application to Azure](#move-the-application-to-azure), Teams Toolkit will replace the placeholder with the staging/production URI. The following is an example:
 
     ```json
     "validDomains": [
@@ -349,7 +350,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     }
     ```
 
-1. Add the following task to the "tasks" array in the .vscode\tasks.json file of the Teams project. Note the following about this markup: 
+1. Add the following task to the "tasks" array in the .vscode\tasks.json file of the project. Note the following about this markup: 
 
     - It adds a "Start Add-in Locally" task that combines the tab app's "Create resources" task with the add-in's debugging task and specifies that they must run in that order.
     - The "Create resources" task generates the final manifest.
@@ -365,7 +366,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     },
     ```
 
-1. Open the .vscode\launch.json file in the Teams project, which configures the **RUN AND DEBUG** UI in Visual Studio Code and add the following object to the top of the "configurations" array.
+1. Open the .vscode\launch.json file in the project, which configures the **RUN AND DEBUG** UI in Visual Studio Code and add the following object to the top of the "configurations" array.
 
     ```
     {
@@ -380,7 +381,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     },
     ```
 
-1. Verify that you can sideload the add-in part of the Teams app to Outlook with the following steps:
+1. Verify that you can sideload the add-in capability of the Teams app to Outlook with the following steps:
 
     <ol type="a">
       <li><i>First, make sure Outlook desktop is closed.</i></li>
@@ -394,7 +395,9 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 ## Move the application to Azure
 
-1. Open the teamsapp.yml file in the root of the project. Replace the entire `deploy:` section with the following code. These changes take account of the new folder structure and the fact that both add-in and tab files need to be deployed.
+1. Open the teamsapp.yml file in the root of the project and find the line `deploymentName: Create-resources-for-tab`. Change it to `deploymentName: Create-resources-for-tab-and-addin`.
+
+1. In the same file, Replace the entire `deploy:` section with the following code. These changes take account of the new folder structure and the fact that both add-in and tab files need to be deployed.
 
     ```
     deploy:
@@ -403,26 +406,20 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
         with:
           workingDirectory: ./tab
           args: install
-      - name: buildTab
-        uses: cli/runNpmCommand # Run npm command
-        with:
-          workingDirectory: ./tab
-          args: run build --if-present
       - name: npmInstallAddin
         uses: cli/runNpmCommand # Run npm command
         with:
           workingDirectory: ./add-in
           args: install
-      - name: buildAddin
+      - name: buildTabAndAddin
         uses: cli/runNpmCommand # Run npm command
         with:
-          workingDirectory: ./add-in
-          args: run build --if-present # The add-in's build will copy add-in's dist folder to tab's build folder, so both tab and add-in are deployed.
+          args: run build --if-present
 
       - uses: azureStorage/deploy # Deploy bits to Azure Storage Static Website
         with:
           workingDirectory: .
-          distributionPath: ./tab/build # Deploy base folder
+          distributionPath: ./build # Deploy base folder
           resourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
     ```
 
@@ -437,13 +434,13 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     - **Launch Remote (Edge)**
     - **Launch Remote (Chrome)** 
 
-1. Press F5 to preview your Teams app.
+1. Press F5 to preview your Teams tab capability.
 
 ### Run the add-in capability from the remote deployment
 
 1. Copy the production URL from the ADDIN_ENDPOINT in env/.env.dev file.
 1. Edit \add-in\webpack.config.js file and change `urlProd` constant value to the value you just copied. Please note to add a '/' at the end of the URL.
-1. In the Visual Studio Code **TERMINAL**, run `npm run build:add-in`.
+1. In the Visual Studio Code **TERMINAL**, navigate to the root of the project, and then run `npm run build:add-in`.
 1. Copy the file \add-in\dist\manifest.dev.json to the \appPackage folder.
 1. Rename the copy in the \appPackage folder to "manifest.addinPreview.json".
 1. In the **TERMINAL**, run `npx office-addin-dev-settings sideload .\appPackage\manifest.addinPreview.json`. This process may take a couple of minutes. Eventually, Outlook desktop will open. (If you are prompted to install `office-addin-dev-settings`, respond "yes".)
@@ -454,6 +451,6 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 There are other commonly suggested next steps, for example:
 
-- [Add authentication and make a Graph API call](https://learn.microsoft.com/microsoftteams/platform/toolkit/add-single-sign-on?pivots=visual-studio-code)
+- Add authentication and make a Graph API call. For the tab capability, see [Add single sign-on to Teams app](https://learn.microsoft.com/microsoftteams/platform/toolkit/add-single-sign-on?pivots=visual-studio-code). For the add-in capability, see [Enable single sign-on (SSO) in an Office Add-in](https://learn.microsoft.com/office/dev/add-ins/develop/sso-in-office-add-ins).
 - [Set up CI/CD pipelines](https://github.com/OfficeDev/TeamsFx/wiki/How-to-automate-cicd-pipelines)
 - [Call a backend API](https://github.com/OfficeDev/TeamsFx/wiki/How-to-integrate-Azure-Functions-with-your-Teams-app)
