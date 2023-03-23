@@ -95,20 +95,23 @@ Begin by separating the source code for the tab (or bot) into its own subfolder.
             "test": "echo \"Error: no test specified\" && exit 1"
         },
         "devDependencies": {
+            "@microsoft/teamsfx-cli": "^1.2.3",
             "@microsoft/teamsfx-run-utils": "alpha",
-            "env-cmd": "^10.1.0"
+            "env-cmd": "^10.1.0",
+            "ncp": "^2.0.0"
         }
     }
     ```
 
 1. Change the "name", "version", and "author" properties, as needed.
-1. Open the teamsapp.local.yml file in the root of the project and find the line `args: install --no-audit`. Change this to `args: run install:tab --no-audit`.
-1. Open **TERMINAL** in Visual Studio Code. Navigate to the root of the project and run `npm install`.
+1. Open the teamsapp.local.yml file in the root of the project and find the line `args: install --no-audit`. Change this to `args: run install:tab --no-audit`.npm 
+1. Open **TERMINAL** in Visual Studio Code. Navigate to the root of the project and run `npm install`. Among other things, a new node_modules folder is in the project root. 
+1. Next run `npm install:tab`. Among other things, a new node_modules folder will be created in the tab folder, if there isn't one already. 
 1. Verify that you can sideload the tab with the following steps:
 
     <ol type="a">
       <li>Select <b>View</b> | <b>Run</b> in Visual Studio Code.</li>
-      <li>In the <b>RUN AND DEBUG</b> drop down menu, select the top option, <b>Debug (Edge)</b>, and then press F5. The project will build and run. Among other things, a new node_modules folder will be created in the project root. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app.</li>
+      <li>In the <b>RUN AND DEBUG</b> drop down menu, select the top option, <b>Debug (Edge)</b>, and then press F5. The project will build and run. This process may take a couple of minutes. Eventually, Teams opens in a browser with a prompt to add your tab app.</li>
       <li>Select <b>Add</b>.</li>
       <li>To stop debugging and uninstall the app, select <b>Run</b> | <b>Stop Debugging</b> in Visual Studio Code.</li>
     </ol>
@@ -119,7 +122,7 @@ Begin by separating the source code for the tab (or bot) into its own subfolder.
 1. With Teams Toolkit open in Visual Studio Code, select **Create a new app**.
 1. In the **Select an option** drop down, select **Start with an Outlook add-in**, and then select **Outlook Taskpane Add-in (preview)**.
 1. Give a name (with no spaces) to the project when prompted and Teams Toolkit will create the project with basic files and scaffolding *and open it in a separate Visual Studio Code window*. You will used this project as a source for files and markup that you add to the Teams project.
-1. Although you won't be developing this project, verify that it can be sideloaded to from Visual Studio Code works before you continue. Use the following steps:
+1. Although you won't be developing this project, verify that it can be sideloaded from Visual Studio Code before you continue. Use the following steps:
 
     <ol type="a">
       <li><i>First, make sure Outlook desktop is closed.</i></li>
@@ -181,7 +184,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
     **NOTE**: During the early preview phase, these variables are set to the same string as the two `TAB_...` variables. It is not possible at this time to host the add-in and the Teams app on distinct domains.
 
-1. Add the following line to the end of the .env.dev file:
+1. Add the following line to the .env.dev file, just below the `TAB_ENDPOINT=` ... line:
 
     ```
     ADDIN_ENDPOINT=
@@ -258,20 +261,19 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
 ## Edit the tooling configuration files
 
-1. Open the package.json file *in the root of the Teams app*.
+1. Open the package.json file *in the root of the project*.
 1. Add the following scripts to the "scripts" object:
 
     ```
     "install:add-in": "cd add-in && npm install",
+    "postinstall": "install:add-in && install:tab",
     "build:add-in": "cd add-in && npm run build",
     "build:add-in:dev": "cd add-in && npm run build:dev",
-    "build": "build:add-in && build:tab",
-    "postinstall": "install:add-in && install:tab"
+    "build": "npm run build:tab && npm run build:add-in",
+    "postbuild": "ncp tab/build build && ncp add-in/dist build"
     ```
 
-    **NOTE**: There is no combined "start" script parallel to the combined "build" and "postinstall" scripts because simultaneous debugging of the tab app and the add-in is not currently supported.
-
-1. Open the package.json file *in the add-in folder* (not the tab folder, and not the root of the Teams app). 
+1. Open the package.json file *in the add-in folder* (not the tab folder, and not the root of the project). 
 1. In the "config" object, change the "dev_server_port" value to `53000`.
 1. Several of the scripts in the "scripts" object have a `manifest.json` parameter like the following. 
 
@@ -298,10 +300,10 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     "validate": "office-addin-manifest validate ../build/AppPackage/manifest.local.json",
     ```
 
-1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, then run the command `npm install`. 
+1. In Visual Studio Code, open the **TERMINAL**. Navigate to the add-in folder, and then run the command `npm install`. 
 1. In the add-in folder, open the webpack.config.js file. 
 1. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
-1. Near the top of the webpack.config.js file, there is a line that assigns a port to the `urlDev` constant. Change the value from `3000` to `53000`.
+1. Near the top of the webpack.config.js file, there is a line that assigns a localhost URL with port `3000` to the `urlDev` constant. Change the value from `3000` to `53000`.
 1. Near the end of the webpack.config.js file there is a line that assigns a value to the `devServer.port` property. Change the value from `3000` to `53000`.
 1. In the root of project, open the teamsapp.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
 
