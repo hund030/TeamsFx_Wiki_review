@@ -401,22 +401,18 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 
     ```
     deploy:
-      - name: npmInstallTab
+      - name: InstallAllCapabilities
         uses: cli/runNpmCommand # Run npm command
         with:
-          workingDirectory: ./tab
           args: install
-      - name: npmInstallAddin
-        uses: cli/runNpmCommand # Run npm command
-        with:
-          workingDirectory: ./add-in
-          args: install
-      - name: buildTabAndAddin
+
+      - name: BuildAllCapabilities
         uses: cli/runNpmCommand # Run npm command
         with:
           args: run build --if-present
 
-      - uses: azureStorage/deploy # Deploy bits to Azure Storage Static Website
+      - name: DeployToAzure
+        uses: azureStorage/deploy # Deploy bits to Azure Storage Static Website
         with:
           workingDirectory: .
           distributionPath: ./build # Deploy base folder
