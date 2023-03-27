@@ -3,7 +3,7 @@
 The page describes the available actions that can be used in `teamsapp.yml` and `teamsapp.local.yml` in Teams Toolkit.
 
 # aadApp/create
-This action will create a new AAD app for you if AAD_APP_CLIENT_ID environment variable is empty.
+This action will create a new Azure Active Directory (AAD) app to authenticate users if the environment variable that stores clientId is empty.
 
 ## Syntax:
 ```
@@ -11,15 +11,14 @@ This action will create a new AAD app for you if AAD_APP_CLIENT_ID environment v
     with:
       name: <your-application-name> # Required. The name of AAD application. Note: when you run configure/aadApp, the AAD app name will be updated based on the definition of manifest. If you don't want to change the name, ensure the name in AAD manifest is same with the name defined here.
       generateClientSecret: true # Required. If the value is false, the action will not generate client secret for you
+    writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
+      clientId: <your-preferred-env-var-name> # Required. The client (application) ID of AAD application. The action will refer the environment variable defined here to determine whether to create a new AAD app.
+      clientSecret: <your-preferred-env-var-name> # Required when `generateClientSecret` is `true`. The action will refer the environment variable defined here to determine whether to create a new client secret. It's recommended to add `SECRET_` prefix to the environment variable name so it will be stored to the .env.{envName}.user environment file.
+      objectId: <your-preferred-env-var-name> # Required. The object ID of AAD application
+      tenantId: <your-preferred-env-var-name> # Optional. The tenant ID of AAD tenant
+      authority: <your-preferred-env-var-name> # Optional. The AAD authority
+      authorityHost: <your-preferred-env-var-name> # Optional. The host name of AAD authority
 ```
-
-## Output:
-* AAD_APP_CLIENT_ID: the client id of AAD app
-* AAD_APP_CLIENT_SECRET: the client secret of AAD app
-* AAD_APP_OBJECT_ID: the object id of AAD app
-* AAD_APP_TENANT_ID: the tenant id of AAD app
-* AAD_APP_OAUTH_AUTHORITY_HOST: the host of OAUTH authority of AAD app
-* AAD_APP_OAUTH_AUTHORITY: the OAUTH authority of AAD app
 
 # aadApp/update
 This action will update your AAD app based on give AAD app manifest. It will refer the `id` property in AAD app manifest to determine which AAD app to update.
