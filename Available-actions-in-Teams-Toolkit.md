@@ -9,7 +9,7 @@ This action will create a new Azure Active Directory (AAD) app to authenticate u
 ```
   - uses: aadApp/create
     with:
-      name: <your-application-name> # Required. The name of AAD application. Note: when you run configure/aadApp, the AAD app name will be updated based on the definition of manifest. If you don't want to change the name, ensure the name in AAD manifest is same with the name defined here.
+      name: <your-application-name> # Required. when you run aadApp/update, the AAD app name will be updated based on the definition in manifest. If you don't want to change the name, make sure the name in AAD manifest is the same with the name defined here.
       generateClientSecret: true # Required. If the value is false, the action will not generate client secret for you
     writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
       clientId: <your-preferred-env-var-name> # Required. The client (application) ID of AAD application. The action will refer the environment variable defined here to determine whether to create a new AAD app.
