@@ -192,20 +192,25 @@ NA
 ### Error message "Failed to run command"
 Please check if the command exists in your system path and try to run this command manually in your working directory.
 
-# azureAppService/deploy
-This action will upload and deploy the project to Azure APP Service. 
-The parameter `workingDirectory` can be removed if you want to run this command in the project root.
-The parameter `dryRun` can be set to true if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image). The default value is false.
+# azureAppService/zipDeploy
+This action will upload and deploy the project to Azure App Service using [the zip deploy feature](https://aka.ms/zip-deploy-to-app-services). 
+The parameter `workingDirectory` refers to the root folder for deploy action operations. It can be removed if you want to run deploy command in the project root.
+The `artifactFolder` parameter represents the folder where you want to upload the artifact. If your input value is a relative path, it is relative to the `workingDirectory`.
+The `ignoreFile` parameter specifies the file path of the ignore file used during upload. This file can be utilized to exclude certain files or folders from the `artifactFolder`. Its syntax is similar to the Git's ignore.
+The `resourceId` parameter indicates the resource ID of an Azure App Service. It is generated automatically after running the provision command. If you already have an Azure App Service, you can find its resource ID in the Azure portal (see this [link](https://azurelessons.com/how-to-find-resource-id-in-azure-portal/) for more information).
+You can set the `dryRun` parameter to true if you only want to test the preparation of the upload and do not intend to deploy it. This will help you verify that the packaging zip file is correct. The default value for this parameter is false.
+The `outputZipFile` parameter indicates the path of the zip file for the packaged artifact folder. It is relative to the `workingDirectory`, and its default value is `.deployment/deployment.zip`. This file will be reconstructed during deployment, reflecting all folders and files in your `artifactFolder`, and removing any non-existent files or folders.
 
 ## Syntax:
 ```
-  - uses: azureAppService/deploy
+  - uses: azureAppService/zipDeploy
     with:
       workingDirectory: ./src
-      distributionPath: . # Deploy base folder
-      ignoreFile: ./.webappignore # Can be changed to any ignore file location, leave blank will ignore nothing
-      resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
+      artifactFolder: .
+      ignoreFile: ./.webappignore
+      resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}}
       dryRun: false
+      artifactFolder: ./.deployment/deployment.zip
 ```
 
 ## Output:
@@ -227,20 +232,25 @@ Please check the log output and try to upload the files located in your .deploym
 ### Error message: Failed to check deployment status.
 This error can be ignored if the deployment is already successful. You can check the deploy status by visiting `Deployment - Deployment center - Logs` in the Azure portal.
 
-# azureFunctions/deploy
-This action will upload and deploy the project to Azure Functions. 
-The parameter `workingDirectory` can be removed if you want to run this command in the project root.
-The parameter `dryRun` can be set to true if you don't plan to actually deploy, but just want to test the preparation of the upload (e.g. packaging or compiling the docker image). The default value is false.
+# azureFunctions/zipDeploy
+This action will upload and deploy the project to Azure Functions using [the zip deploy feature](https://aka.ms/zip-deploy-to-azure-functions). 
+The parameter `workingDirectory` refers to the root folder for deploy action operations. It can be removed if you want to run deploy command in the project root.
+The `artifactFolder` parameter represents the folder where you want to upload the artifact. If your input value is a relative path, it is relative to the `workingDirectory`.
+The `ignoreFile` parameter specifies the file path of the ignore file used during upload. This file can be utilized to exclude certain files or folders from the `artifactFolder`. Its syntax is similar to the Git's ignore.
+The `resourceId` parameter indicates the resource ID of an Azure Function. It is generated automatically after running the provision command. If you already have an Azure Function, you can find its resource ID in the Azure portal (see this [link](https://azurelessons.com/how-to-find-resource-id-in-azure-portal/) for more information).
+You can set the `dryRun` parameter to true if you only want to test the preparation of the upload and do not intend to deploy it. This will help you verify that the packaging zip file is correct. The default value for this parameter is false.
+The `outputZipFile` parameter indicates the path of the zip file for the packaged artifact folder. It is relative to the `workingDirectory`, and its default value is `.deployment/deployment.zip`. This file will be reconstructed during deployment, reflecting all folders and files in your `artifactFolder`, and removing any non-existent files or folders.
 
 ## Syntax:
 ```
-  - uses: azureFunctions/deploy
+  - uses: azureFunctions/zipDeploy
     with:
       workingDirectory: ./src
-      distributionPath: . # Deploy base folder
-      ignoreFile: ./.webappignore # Can be changed to any ignore file location, leave blank will ignore nothing
-      resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
+      artifactFolder: .
+      ignoreFile: ./.webappignore
+      resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}}
       dryRun: false
+      outputZipFile: ./.deployment/deployment.zip
 ```
 
 ## Output:
