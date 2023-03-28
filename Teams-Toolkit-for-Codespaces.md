@@ -35,6 +35,13 @@ Once your codespace is created, the TeamsFx-Samples repository will be automatic
 
 <img src="https://user-images.githubusercontent.com/10163840/224229999-e032325e-24b1-4b4f-8f98-5f19462c7961.png" width="70%" height="70%">
 
+### 3. Preview App
+When Teams launches in the browser, select the `Add` button in the dialog to install your app to Teams.
+
+   > **Note**: You may need to **allow pop-ups** so that Codespace can open a new browser to sideload the app to Teams:
+   >
+   > ![image](https://user-images.githubusercontent.com/10163840/225506097-18d04d70-ea4c-4a10-bde4-9d38654a2e72.png)
+
 ## Enable Codespaces for Tab App
 You can enable codespaces configuration for your TeamsFx Tab project on GitHub by following the steps below:
 
@@ -97,7 +104,8 @@ Add the following debug tasks in `.vscode/tasks.json`:
             "type": "teamsfx",
             "command": "launch-web-client",
             "args": {
-              "env": "local"
+              "env": "local",
+              "manifestPath": "${workspaceFolder}/appPackage/manifest.json"
             }
         },
         {
@@ -220,7 +228,8 @@ Add the following debug tasks in `.vscode/tasks.json`:
             "type": "teamsfx",
             "command": "launch-web-client",
             "args": {
-              "env": "local"
+              "env": "local",
+              "manifestPath": "${workspaceFolder}/appPackage/manifest.json"
             }
         }
         ...
