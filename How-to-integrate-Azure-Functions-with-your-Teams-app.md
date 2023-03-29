@@ -146,9 +146,9 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
 
       ```yml
       deploy:
-        - uses: file/updateEnv # Generate runtime environment variables for backend
+        - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
           with:
-            target: ./api/.localSettings
+            target: ./.localSettings
             envs:
               M365_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
               M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
@@ -217,7 +217,7 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
 
 1. We recommend setting function endpoint and function name in environment variables. In `teamsapp.local.yml` file, find the action `file/updateEnv` and add new envs.
     ```yml
-    - uses: file/updateEnv # Generate runtime environment variables for tab
+    - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
       with:
         target: ./.localSettings
         envs:
