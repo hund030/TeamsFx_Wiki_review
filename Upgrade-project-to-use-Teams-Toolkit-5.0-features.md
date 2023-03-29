@@ -75,6 +75,9 @@ If your project only contains a bot, an error might occur saying `STATE__FX_RESO
 ### InvalidParameter: Following parameter is missing or invalid for aadApp/create action: name
 You may be trying to upgrade a project created by Teams Toolkit for Visual Studio Code v3.x / Teams Toolkit CLI v0.x / Teams Toolkit for Visual Studio v17.3. Please install Teams Toolkit for Visual Studio Code v4.x / Teams Toolkit CLI v1.x / Teams Toolkit for Visual Studio v17.4 and run upgrade first.
 
+### SimpleAuthEndpoint in configuration is invalid
+If your tab app is created with Teams Toolkit 3.2.0 or earlier version, you may see error `simpleAuthEndpoint in configuration is invalid` when local debugging your app.
+
 ## Feature changes that impact your development flow
 
 There're some changes to existing features you should be aware of:
