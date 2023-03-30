@@ -362,8 +362,7 @@ export const commandBot = new ConversationBot({
 ```
 
 #### For Messaging Extension
-The sample business logic provides a handler `TeamsBot` extends TeamsActivityHandler and override `handleTeamsMessagingExtensionQuery`. 
-You can update the query logic in the `handleMessageExtensionQueryWithSSO` with token which is obtained by using the logged-in Teams user token.
+Please read the [handleMessageExtensionQueryWithToken.js](https://github.com/OfficeDev/TeamsFx/blob/main/packages/fx-core/templates/plugins/resource/aad/auth/bot/js/sso/handleMessageExtensionQueryWithToken.js) or [handleMessageExtensionQueryWithToken.ts](https://github.com/OfficeDev/TeamsFx/blob/main/packages/fx-core/templates/plugins/resource/aad/auth/bot/ts/sso/handleMessageExtensionQueryWithToken.ts).  What you need to do is just to implement the key API `handleMessageExtensionQueryWithSSO` in `TeamsActivityHandler.handleTeamsMessagingExtensionQuery`.
 
 To make this work in your application:
 1. Move the `auth/public` folder to `src/public`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
@@ -391,9 +390,9 @@ server.get(
   })
 );
 ```
-3. Override `handleTeamsMessagingExtensionQuery` interface under `src/teamsBot`. You can follow the sample code in the `handleMessageExtensionQueryWithSSO` to do your own query logic.
-4. Install `@microsoft/teamsfx` in your project.
-5. Install `isomorphic-fetch` in your project.
+3. Execute the following commands under `./` folder: `npm install @microsoft/teamsfx`
+4. Execute the following commands under `./` folder: `npm install isomorphic-fetch`
+5. Implement the key API `handleMessageExtensionQueryWithSSO` in `TeamsActivityHandler.handleTeamsMessagingExtensionQuery`
 6. (For ts only) Install `copyfiles` npm packages in your bot project, add or update the `build` script in `src/package.json` as following
 
 ```json
