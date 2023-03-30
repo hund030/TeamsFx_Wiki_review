@@ -362,9 +362,7 @@ export const commandBot = new ConversationBot({
 ```
 
 #### For Messaging Extension
-Please read the [handleMessageExtensionQueryWithToken.js](https://github.com/OfficeDev/TeamsFx/blob/main/packages/fx-core/templates/plugins/resource/aad/auth/bot/js/sso/handleMessageExtensionQueryWithToken.js) or [handleMessageExtensionQueryWithToken.ts](https://github.com/OfficeDev/TeamsFx/blob/main/packages/fx-core/templates/plugins/resource/aad/auth/bot/ts/sso/handleMessageExtensionQueryWithToken.ts).  What you need to do is just to implement the key API `handleMessageExtensionQueryWithSSO` in `TeamsActivityHandler.handleTeamsMessagingExtensionQuery`.
-
-Read this [Wiki](https://github.com/OfficeDev/TeamsFx/wiki/SSO-for-Message-Extension) for more detail about the API `handleMessageExtensionQueryWithSSO`
+Implement the Key API `handleMessageExtensionQueryWithSSO` in `TeamsActivityHandler.handleTeamsMessagingExtensionQuery`. Read this [Wiki](https://github.com/OfficeDev/TeamsFx/wiki/SSO-for-Message-Extension) for more detail about the API `handleMessageExtensionQueryWithSSO`
 
 To make this work in your application:
 1. Move the `auth/public` folder to `src/public`. This folder contains HTML pages that the bot application hosts. When single sign-on flows are initiated with AAD, AAD will redirect the user to these pages.
