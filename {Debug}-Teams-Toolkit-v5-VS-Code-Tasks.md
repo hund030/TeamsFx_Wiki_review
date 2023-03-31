@@ -319,6 +319,7 @@ This Task is to launch you application in Teams Web Client for remote developmen
 |---|---|---|---|
 | template | string | optional | File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
+| manifestPath | string | required | The file path to the Teams manifest template file. |
 
 #### Sample
 ```json
@@ -327,7 +328,8 @@ This Task is to launch you application in Teams Web Client for remote developmen
   "type": "teamsfx",
   "command": "launch-web-client",
   "args": {
-    "env": "local"
+    "env": "local",
+    "manifestPath": "${workspaceFolder}/appPackage/manifest.json"
   }
 }
 ```
