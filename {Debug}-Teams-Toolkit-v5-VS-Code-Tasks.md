@@ -317,7 +317,6 @@ These tasks are standard VS Code shell tasks to execute npm commands on project,
 This Task is to launch you application in Teams Web Client for remote development environment (e.g. Codespaces).
 | Arguments | Type | Required | Description |
 |---|---|---|---|
-| template | string | optional | File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
 | manifestPath | string | required | The file path to the Teams manifest template file. |
 
