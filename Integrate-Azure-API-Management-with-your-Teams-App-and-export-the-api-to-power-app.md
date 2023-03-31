@@ -8,9 +8,12 @@ Azure API Management enables professional developers to publish their Teams App 
 - A client Azure AD app used to visit the backend API. You can register a new Azure AD app add a client secret according to this [document](https://learn.microsoft.com/en-us/azure/active-directory/develop/quickstart-register-app). Both the client app and the web API app must be registered in the same tenant.
 
 ## Add Azure API Management resource in Azure
-1. Add the the client id and client secret of the client Azure AD app to `env/.env.dev`.
+1. Add the the client id of the client Azure AD app to `env/.env.dev`.
    ```
    APIM_CLIENT_AAD_CLIENT_ID=<your-apim-client-aad-client-id>
+   ```
+   Add client secret of the client Azure AD app to `env/.env.dev.user`.
+   ```
    APIM_CLIENT_AAD_CLIENT_SECRET=<your-apim-client-aad-client-secret>
    ```
 1. Update the parameter file `infra/azure.parameters.json`.
