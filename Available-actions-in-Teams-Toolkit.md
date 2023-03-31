@@ -50,10 +50,12 @@ This action will create a new Teams app for you if TEAMS_APP_ID environment vari
   - uses: teamsApp/create
     with:
       name: YOUR-APP-NAME-${{TEAMSFX_ENV}} # TEAMSFX_ENV is the environment variable defined in env/.env.<environment> file, used to differentiate Teams app in Teams Developer Portal
+    writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
+      teamsAppId: TEAMS_APP_ID
 ```
 
 ## Output:
-* TEAMS_APP_ID: The id for Teams app
+* teamsAppId: The id for Teams app
 * TEAMS_APP_TENANT_ID: The tenant id for M365 account.
 
 # teamsApp/update
@@ -67,20 +69,30 @@ Apply the Teams app manifest to an existing Teams app in Teams Developer Portal.
 ```
 
 ## Output:
-* TEAMS_APP_ID: The id for Teams app
 * TEAMS_APP_TENANT_ID: The tenant id for M365 account.
 * TEAMS_APP_UPDATE_TIME: The latest update time for syncing local manifest file to Teams Developer Portal.
 
-# teamsApp/validate
-This action will render Teams app manifest template with environment variables, validate Teams app manifest file against its schema.
-
-!NOTE: This action is currently skipped as the manifest schema has been changed. See [issue 7737](https://github.com/OfficeDev/TeamsFx/issues/7737). Will be supported in the future version.
+# teamsApp/validateManifest
+This action will render Teams app manifest template with environment variables, validate Teams app manifest file using its schema.
 
 ## Syntax:
 ```
   - uses: teamsApp/validate
     with:
       manifestPath: ./appPackage/manifest.json # Required. Path to Teams app manifest file
+```
+
+## Output:
+* NONE
+
+# teamsApp/validateAppPackage
+This action will validate Teams app package using validation rules.
+
+## Syntax:
+```
+  - uses: teamsApp/validateAppPackage
+    with:
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
 ```
 
 ## Output:
@@ -109,10 +121,12 @@ This action will publish built Teams app zip file to tenant app catalog.
   - uses: teamsApp/publishAppPackage
     with:
       appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
+    writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
+      publishedAppId: TEAMS_APP_PUBLISHED_APP_ID
 ```
 
 ## Output:
-* TEAMS_APP_PUBLISHED_APP_ID: The Teams app id in tenant app catalog. It is different from the app id in Teams developer Portal.
+* publishedAppId: The Teams app id in tenant app catalog. It is different from the app id in Teams developer Portal.
 
 # azureStorage/enableStaticWebsite
 This action will enable static website setting in Azure Stroage.
