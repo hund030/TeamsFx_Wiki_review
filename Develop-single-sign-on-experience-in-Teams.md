@@ -50,17 +50,17 @@ Example: You can add following object into your Teams app manifest for your Tab 
 ### Teams Toolkit configuration files
 
 You can find your Teams Toolkit configuration files `./.yml`. AAD related changes and configs needs to be added into your configuration files:
-- add `aadApp/create` under 'registerApp':
+- add `aadApp/create` under `provision`:
   * For creating new AAD apps used for SSO.
   * You can find more info [here](https://aka.ms/teamsfx-actions/aadapp-create)
-- add `aadApp/update` under 'configureApp'
+- add `aadApp/update` under `provision`
   * For updating your AAD app with AAD app manifest in step 1.
   * You can find more info [here](https://aka.ms/teamsfx-actions/aadapp-update)
-- update `npm/command` under `deploy`:
+- update `cli/runNpmCommand` under `deploy`:
   * For adding following environment variables when local debug:
     * REACT_APP_CLIENT_ID: AAD app client id
     * REACT_APP_START_LOGIN_PAGE_URL: AAD app client secret
-- update `file/updateEnv`
+- update `file/createOrUpdateEnvironmentFile`
   * For adding following environment variables when local debug:
     * REACT_APP_CLIENT_ID: AAD app client id
     * REACT_APP_START_LOGIN_PAGE_URL: Login start page for authentication
@@ -68,17 +68,18 @@ You can find your Teams Toolkit configuration files `./.yml`. AAD related change
 You can set following values if you are using TeamsFx Tab template.
 
 #### `aad/create`
-Add following lines in `registerApp` in `teamsapp.yml` and `teamsapp.local.yml`:
+Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
 ```yml
 - uses: aadApp/create
   with:
     name: "YOUR_AAD_APP_NAME"
     generateClientSecret: true
+    signInAudience: "AzureADMyOrg"
 ```
 > Note: Replace the value of "name" with your expected AAD app name.
 
 #### `aad/update`
-Add following lines in `configureApp` in `teamsapp.yml` and `teamsapp.local.yml`:
+Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
 
 ```yml
 - uses: aadApp/update
@@ -88,18 +89,18 @@ Add following lines in `configureApp` in `teamsapp.yml` and `teamsapp.local.yml`
 ```
 > Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.json`) if you have modify the path of this file.
 
-> Note: For local you need to place `aad/update` after `file/updateEnv` action since `aad/update` will consume output of `file/updateEnv`.
+> Note: For local you need to place `aad/update` after `file/createOrUpdateEnvironmentFile` action since `aad/update` will consume output of `file/createOrUpdateEnvironmentFile`.
 
-#### `npm/command`
-Find `npm/command` action for `build` in `teamsapp.yml` and add following env:
+#### `cli/runNpmCommand`
+Find `cli/runNpmCommand` action with name `build app` in `teamsapp.yml` and add following env:
 ```yml
 env:
   REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
   REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
 ```
 
-#### `file/updateEnv`
-Find `file/updateEnv` action for deploy in `teamsapp.local.yml` and add following env:
+#### `file/createOrUpdateEnvironmentFile`
+Find `file/createOrUpdateEnvironmentFile` action for deploy in `teamsapp.local.yml` and add following env:
 ```yml
 env:
   ...
@@ -178,13 +179,13 @@ You can set following values if you are using TeamsFx Bot template.
 
 You can find your Teams Toolkit configuration files `./.yml`. AAD related changes and configs needs to be added into your configuration files:
 
-  - add `aadApp/create` under 'registerApp':
+  - add `aadApp/create` under `provision`:
     * For creating new AAD apps used for SSO.
     * You can find more info [here](https://aka.ms/teamsfx-actions/aadapp-create)
-  - add `aadApp/update` under 'configureApp'
+  - add `aadApp/update` under `provision`
     * For updating your AAD app with AAD app manifest in step 1.
     * You can find more info [here](https://aka.ms/teamsfx-actions/aadapp-update)
-  - update `script.js`
+  - update `file/createOrUpdateEnvironmentFile`
     * For adding following environment variables when local debug:
       * M365_CLIENT_ID: AAD app client id
       * M365_CLIENT_SECRET: AAD app client secret
@@ -196,17 +197,18 @@ You can find your Teams Toolkit configuration files `./.yml`. AAD related change
 You can set following values if you are using TeamsFx Tab/Bot template.
 
 #### `aad/create`
-Add following lines in `registerApp` in `teamsapp.yml` and `teamsapp.local.yml`:
+Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
 ```yml
 - uses: aadApp/create
   with:
     name: "YOUR_AAD_APP_NAME"
     generateClientSecret: true
+    signInAudience: "AzureADMyOrg"
 ```
 > Note: Replace the value of "name" with your expected AAD app name.
 
 #### `aad/update`
-Add following lines in `configureApp` in `teamsapp.yml` and `teamsapp.local.yml`:
+Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
 
 ```yml
 - uses: aadApp/update
@@ -216,8 +218,8 @@ Add following lines in `configureApp` in `teamsapp.yml` and `teamsapp.local.yml`
 ```
 > Note: Replace the value of "manifestPath" with the relative path of AAD app manifest template (`aad.manifest.json`) if you have modify the path of this file.
 
-#### `file/updateEnv`
-Find `file/updateEnv` action in `teamsapp.local.yml` and add following env:
+#### `file/createOrUpdateEnvironmentFile`
+Find `file/createOrUpdateEnvironmentFile` action in `teamsapp.local.yml` and add following env:
 ```yml
 env:
   ...
@@ -241,7 +243,7 @@ AAD related configs needs to be configured in your remote service. Following exa
 
 You can set follow the steps below if you are using TeamsFx Tab/Bot template.
 
-1. Open `infra/azure.parameter.json` and add following lines into `parameters`:
+1. Open `infra/azure.parameters.json` and add following lines into `parameters`:
   ```json
   "m365ClientId": {
     "value": "${{AAD_APP_CLIENT_ID}}"
