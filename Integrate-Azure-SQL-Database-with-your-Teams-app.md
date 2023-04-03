@@ -79,11 +79,11 @@ We need to add some required parameters for the bicep snippet in step 1.
       "value": "${{SQL_ADMIN_PASSWORD}}"
     }
    ```
-2. Add following content to `env/.env.{env_name}` and set the value of `SQL_ADMIN_PASSWORD`
+2. Add following content to `env/.env.{env_name}.user` and set the value of `SQL_ADMIN_PASSWORD`
    ```
    SQL_ADMIN_PASSWORD=
    ```
-> Note: ${{ENV_NAME}} is a special placeholder supported by Teams Toolkit, which references the value of an environment variable. You can replace the real values in `azure.parameters.json` with this placeholder and set the environment variable values in `env/.env.{env_name}` or set to your machine's environment variable directly. The folder of .env files is controlled by `environmentFolderPath` property in `teamsapp.yml`. The folder name is `env` by default but may be customized after project creation.
+> Note: ${{ENV_NAME}} is a special placeholder supported by Teams Toolkit, which references the value of an environment variable. You can replace the real values in `azure.parameters.json` with this placeholder and set the environment variable values in `env/.env.{env_name}`, `env/.env.{env_name}.user` or set to your machine's environment variable directly. The folder of .env files is controlled by `environmentFolderPath` property in `teamsapp.yml`. The folder name is `env` by default but may be customized after project creation.
 
 <p align="right"><a href="#steps-to-create-azure-sql-database">back to top</a></p>
 
