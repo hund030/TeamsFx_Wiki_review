@@ -7,24 +7,25 @@ Tabs are Teams-aware webpages embedded in Microsoft Teams. They're simple HTML <
 
 ## Prerequisites
 
-To configure tab as additional capability, please make sure:
+Before configuring a tab as an additional capability, please ensure that:
 
 - You have a Teams application and its manifest.
 - You have a Microsoft 365 account to test the application.
 
-Before going on, we strongly suggest you should create and go through a Tab app with Teams Toolkit.
-Create a Tab app with Teams Toolkit(https://learn.microsoft.com/microsoftteams/platform/toolkit/create-new-project?pivots=visual-studio-code)
+Prior to continuing, we strongly recommend creating and going through a Tab app with Teams Toolkit.
+To create a Tab app with Teams Toolkit, please visit [Tab app with Teams Toolkit](https://learn.microsoft.com/microsoftteams/platform/toolkit/create-new-project?pivots=visual-studio-code)
 
-Following are the steps to configure Tab capability:
+The following steps outline how to configure the Tab capability:
+
 1. [Configure Tab capability in Teams application manifest](#configure-tab-capability-in-teams-application-manifest).
 1. [Setup local debug environment](#setup-local-debug-environment).
 1. [Move the application to Azure](#move-the-application-to-azure).
 
-You can always find a complete example here for your reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
+For a complete example, please refer to [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 ## Configure Tab capability in Teams application manifest
 
-1. You can configure your tab within group or channel, or personal scope in you Teams application manifest `appPackage/manifest.template.json`.
+1. To configure your tab within a group or channel, or personal scope in your Teams application manifest `appPackage/manifest.json`, follow these examples:
     Examples:
     ```
       "staticTabs": [
@@ -63,11 +64,11 @@ You can always find a complete example here for your reference. [Hello World Bot
 
 ## Setup local debug environment in VSCode
 
-If you would like a server-side tab app, you may not need to update your folder structure or debug profile. Just add new routes to the tab page in your bot service.
-This document supposes you are adding a client-side tab app.
+If you prefer to create a server-side tab app, you may not need to update your folder structure or debug profile. Simply add new routes to the tab page in your bot service.
+However, this document assumes that you are adding a client-side tab app.
 
-1. Bring your tab app code into your project. If you don't have one, you can create a new Tab app project with Teams Toolkit and copy the source code to into your current project.
-Suppose your folder structure is like:
+1. To begin, bring your tab app code into your project. If you do not have one, you can create a new Tab app project with Teams Toolkit and copy the source code to into your current project.
+For example, your folder structure look like:
     ```
     .
     |-- appPackage/
@@ -83,7 +84,7 @@ Suppose your folder structure is like:
     |-- teamsapp.yml
     ```
 
-    It is suggested to re-organize the folder structure as:
+    We recommend to re-organizing the folder structure as follows:
 
     ```
     .
@@ -100,7 +101,7 @@ Suppose your folder structure is like:
     |-- teamsapp.yml
     ```
 
-1. Configure debug profile for the new tab project by adding below section to your `tasks.json`. Find the complete example [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/hello-world-bot-with-tab/.vscode).
+1. To configure the debug profile for your new tab project, add the following section to your `tasks.json`. You can find a complete example [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/hello-world-bot-with-tab/.vscode).
 
     ```json
     {
@@ -158,7 +159,7 @@ Suppose your folder structure is like:
     }
     ```
 
-1. Update `teamsapp.local.yml` file. Add new actions to integrate your tab project with Teams Toolkit.
+1. Update the `teamsapp.local.yml` file and add new actions. These actions will enable your tab project to work seamlessly with Teams Toolkit.
 
     ```yaml
     provision:
@@ -195,14 +196,14 @@ Suppose your folder structure is like:
             SSL_KEY_FILE: ${{SSL_KEY_FILE}}
     ```
 
-1. Try local debug with Visual Studio Code.
+1. Once you have configured your project and updated the necessary files, you can try local debugging with Visual Studio Code. This will allow you to test and troubleshoot your tab app before deploying it to Teams.
 
 ## Move the application to Azure
 
-Again, if you would like a server-side tab app, you may not need to update your bicep files or Azure infrastructure. Your tab app can be host in the same Azure App Service with your bot.
-This document supposes you are adding a client-side tab app.
+If you prefer to create a server-side tab app, you may not need to update your bicep files or Azure infrastructure. Your tab app can be hosted in the same Azure App Service as your bot.
+However, this document assumes that you are adding a client-side tab app.
 
-1. Add below snippet to your bicep file to provision an Azure Storage for the tab app.
+1. Add the following snippet to your bicep file to provision an Azure Storage Account for your tab app.
 
     ```bicep
     @maxLength(20)
@@ -230,7 +231,7 @@ This document supposes you are adding a client-side tab app.
     output TAB_ENDPOINT string = 'https://${siteDomain}'
     ```
 
-1. Also update the `azure.parameters.json` file to ensure the parameters.
+1. Additionally, make sure to update the `azure.parameters.json` file to ensure that necessary parameters are set correctly.
 
     ```json
     {
@@ -248,7 +249,7 @@ This document supposes you are adding a client-side tab app.
     }
     ```
 
-1. To host your tab app in Azure Storage, you need to enable static website feature for the storage. Add the action in your `teamsapp.yml` file.
+1. To host your tab app in Azure Storage, you'll need to enable the static website feature for the storage account. Add the following action in your `teamsapp.yml` file.
 
     ```yml
     provision:
@@ -261,7 +262,7 @@ This document supposes you are adding a client-side tab app.
 
 1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
 
-1. Add build and deploy action to your `teamsapp.yml` file.
+1. To automate the build and deployment of your tab app, add the following build and deploy action to your `teamsapp.yml` file.
 
     ```
       - uses: cli/runNpmCommand # Run npm command
