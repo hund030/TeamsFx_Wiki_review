@@ -304,7 +304,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
 1. Manually merge `teamsapp.local.yml` file with yours. Then update `file/updateEnv` action under deploy:
     ```yml
     deploy:
-    - uses: file/updateEnv # Generate runtime environment variables
+    - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
         with:
           target: ./tab/.localSettings
         envs:
@@ -314,7 +314,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
             SSL_CRT_FILE: ${{SSL_CRT_FILE}}
             SSL_KEY_FILE: ${{SSL_KEY_FILE}}
 
-    - uses: file/updateEnv # Generate runtime environment variables
+    - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
         with:
           target: ./bot/.localSettings
         envs:
