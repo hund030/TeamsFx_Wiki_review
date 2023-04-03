@@ -238,7 +238,7 @@ NA
 
 ## Troubleshooting:
 ### Error message: No file is found in distribution folder
-Please make sure the distribution path is not empty.
+Please make sure the artifactFolder is not empty.
 
 ### Error message: Failed to list publishing credentials.
 Please retry first, if it does not work, please check your Azure account and make sure this account can use [this api](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list-publishing-credentials#code-try-0). You can test it in the right side of the page.
@@ -247,7 +247,7 @@ Please retry first, if it does not work, please check your Azure account and mak
 Please wait for a while before retrying.
 
 ### Error message: Failed to deploy zip file.
-Please check the log output and try to upload the files located in your .deployment folder which is in your distribution folder according to the guidelines in [this link](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=kudu-ui).
+Please check the log output and try to upload the files located in your .deployment folder which is in your artifact folder according to the guidelines in [this link](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=kudu-ui).
 
 ### Error message: Failed to check deployment status.
 This error can be ignored if the deployment is already successful. You can check the deploy status by visiting `Deployment - Deployment center - Logs` in the Azure portal.
@@ -283,7 +283,7 @@ NA
 
 ## Troubleshooting:
 ### Error message: No file is found in distribution folder
-Please make sure the distribution path is not empty.
+Please make sure the `artifactFolder` path is not empty.
 
 ### Error message: Failed to list publishing credentials.
 Please retry first, if it does not work, please check your Azure account and make sure this account can use [this api](https://learn.microsoft.com/en-us/rest/api/appservice/web-apps/list-publishing-credentials#code-try-0). You can test it in the right side of the page.
@@ -292,7 +292,7 @@ Please retry first, if it does not work, please check your Azure account and mak
 Please wait for a while before retrying.
 
 ### Error message: Failed to deploy zip file.
-Please check the log output and try to upload the files located in your .deployment folder which is in your distribution folder according to the guidelines in [this link](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=kudu-ui).
+Please check the log output and try to upload the files located in your .deployment folder which is in your artifact folder according to the guidelines in [this link](https://learn.microsoft.com/en-us/azure/app-service/deploy-zip?tabs=kudu-ui).
 
 ### Error message: Failed to check deployment status.
 This error can be ignored if the deployment is already successful. You can check the deploy status by visiting `Deployment - Deployment center - Logs` in the Azure portal.
@@ -306,7 +306,7 @@ This action will upload and deploy the project to Azure Storage. The parameter `
   - uses: azureStorage/deploy
     with:
       workingDirectory: ./src
-      distributionPath: . # Deploy base folder
+      artifactFolder: . # Deploy base folder
       ignoreFile: ./.webappignore # Can be changed to any ignore file location, leave blank will ignore nothing
       resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}} # The resource id of the cloud resource to be deployed to
 ```
