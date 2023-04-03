@@ -210,10 +210,15 @@ Please check if the command exists in your system path and try to run this comma
 # azureAppService/zipDeploy
 This action will upload and deploy the project to Azure App Service using [the zip deploy feature](https://aka.ms/zip-deploy-to-app-services). 
 The parameter `workingDirectory` refers to the root folder for deploy action operations. It can be removed if you want to run deploy command in the project root.
+
 The `artifactFolder` parameter represents the folder where you want to upload the artifact. If your input value is a relative path, it is relative to the `workingDirectory`.
+
 The `ignoreFile` parameter specifies the file path of the ignore file used during upload. This file can be utilized to exclude certain files or folders from the `artifactFolder`. Its syntax is similar to the Git's ignore.
+
 The `resourceId` parameter indicates the resource ID of an Azure App Service. It is generated automatically after running the provision command. If you already have an Azure App Service, you can find its resource ID in the Azure portal (see this [link](https://azurelessons.com/how-to-find-resource-id-in-azure-portal/) for more information).
+
 You can set the `dryRun` parameter to true if you only want to test the preparation of the upload and do not intend to deploy it. This will help you verify that the packaging zip file is correct. The default value for this parameter is false.
+
 The `outputZipFile` parameter indicates the path of the zip file for the packaged artifact folder. It is relative to the `workingDirectory`, and its default value is `.deployment/deployment.zip`. This file will be reconstructed during deployment, reflecting all folders and files in your `artifactFolder`, and removing any non-existent files or folders.
 
 ## Syntax:
@@ -250,10 +255,15 @@ This error can be ignored if the deployment is already successful. You can check
 # azureFunctions/zipDeploy
 This action will upload and deploy the project to Azure Functions using [the zip deploy feature](https://aka.ms/zip-deploy-to-azure-functions). 
 The parameter `workingDirectory` refers to the root folder for deploy action operations. It can be removed if you want to run deploy command in the project root.
+
 The `artifactFolder` parameter represents the folder where you want to upload the artifact. If your input value is a relative path, it is relative to the `workingDirectory`.
+
 The `ignoreFile` parameter specifies the file path of the ignore file used during upload. This file can be utilized to exclude certain files or folders from the `artifactFolder`. Its syntax is similar to the Git's ignore.
+
 The `resourceId` parameter indicates the resource ID of an Azure Function. It is generated automatically after running the provision command. If you already have an Azure Function, you can find its resource ID in the Azure portal (see this [link](https://azurelessons.com/how-to-find-resource-id-in-azure-portal/) for more information).
+
 You can set the `dryRun` parameter to true if you only want to test the preparation of the upload and do not intend to deploy it. This will help you verify that the packaging zip file is correct. The default value for this parameter is false.
+
 The `outputZipFile` parameter indicates the path of the zip file for the packaged artifact folder. It is relative to the `workingDirectory`, and its default value is `.deployment/deployment.zip`. This file will be reconstructed during deployment, reflecting all folders and files in your `artifactFolder`, and removing any non-existent files or folders.
 
 ## Syntax:
