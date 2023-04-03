@@ -359,14 +359,13 @@ This action will upload your app as M365 title, so it can be viewed on Outlook a
 
 ## Syntax
 ```yml
-  - uses: m365Title/acquire
+  - uses: m365Title/acquire # Upload your app to Outlook and the Microsoft 365 app
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. The relative path to the built app package.
+      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to the built app package.
+    writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
+      titleId: M365_TITLE_ID # Required. The ID of M365 title.
+      appId: M365_APP_ID # Required. The app ID of M365 title.
 ```
-
-## Output
-- M365_TITLE_ID: the ID of M365 title.
-- M365_APP_ID: the app ID of M365 title.
 
 # file/createOrUpdateEnvironmentFile
 This action will create or update variables to environment file.
@@ -464,19 +463,18 @@ This action will install the developing tools that are required to debug a Teams
 
 ## Syntax:
 ```yml
-  - uses: prerequisite/install
+  - uses: prerequisite/install # Install dependencies
     with:
       devCert: # Optional. The SSL certificate for Teams Tab app. This action will generate a SSL certificate and install it to the system certificate management center.
         trust: true # Required. Whether to trust the SSL certificate.
       func: true # Optional. Azure Functions Core Tools.
       dotnet: true # Optional. .NET.
+    writeToEnvironmentFile: # Write the information of installed dependencies into environment file for the specified environment variable(s).
+      sslCertFile: SSL_CRT_FILE # Optional. The path of the certificate file of the SSL certificate. This parameter takes effect only when `devCert` is specified.
+      sslKeyFile: SSL_KEY_FILE # Optional. The path of the key file of the SSL certificate. This parameter takes effect only when `devCert` is specified.
+      funcPath: FUNC_PATH # Optional. The path of the Azure Functions Core Tools binary. This parameter takes effect only when `func` is `true`.
+      dotnetPath: DOTNET_PATH # Optional. The path of the .NET binary. This parameter takes effect only when `dotnet` is `true`.
 ```
-
-## Output
-- SSL_CRT_FILE: The path of the certificate file of the SSL certificate.
-- SSL_KEY_FILE: The path of the key file of the SSL certificate.
-- FUNC_PATH: The path of the Azure Functions Core Tools binary.
-- DOTNET_PATH: The path of the .NET binary.
 
 # arm/deploy
 This action will deploy given ARM templates parallelly
