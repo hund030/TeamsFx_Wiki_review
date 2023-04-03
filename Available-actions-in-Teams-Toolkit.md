@@ -230,7 +230,7 @@ The `outputZipFile` parameter indicates the path of the zip file for the package
       ignoreFile: ./.webappignore
       resourceId: ${{BOT_AZURE_APP_SERVICE_RESOURCE_ID}}
       dryRun: false
-      artifactFolder: ./.deployment/deployment.zip
+      outputZipFile: ./.deployment/deployment.zip
 ```
 
 ## Output:
