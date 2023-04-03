@@ -15,10 +15,12 @@ To configure tab as additional capability, please make sure:
 Before going on, we strongly suggest you should create and go through a Tab app with Teams Toolkit.
 Create a Tab app with Teams Toolkit(https://learn.microsoft.com/microsoftteams/platform/toolkit/create-new-project?pivots=visual-studio-code)
 
-Following are the steps to add Tab capability:
+Following are the steps to configure Tab capability:
 1. [Configure Tab capability in Teams application manifest](#configure-tab-capability-in-teams-application-manifest).
 1. [Setup local debug environment](#setup-local-debug-environment).
 1. [Move the application to Azure](#move-the-application-to-azure).
+
+You can always find a complete example here for your reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 ## Configure Tab capability in Teams application manifest
 
@@ -59,10 +61,13 @@ Following are the steps to add Tab capability:
     ```
     `TAB_ENDPOINT` and `TAB_DOMAIN` are built-in variables of Teams Toolkit. They will be replaced with the true endpoint in runtime based on your current environment(local, dev, etc.).
 
-## Setup local debug environment
+## Setup local debug environment in VSCode
 
-1. Bring your Tab app code into your project. If you don't have one, you can create a new Tab app project with Teams Toolkit and copy the source code to into your current project.
-Your folder structure may be like:
+If you would like a server-side tab app, you may not need to update your folder structure or debug profile. Just add new routes to the tab page in your bot service.
+This document supposes you are adding a client-side tab app.
+
+1. Bring your tab app code into your project. If you don't have one, you can create a new Tab app project with Teams Toolkit and copy the source code to into your current project.
+Suppose your folder structure is like:
     ```
     .
     |-- appPackage/
@@ -95,49 +100,185 @@ Your folder structure may be like:
     |-- teamsapp.yml
     ```
 
-1. Generate debug profile with TeamsFx CLI.
+1. Configure debug profile for the new tab project by adding below section to your `tasks.json`. Find the complete example [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/hello-world-bot-with-tab/.vscode).
+
+    ```json
+    {
+        "label": "Start application",
+        "dependsOn": [
+            "Start bot",
+            "Start frontend"
+        ]
+    },
+    {
+        "label": "Start bot",
+        "type": "shell",
+        "command": "npm run dev:teamsfx",
+        "isBackground": true,
+        "options": {
+            "cwd": "${workspaceFolder}/bot"
+        },
+        "problemMatcher": {
+            "pattern": [
+                {
+                    "regexp": "^.*$",
+                    "file": 0,
+                    "location": 1,
+                    "message": 2
+                }
+            ],
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": "[nodemon] starting",
+                "endsPattern": "restify listening to|Bot/ME service listening at|[nodemon] app crashed"
+            }
+        }
+    },
+    {
+        "label": "Start frontend",
+        "type": "shell",
+        "command": "npm run dev:teamsfx",
+        "isBackground": true,
+        "options": {
+            "cwd": "${workspaceFolder}/tab"
+        },
+        "problemMatcher": {
+            "pattern": {
+                "regexp": "^.*$",
+                "file": 0,
+                "location": 1,
+                "message": 2
+            },
+            "background": {
+                "activeOnStart": true,
+                "beginsPattern": ".*",
+                "endsPattern": "Compiled|Failed|compiled|failed"
+            }
+        }
+    }
     ```
-    > teamsfx init debug
-    ? Teams Toolkit: Select your development environment: Visual Studio Code (JS/TS)
-    ? Teams Toolkit: Select the capability of your app: Tab
-    ? Teams Toolkit: Are you developing with SPFx?: No
-    ? Teams Toolkit: Teams Toolkit will generate the following files (existing files with duplicated names will be overwritten), would you like to proceed?
-      .vscode-teamsfx/
-        - launch.json
-        - settings.json
-        - tasks.json
-      env/
-        - .env.local
-      teamsapp.local.yml
-      teamsapp.yml
-    : Yes
+
+1. Update `teamsapp.local.yml` file. Add new actions to integrate your tab project with Teams Toolkit.
+
+    ```yaml
+    provision:
+      - uses: script # Set TAB_DOMAIN for local launch
+        name: Set TAB_DOMAIN for local launch
+        with:
+          run: echo "::set-output TAB_DOMAIN=localhost:53000"
+      - uses: script # Set TAB_ENDPOINT for local launch
+        name: Set TAB_ENDPOINT for local launch
+        with:
+          run: echo "::set-output TAB_ENDPOINT=https://localhost:53000"
+    deploy:
+      - uses: prerequisite/install # Install dependencies
+        with:
+          devCert:
+            trust: true
+        writeToEnvironmentFile: # Write the information of installed dependencies into environment file for the specified environment variable(s).
+          sslCertFile: SSL_CRT_FILE
+          sslKeyFile: SSL_KEY_FILE
+
+      - uses: cli/runNpmCommand # Run npm command
+        with:
+          args: install --no-audit
+          workingDirectory: ./tab
+
+      - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables for tab
+        with:
+          target: ./tab/.localSettings
+          envs:
+            BROWSER: none
+            HTTPS: true
+            PORT: 53000
+            SSL_CRT_FILE: ${{SSL_CRT_FILE}}
+            SSL_KEY_FILE: ${{SSL_KEY_FILE}}
     ```
-1. Manually merge the content in `.vscode-teamsfx`, `env` folder and `teamsapp.local.yml` file with yours.
-Here is an sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
 
 1. Try local debug with Visual Studio Code.
 
 ## Move the application to Azure
 
-1. Generate Bicep file for Azure infrastructure with TeamsFx CLI.
+Again, if you would like a server-side tab app, you may not need to update your bicep files or Azure infrastructure. Your tab app can be host in the same Azure App Service with your bot.
+This document supposes you are adding a client-side tab app.
+
+1. Add below snippet to your bicep file to provision an Azure Storage for the tab app.
+
+    ```bicep
+    @maxLength(20)
+    @minLength(4)
+    param resourceBaseName string
+    param storageSku string
+    param storageName string = resourceBaseName
+    param location string = resourceGroup().location
+
+    // Azure Storage that hosts your static web site
+    resource storage 'Microsoft.Storage/storageAccounts@2021-06-01' = {
+      kind: 'StorageV2'
+      location: location
+      name: storageName
+      properties: {
+        supportsHttpsTrafficOnly: true
+      }
+      sku: {
+        name: storageSku
+      }
+    }
+
+    output TAB_AZURE_STORAGE_RESOURCE_ID string = storage.id // used in deploy stage
+    output TAB_DOMAIN string = siteDomain
+    output TAB_ENDPOINT string = 'https://${siteDomain}'
     ```
-    > teamsfx init infra
-    ? Teams Toolkit: Select your development environment: Visual Studio Code (JS/TS)
-    ? Teams Toolkit: Select the capability of your app: Tab
-    ? Teams Toolkit: Are you developing with SPFx?: No
-    ? Teams Toolkit: Teams Toolkit will generate the following files (existing files with duplicated names will be overwritten), would you like to proceed?
-      infra/
-        - azure.bicep
-        - azure.parameters.json
-      env/
-        - .env.dev
-      teamsapp.yml
-    : Yes
+
+1. Also update the `azure.parameters.json` file to ensure the parameters.
+
+    ```json
+    {
+      "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+      "contentVersion": "1.0.0.0",
+      "parameters": {
+        "resourceBaseName": {
+          "value": "helloworld${{RESOURCE_SUFFIX}}"
+        },
+        "storageSku": {
+          "value": "Standard_LRS"
+        },
+        ...
+      }
+    }
     ```
-1. Manually merge the content in `infra`, `env` folder and `teamsapp.yml` file with yours.
-    Here is a sample project for reference. [Hello World Bot with Tab](https://github.com/OfficeDev/TeamsFx-Samples/tree/v3/hello-world-bot-with-tab).
+
+1. To host your tab app in Azure Storage, you need to enable static website feature for the storage. Add the action in your `teamsapp.yml` file.
+
+    ```yml
+    provision:
+      - uses: azureStorage/enableStaticWebsite
+        with:
+          storageResourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}}
+          indexPage: index.html
+          errorPage: error.html
+    ```
 
 1. Run `Teams: Provision in the cloud` command in Visual Studio Code to apply the bicep to Azure.
+
+1. Add build and deploy action to your `teamsapp.yml` file.
+
+    ```
+      - uses: cli/runNpmCommand # Run npm command
+        with:
+          args: install
+      - uses: cli/runNpmCommand # Run npm command
+        with:
+          args: run build
+      # Deploy bits to Azure Storage Static Website
+      - uses: azureStorage/deploy
+        with:
+          workingDirectory: tab
+          # Deploy base folder
+          artifactFolder: build
+          # The resource id of the cloud resource to be deployed to. This key will be generated by arm/deploy action automatically. You can replace it with your existing Azure Resource id or add it to your environment variable file.
+          resourceId: ${{TAB_AZURE_STORAGE_RESOURCE_ID}}
+    ```
 
 1. Run `Teams: Deploy to cloud` command in Visual Studio Code to deploy your Tab app code to Azure.
 
