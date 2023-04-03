@@ -9,26 +9,40 @@ Teams Toolkit now natively support add other collaborators for TeamsFx project w
 
 - To use collaboration feature, you need to **login M365 and Azure account**(Only needed for Tab project, and for SPFX project, it is not needed) and your **TeamsFx project should be provisioned first**
 
-- In the Teams Toolkit panel, click ENVIRONMENT, and expand an environment name which you want to work with others, then you can see collaboration buttons:
+- In the Teams Toolkit panel, click ENVIRONMENT, and expand an environment name which you want to work with others, then you can see Manage Collaborator button:
 
-  ![collaboration-buttons](https://user-images.githubusercontent.com/5545529/168954079-72d3e24d-a862-4067-8df9-f2539cedae3c.png)
-
-
-- Click grant permission button on the left, then you can add another M365 account email address as collaborator (this account should be in the same tenant with your M365 account):
-
-  ![input-collaborator-email](https://user-images.githubusercontent.com/5545529/168954580-d4012f4d-f99e-4c97-92af-ffe68e7ecb6b.png)
+  ![collaboration-buttons](https://user-images.githubusercontent.com/63089166/229402317-9211c1ea-d8c2-41da-aac6-e919f4f96ea6.png)
 
 
-- Click List permission button on the right to view all collaborators for the current environment:
-  ![view-collaborators](https://user-images.githubusercontent.com/5545529/168957068-84ff633e-8612-4805-a1a2-fe4afe42a00d.png)
+- Add App Owners:
+  - Click Manage Collaborator button
+  - Select `Add App Owners`
+    ![collaboration-add-app-owners](https://user-images.githubusercontent.com/63089166/229402708-03d27794-bae3-49b3-8882-352239b72300.png)
+  - Select the apps you want to add app owners for
+    ![collaboration-select-app](https://user-images.githubusercontent.com/63089166/229402856-6af63850-03c3-45fa-a80b-05c5122713e4.png)
+  - (Optional) Select and confirm Teams `manifest.json` file
+    ![collaboration-select-manifest](https://user-images.githubusercontent.com/63089166/229403125-95ab5594-4cdd-4b03-a30f-2f5579017b33.png)
+  - (Optional) Select and confirm Azure Active Directory app `aad.manifest.json` file
+    ![collaboration-select-aad-manifest](https://user-images.githubusercontent.com/63089166/229403266-189fe064-cf01-4dbc-be8c-e25e31af2397.png)
+  - Input the M365 account email address you want to add as app owner (this account should be in the same tenant with your M365 account)
+    ![collaboration-input-collaborator](https://user-images.githubusercontent.com/63089166/229403537-647d9a1b-4443-4fe7-8b8a-109e2925fae0.png)
+
+- List App Owners:
+  - Click Manage Collaborator button
+  - Select `List App Owners`
+    ![collaboration-add-app-owners](https://user-images.githubusercontent.com/63089166/229402708-03d27794-bae3-49b3-8882-352239b72300.png)
+  - Select the apps you want to add app owners for
+    ![collaboration-select-app](https://user-images.githubusercontent.com/63089166/229402856-6af63850-03c3-45fa-a80b-05c5122713e4.png)
+  - (Optional) Select and confirm Teams `manifest.json` file
+    ![collaboration-select-manifest](https://user-images.githubusercontent.com/63089166/229403125-95ab5594-4cdd-4b03-a30f-2f5579017b33.png)
+  - (Optional) Select and confirm Azure Active Directory app `aad.manifest.json` file
+    ![collaboration-select-aad-manifest](https://user-images.githubusercontent.com/63089166/229403266-189fe064-cf01-4dbc-be8c-e25e31af2397.png)
 
 
 - Share your project with the collaborator:
   - Commit your project to GitHub repository
   - Collaborator clone the project to his computer
-  - If your project contains Bot capability, share secret file `.fx\states\[Environment-Name].userdata` to the collaborator, and collaborator should copy the secret file to same place in the project:
-    ![secret-file](https://user-images.githubusercontent.com/5545529/169196511-9a426695-af8e-4b03-980c-5fcb7935d163.png)
-
+  - If your project contains Bot capability, share secret file `env\.env.[Environment-Name].user` to the collaborator, and collaborator should copy the secret file to same place in the project
 
 - Collaborator login to M365 account
 
@@ -56,6 +70,12 @@ Teams Toolkit CLI provides `teamsFx permission` Commands for collaboration scena
 - ##### `--email`
 	**(Required)** Provide collaborator's M365 email address. Note that the collaborators's account should be in the same tenant with creator.
 
+- #### `--teams-app-manifest`
+  Provide path of your Teams app `manifest.json` file.
+
+- #### `--aad-app-manifest`
+  Provide path of your Azure Active Directory `aad.manifest.json` file.
+
 #### Parameters for `teamsfx permission status`
 - ##### `--env`
 	**(Required)** Provide env name.
@@ -63,17 +83,23 @@ Teams Toolkit CLI provides `teamsFx permission` Commands for collaboration scena
 - ##### `--list-all-collaborators`
 	With this flag, Teams Toolkit CLI will print out all collaborators for this project.
 
+- #### `--teams-app-manifest`
+  Provide path of your Teams app `manifest.json` file.
+
+- #### `--aad-app-manifest`
+  Provide path of your Azure Active Directory `aad.manifest.json` file.
+
 ### Examples
 Here are some examples for you to better handling permission for `TeamsFx` projects.
 
 #### Grant Permission
 ```bash
-teamsfx permission grant --env dev --email user-email@user-tenant.com
+teamsfx permission grant --env dev --email user-email@user-tenant.com --teams-app-manifest your-path-of-teams-app-manifest --aad-app-manifest your-path-of-aad-app-manifest
 ```
 
 #### Show current user Permission Status
 ```bash
-teamsfx permission status --env dev
+teamsfx permission status --env dev --teams-app-manifest your-path-of-teams-app-manifest --aad-app-manifest your-path-of-aad-app-manifest
 ```
 
 #### List All Collaborators
