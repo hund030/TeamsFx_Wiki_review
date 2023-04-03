@@ -301,7 +301,7 @@ Please check the guide [Create a bot app with Teams Toolkit](https://learn.micro
     ]
     ```
 
-1. Manually merge `teamsapp.local.yml` file with yours. Then update `file/updateEnv` action under deploy:
+1. Manually merge `teamsapp.local.yml` file with yours. Then update `file/createOrUpdateEnvironmentFile` action under deploy:
     ```yml
     deploy:
     - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
