@@ -104,7 +104,7 @@ teamsfx permission status --env dev --teams-app-manifest your-path-of-teams-app-
 
 #### List All Collaborators
 ```bash
-teamsfx permission status --env dev --list-all-collaborators
+teamsfx permission status --env dev --list-all-collaborators  --teams-app-manifest your-path-of-teams-app-manifest --aad-app-manifest your-path-of-aad-app-manifest
 ```
 
 ### Limitations of collaboration feature
