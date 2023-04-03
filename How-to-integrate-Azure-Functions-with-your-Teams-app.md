@@ -148,7 +148,7 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
       deploy:
         - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
           with:
-            target: ./.localSettings
+            target: ./api/.localSettings
             envs:
               M365_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
               M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
@@ -472,7 +472,7 @@ You can find the complete sample [here](https://github.com/OfficeDev/TeamsFx-Sam
       - uses: azureFunctions/deploy
         with:
           # deploy base folder
-          distributionPath: ./api
+          artifactFolder: ./api
           # the resource id of the cloud resource to be deployed to
           resourceId: ${{API_FUNCTION_RESOURCE_ID}}
     ```
