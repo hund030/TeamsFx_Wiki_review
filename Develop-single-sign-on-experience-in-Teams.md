@@ -425,7 +425,7 @@ Teams Toolkit will use the Azure Active Directory manifest file to register a AA
 
 To learn more about Teams Toolkit local debug functionalities, refer to this [document](https://docs.microsoft.com/microsoftteams/platform/toolkit/debug-local).
 
-## Customize AAD applications
+## Customize Azure Active Directory applications
 
 The Azure Active Directory [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
 
