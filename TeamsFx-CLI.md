@@ -18,12 +18,27 @@ Preview the current application from local or remote.
 
 ## Scenarios for teamsfx preview
 The following list provides the common scenarios for`teamsfx preview:
-- Local Preview
-```shell
-teamsfx provision --env local
-teamsfx deploy --env local
-teamsfx preview --env local
-```
+- Local Preview Tab App
+  - Executing the commands in your project directory.
+    ```shell
+    teamsfx provision --env local
+    teamsfx deploy --env local
+    teamsfx preview --env local
+    ```
+
+- Local Preview Bot App
+  - Install [ngrok](https://ngrok.com/download) and start your local tunnel service by running the command `ngrok http 3978`.
+  - In the `env/.env.local` file, fill in the values for `BOT_DOMAIN` and `BOT_ENDPOINT` with your ngrok URL.
+    ```
+    BOT_DOMAIN=sample-id.ngrok.io
+    BOT_ENDPOINT=http://sample-id.ngrok.io
+    ```
+  - Executing the commands in your project directory.
+    ```shell
+    teamsfx provision --env local
+    teamsfx deploy --env local
+    teamsfx preview --env local
+    ```
 
 - Remote Preview
 ```shell
