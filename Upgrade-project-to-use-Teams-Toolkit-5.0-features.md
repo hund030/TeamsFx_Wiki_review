@@ -90,7 +90,7 @@ To fix this: Open `teamsapp.yml`, find the npm build command in deploy lifecycle
       args: run build --if-present
 ```
 
-Since the simple auth is deprecated, it's also recommended to refer this [wiki](https://github.com/OfficeDev/TeamsFx/wiki/How-Authentication-Works-in-TeamsFx) to for best practices and iterate your application to use latest TeamsFx SDK.
+Since simple auth is deprecated, refer to [wiki](https://github.com/OfficeDev/TeamsFx/wiki/How-Authentication-Works-in-TeamsFx) for best practices and iterate your application to use the latest TeamsFx SDK.
 
 ## Feature changes that impact your development flow
 
