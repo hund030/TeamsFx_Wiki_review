@@ -7,7 +7,7 @@ Basically you will need take care these configurations:
 * In the Azure AD app manifest file, you need to specify URIs such as the URI to identify the Azure AD authentication app and the redirect URI for returning token. 
 * In the Teams manifest file, add the SSO application to link it with Teams application.
 * In the Teams Toolkit configuration files and Infra files, you need to add necessary configurations to make SSO works for your Teams app.
-* Add SSO application information in Teams Toolkit configuration files in order to make sure the authentication app can be registered on backend service and started by Teams Toolkit when you debugging or previewing Teams application.
+* Add SSO application information in Teams Toolkit configuration files in order to make sure the authentication app can be registered on backend service and started by Teams Toolkit when you debug or preview Teams application.
 
 In this tutorial you will learn:
 * [Steps to add SSO to Teams Tab app](#teams-tab-app)
