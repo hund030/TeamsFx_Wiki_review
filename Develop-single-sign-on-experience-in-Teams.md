@@ -4,14 +4,14 @@ Microsoft Teams provides a mechanism by which an application can obtain the sign
 
 Basically you will need take care these configurations: 
 
-* In the Azure AD app manifest file, you need to specify URIs such as the URI to identify the Azure AD authentication app and the redirect URI for returning token. 
+* In the Azure Active Directory app manifest file, you need to specify URIs such as the URI to identify the Azure AD authentication app and the redirect URI for returning token. 
 * In the Teams manifest file, add the SSO application to link it with Teams application.
 * In the Teams Toolkit configuration files and Infra files, you need to add necessary configurations to make SSO works for your Teams app.
 * Add SSO application information in Teams Toolkit configuration files in order to make sure the authentication app can be registered on backend service and started by Teams Toolkit when you debug or preview Teams application.
 
 In this tutorial you will learn:
 * [Steps to add SSO to Teams Tab app](#teams-tab-app)
-  * [Create Azure AD app manifest](#azure-ad-app-manifest)
+  * [Create Azure Active Directory app manifest](#azure-active-directory-app-manifest)
   * [Update Teams app manifest](#teams-app-manifest)
   * [Update Teams Toolkit configuration files](#teams-toolkit-configuration-files)
   * [Update Source Code](#update-source-code)
@@ -24,11 +24,11 @@ In this tutorial you will learn:
 
 ## Teams Tab app
 
-### Azure AD app manifest
+### Azure Active Directory app manifest
 
-> Note: You can find detail info about Azure AD app manifest [here](https://learn.microsoft.com/azure/active-directory/develop/reference-app-manifest).
+> Note: You can find detail info about Azure Active Directory app manifest [here](https://learn.microsoft.com/azure/active-directory/develop/reference-app-manifest).
 
-Download Azure AD app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-tab) to `./aad.manifest.json`. The AAD [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
+Download Azure Active Directory app manifest template [here](https://aka.ms/teamsfx-aad-manifest-v3-tab) to `./aad.manifest.json`. The Azure Active Directory [manifest](https://docs.microsoft.com/azure/active-directory/develop/reference-app-manifest) allows you to customize various aspects of your application registration. You can update the manifest as needed.
 
 ### Teams app manifest
 
