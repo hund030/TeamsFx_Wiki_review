@@ -77,6 +77,17 @@ You may be trying to upgrade a project created by Teams Toolkit for Visual Studi
 
 ### SimpleAuthEndpoint in configuration is invalid
 If your tab app is created with Teams Toolkit 3.2.0 or earlier version, you may see error `simpleAuthEndpoint in configuration is invalid` when remote debugging your app.
+To fix this: Open `teamsapp.yml`, find the npm build command in deploy lifecycle and add an additional env `REACT_APP_TEAMSFX_ENDPOINT` as below:
+```
+  - uses: cli/runNpmCommand
+    env:
+      REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
+      REACT_APP_START_LOGIN_PAGE_URL: ${{PROVISIONOUTPUT__FRONTENDHOSTINGOUTPUT__ENDPOINT}}/auth-start.html
+      REACT_APP_TEAMSFX_ENDPOINT: ${{PROVISIONOUTPUT__SIMPLEAUTHOUTPUT__ENDPOINT}}
+    with:
+      workingDirectory: tabs
+      args: run build --if-present
+```
 
 ## Feature changes that impact your development flow
 
