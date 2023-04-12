@@ -172,11 +172,11 @@ For example, your folder structure look like:
         with:
           run: echo "::set-output TAB_ENDPOINT=https://localhost:53000"
     deploy:
-      - uses: prerequisite/install # Install dependencies
+      - uses: devTool/install # Install development tool(s)
         with:
           devCert:
             trust: true
-        writeToEnvironmentFile: # Write the information of installed dependencies into environment file for the specified environment variable(s).
+        writeToEnvironmentFile: # Write the information of installed development tool(s) into environment file for the specified environment variable(s).
           sslCertFile: SSL_CRT_FILE
           sslKeyFile: SSL_KEY_FILE
 

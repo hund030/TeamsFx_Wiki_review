@@ -458,18 +458,18 @@ This action will generate environment variables to `.env` file.
 ## Output:
 If `target` is specified, NA. If `target` is not specified, `envs`.
 
-# prerequisite/install
-This action will install the developing tools that are required to debug a Teams app.
+# devTool/install
+This action will install the development tool(s) required to debug a Teams app.
 
 ## Syntax:
 ```yml
-  - uses: prerequisite/install # Install dependencies
+  - uses: devTool/install # Install development tool(s)
     with:
       devCert: # Optional. The SSL certificate for Teams Tab app. This action will generate a SSL certificate and install it to the system certificate management center.
         trust: true # Required. Whether to trust the SSL certificate.
       func: true # Optional. Azure Functions Core Tools.
-      dotnet: true # Optional. .NET.
-    writeToEnvironmentFile: # Write the information of installed dependencies into environment file for the specified environment variable(s).
+      dotnet: true # Optional. .NET SDK.
+    writeToEnvironmentFile: # Write the information of installed development tool(s) into environment file for the specified environment variable(s).
       sslCertFile: SSL_CRT_FILE # Optional. The path of the certificate file of the SSL certificate. This parameter takes effect only when `devCert` is specified.
       sslKeyFile: SSL_KEY_FILE # Optional. The path of the key file of the SSL certificate. This parameter takes effect only when `devCert` is specified.
       funcPath: FUNC_PATH # Optional. The path of the Azure Functions Core Tools binary. This parameter takes effect only when `func` is `true`.
