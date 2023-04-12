@@ -354,12 +354,12 @@ This action will copy the Teams App zipped package to `teams` folder in SPFx dir
 ## Output:
 NA
 
-# m365Title/acquire
+# teamsApp/extendToM365
 This action will upload your app as M365 title, so it can be viewed on Outlook and Office.
 
 ## Syntax
 ```yml
-  - uses: m365Title/acquire # Upload your app to Outlook and the Microsoft 365 app
+  - uses: teamsApp/extendToM365 # Extend your Teams app to Outlook and the Microsoft 365 app
     with:
       appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to the built app package.
     writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
