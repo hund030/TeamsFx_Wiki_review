@@ -237,7 +237,6 @@ This task executes lifecycle *provision* to prepare Teams app related resources 
 
 | Arguments | Type | Required | Description |
 |---|---|---|---|
-| template | string | optional | File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
 
 #### Sample
@@ -258,7 +257,6 @@ This task executes lifecycle *deploy* to build project. It references `teamsapp.
 
 | Arguments | Type | Required | Description |
 |---|---|---|---|
-| template | string | optional| File path of `.yml` template that defines the actions. |
 | env | string | required | Environment name. |
 
 #### Sample
