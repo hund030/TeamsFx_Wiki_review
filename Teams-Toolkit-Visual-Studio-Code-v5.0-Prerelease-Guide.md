@@ -224,6 +224,32 @@ Following shows the step-by-step flow after clicking F5, and the place where eac
 
 # Examples
 
+## Add your own environment variables to teamsfx actions
+
+There're 3 ways to add customized environment variables to teamsfx actions:
+
+1. Update your machine's environment variable directly. You need to close all the opened VS Code instances and reopen VS Code again to let the environment variable changes take effect.
+
+2. Add your environment variables to the `.env.{envName}` and `.env.{envName}.user` files. The environment variables defined in these 2 files will be available to all the actions. You can reference the [dotenv](https://github.com/motdotla/dotenv) document to understand the syntax.
+
+   If you want to commit your environment variables to git, you need to add them to `.env.{envName}`. Otherwise, you need to add them to `.env.{envName}.user`.
+
+3. Define temporary environment variables in your action's definition. You can refer following sample for the syntax. The environment variables are only available to the specific action run.
+   ``` yaml
+   - uses: <action name>
+     env:
+       # Defines an environment variable MY_ENV_A, and its value is "env-value"
+       MY_ENV_A: env-value
+       # This defines an environment variable MY_ENV_B, and its value is same with the NODE_ENV environment variable in your machine or the .env.{envName}/.env.{envName}.user file.
+       MY_ENV_B: ${{NODE_ENV}} 
+   ```
+
+## Add your own environment variables when execute npm commands during local debug
+
+Some local debug operation is not defined in `teamsapp.local.yml`, for example `npm run dev:teamsfx`. You need to inspect the actual command in `package.json` to understand which file is used to define the npm command's input (usually in the form of environment variable) and update that file.
+
+Most of the time, the npm command uses `env-cmd -f .localSettings` to load environment variables. So you need to create a `.localSettings` file in the same folder of `package.json` and add environment variables to it.
+
 ## Customize your Ngrok configuration for debug
 
 Teams Toolkit use ngrok for tunneling, but you could customize the tunneling settings or use your own tunneling service by modifying .`vscode/tasks.json`. Visit [teamsfx local tunnel](https://aka.ms/teamsfx-tasks#start-local-tunnel) for more details.
