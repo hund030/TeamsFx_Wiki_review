@@ -88,7 +88,7 @@ Begin by separating the source code for the tab (or bot) into its own subfolder.
         "version": "0.0.1",
         "author": "Contoso",
         "scripts": {
-            "dev:teamsfx": "env-cmd --silent -f .localSettings npm run start:tab",
+            "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run start:tab",
             "build:tab": "cd tab && npm run build",
             "install:tab": "cd tab && npm install",
             "start:tab": "cd tab && npm run start",

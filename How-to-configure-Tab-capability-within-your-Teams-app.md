@@ -187,7 +187,7 @@ For example, your folder structure look like:
 
       - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables for tab
         with:
-          target: ./tab/.localSettings
+          target: ./tab/.localConfigs
           envs:
             BROWSER: none
             HTTPS: true

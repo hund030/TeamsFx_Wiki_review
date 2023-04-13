@@ -142,13 +142,13 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
     },
     ```
 
-1. Add `file/updateEnv` actions to deploy lifecycle in `./teamsapp.local.yml` file. This action generates environment variables.
+1. Add `file/createOrUpdateEnvironmentFile` actions to deploy lifecycle in `./teamsapp.local.yml` file. This action generates environment variables.
 
       ```yml
       deploy:
         - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
           with:
-            target: ./api/.localSettings
+            target: ./api/.localConfigs
             envs:
               M365_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
               M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
@@ -162,7 +162,7 @@ You can find a complete sample debug profile for VSC [here](https://github.com/O
 
       ```json
       "scripts": {
-        "dev:teamsfx": "env-cmd --silent -f .localSettings npm run dev",
+        "dev:teamsfx": "env-cmd --silent -f .localConfigs npm run dev",
         "dev": "func start --typescript --language-worker=\"--inspect=9229\" --port \"7071\" --cors \"*\"",
         ...
       }
@@ -215,11 +215,11 @@ M365_CLIENT_ID should be the client id of your Teams app. So that your Teams tab
 
 ## Call the function from your client with TeamsFx SDK
 
-1. We recommend setting function endpoint and function name in environment variables. In `teamsapp.local.yml` file, find the action `file/updateEnv` and add new envs.
+1. We recommend setting function endpoint and function name in environment variables. In `teamsapp.local.yml` file, find the action `file/createOrUpdateEnvironmentFile` and add new envs.
     ```yml
     - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
       with:
-        target: ./.localSettings
+        target: ./.localConfigs
         envs:
           BROWSER: none
           HTTPS: true

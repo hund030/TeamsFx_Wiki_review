@@ -191,9 +191,6 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
       "build:bot": "cd bot && npm run build",
       "build": "concurrently \"npm run build:tab\" \"npm run build:bot\""
     },
-    "devDependencies": {
-        "@microsoft/teamsfx-run-utils": "alpha"
-    },
     "dependencies": {
         "concurrently": "^7.6.0"
     },
@@ -356,7 +353,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
     deploy:
     - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
         with:
-          target: ./tab/.localSettings
+          target: ./tab/.localConfigs
         envs:
             BROWSER: none
             HTTPS: true
@@ -366,7 +363,7 @@ Please check the guide [Create a message extension app with Teams Toolkit](https
 
     - uses: file/createOrUpdateEnvironmentFile # Generate runtime environment variables
         with:
-          target: ./bot/.localSettings
+          target: ./bot/.localConfigs
         envs:
             BOT_ID: ${{BOT_ID}}
             BOT_PASSWORD: ${{SECRET_BOT_PASSWORD}}
