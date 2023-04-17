@@ -248,7 +248,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     |-- infra/
     |-- node_modules/
     |-- tab/
-    |-- |- node_modules/
+    |-- |-- node_modules/
     |-- |-- public/
     |-- |-- src/
     |-- |-- package-lock.json
