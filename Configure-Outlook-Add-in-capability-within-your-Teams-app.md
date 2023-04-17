@@ -306,19 +306,27 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 1. Change the line `from: "manifest*.json",` to `from: "../build/appPackage/manifest*.json",`.
 1. Near the top of the webpack.config.js file, there is a line that assigns a localhost URL with port `3000` to the `urlDev` constant. Change the value from `3000` to `53000`.
 1. Near the end of the webpack.config.js file there is a line that assigns a value to the `devServer.port` property. Change the value from `3000` to `53000`.
-1. In the root of project, open the teamsapp.local.yml file and find the `configureApp` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `configureApp` section should begin like the following:
+1. In the root of project, open the teamsapp.local.yml file and find the `provision` section. Use the `#` character to comment out the lines that validate the manifest template. This is necessary because the Teams manifest validation system is not yet compatible with the changes you made to the manifest template. When you are done, the `provision` section should begin like the following:
 
     ```
-    configureApp:
-      - uses: file/updateEnv # Generate env to .env file
+    provision:
+      - uses: teamsApp/create # Creates a Teams app
         with:
-          envs:
-            TAB_DOMAIN: localhost:53000
-            TAB_ENDPOINT: https://localhost:53000
-    #  - uses: teamsApp/validate
-    #    with:
-    #      manifestPath: ./appPackage/manifest.template.json # Path to manifest template
-    
+          name: TeamsTabTest-${{TEAMSFX_ENV}} # Teams app name
+        writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
+          teamsAppId: TEAMS_APP_ID
+      - uses: script # Set TAB_DOMAIN for local launch
+        name: Set TAB_DOMAIN for local launch
+        with:
+          run: echo "::set-teamsfx-env TAB_DOMAIN=localhost:53000"
+      - uses: script # Set TAB_ENDPOINT for local launch
+        name: Set TAB_ENDPOINT for local launch
+        with:
+          run: echo "::set-teamsfx-env TAB_ENDPOINT=https://localhost:53000"
+      # - uses: teamsApp/validateManifest # Validate using manifest schema
+      #   with:
+      #     manifestPath: ./appPackage/manifest.json # Path to manifest template
+
     # remainder of the section omitted
     
    ```
