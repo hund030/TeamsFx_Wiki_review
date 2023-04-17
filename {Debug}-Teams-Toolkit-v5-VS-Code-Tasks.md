@@ -110,7 +110,7 @@ If you choose to use the dev tunnel service, the following are the required argu
 The `ports` argument must be an array of objects, with each object specifying the configuration for a particular port.
 Each object must have the following fields:
 
-| port                   | Type   | Required | Description |
+| Port                   | Type   | Required | Description |
 |------------------------|--------|----------|-------------|
 | portNumber             | number | required | The local port number of the tunnel. |
 | protocol               | string | required | The protocol of the tunnel. |
@@ -118,11 +118,12 @@ Each object must have the following fields:
 | writeToEnvironmentFile | object | optional | The key of tunnel endpoint and tunnel domain environment variables that will be writen to `.env` file. |
 
 The `writeToEnvironmentFile`object may have two fields:
-| writeToEnvironmentFile | Type   | Required | description |
+| WriteToEnvironmentFile | Type   | Required | Description |
 |------------------------|--------|----------|-------------|
 | endpoint               | string | optional | The key of tunnel endpoint environment variable.|
 | domain                 | string | optional | The key of tunnel domain environment variable.|
-When `writeToEnvironmentFile` is included, the specified environment variables will be written to the `.env` file. If this field is omitted, no environment variables will be written to the file.
+
+When `writeToEnvironmentFile` is included, the specified environment variables will be written to the `.env` file. If this field is omitted, no environment variables will be written to the file. 
 
 #### Dev Tunnel Samples
 **1. The default one used by TeamsFx templates.** If you want to manually migrate your local tunnel task from a v4 project, you can use the following code to replace the old task.
@@ -191,7 +192,7 @@ If you opt for the ngrok service, you will need to provide the following argumen
 | ngrokPath        | string | optional | The ngrok binary path. If undefined, use Teams Toolkit ngrok, otherwise use provided path. E.g.,"ngrokPath": <ul><li>"ngrok" // use ngrok from `env:PATH`</li><li>"C:/some-path/ngrok" // use ngrok from absolute path</li><li>"./bot/my-ngrok/ngrok" // use ngrok from relative path</li></ul> |
 | tunnelInspection | string  | optional | Teams Toolkit tries to get tunnel public URL from ngrok log first, then the first PublicURL via default inspection "http://127.0.0.1:4040/api/tunnels". If you specify your own `ngrokArgs` with different log format or inspection, set this arg to provide your own inspection location. |
 
-| writeToEnvironmentFile | description |
+| WriteToEnvironmentFile | Description |
 |----------------|------------------------------------------------------------------------------------------------------------|
 | endpoint | The key of tunnel endpoint environment variable.  |
 | domain | The key of tunnel domain environment variable. |
