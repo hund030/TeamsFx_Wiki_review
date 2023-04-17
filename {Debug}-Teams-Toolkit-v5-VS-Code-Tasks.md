@@ -197,7 +197,7 @@ If you opt for the ngrok service, you will need to provide the following argumen
 | domain | The key of tunnel domain environment variable. |
 
 #### Ngrok Samples
-**1. The default one used by TeamsFx templates.** Teams Toolkit installs its own ngrok binary and start tunnel with command `ngrok http 3978 --log=stdout --log-format=logfmt`.
+**1. This task is used to replace the default dev tunnel task that is included with TeamsFx templates.** Teams Toolkit installs its own ngrok binary and start tunnel with command `ngrok http 3978 --log=stdout --log-format=logfmt`.
 ```json
 {
     "label": "Start local tunnel",
