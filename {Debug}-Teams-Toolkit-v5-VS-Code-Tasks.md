@@ -125,7 +125,7 @@ The `writeToEnvironmentFile`object may have two fields:
 When `writeToEnvironmentFile` is included, the specified environment variables will be written to the `.env` file. If this field is omitted, no environment variables will be written to the file.
 
 #### Dev Tunnel Samples
-**1. The default one used by TeamsFx templates.**
+**1. The default one used by TeamsFx templates.** If you want to manually migrate your local tunnel task from a v4 project, you can use the following code to replace the old task.
 ```json
 {
     "label": "Start local tunnel",
