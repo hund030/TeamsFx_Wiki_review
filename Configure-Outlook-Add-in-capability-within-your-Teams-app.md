@@ -428,8 +428,8 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
     ```
 
 1. In Visual Studio Code open the Teams Toolkit and in the **ACCOUNTS** section be sure you are signed into your Azure account. For more information about signing in, open [Exercise - Create Azure resources to host a Teams tab app](https://learn.microsoft.com/training/modules/teams-toolkit-vsc-deploy-apps/03-create-azure-resources-exercise) and scroll to the **Sign in to Azure in Teams Toolkit** section.
-1. In the **DEPLOYMENT** section of Teams Toolkit, select **Provision in the cloud**. It may take several minutes.
-1. When provisioning completes, select **Deploy to the cloud** to deploy your app code to Azure.
+1. In the **LIFECYCLE** section of Teams Toolkit, select **Provision**. It may take several minutes.
+1. When provisioning completes, select **Deploy** to deploy your app code to Azure.
 
 ### Run the tab capability from the remote deployment
 
@@ -443,7 +443,7 @@ Unless specified otherwise, the file you change is \appPackage\manifest.json.
 ### Run the add-in capability from the remote deployment
 
 1. Copy the production URL from the ADDIN_ENDPOINT in env/.env.dev file.
-1. Edit \add-in\webpack.config.js file and change `urlProd` constant value to the value you just copied. Please note to add a '/' at the end of the URL.
+1. Edit \add-in\webpack.config.js file and change `urlProd` constant value to the value you just copied. Be sure to add a '/' at the end of the URL.
 1. In the Visual Studio Code **TERMINAL**, navigate to the root of the project, and then run `npm run build:add-in`.
 1. Copy the file \add-in\dist\manifest.dev.json to the \appPackage folder.
 1. Rename the copy in the \appPackage folder to "manifest.addinPreview.json".
