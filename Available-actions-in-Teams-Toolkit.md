@@ -44,7 +44,7 @@ To fix this error: find the id of `access_as_user` scope for your application in
 ![image](https://user-images.githubusercontent.com/16605901/204182487-8eb46f6d-cee6-4d97-9cd4-68db59d4a572.png)
 
 # teamsApp/create
-This action will create a new Teams app for you if TEAMS_APP_ID environment variable is empty or the app with TEAMS_APP_ID is not found from Teams Developer Portal.
+This action will create a new Teams app for you if the environment variable that stores Teams app id is empty or the app with given id is not found from Teams Developer Portal.
 
 ## Syntax:
 ```
@@ -66,7 +66,7 @@ Apply the Teams app manifest to an existing Teams app in Teams Developer Portal.
 ```
   - uses: teamsApp/update # 
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
 ```
 
 ## Output:
@@ -93,7 +93,7 @@ This action will validate Teams app package using validation rules.
 ```
   - uses: teamsApp/validateAppPackage
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
 ```
 
 ## Output:
@@ -107,8 +107,8 @@ This action will render Teams app manifest template with environment variables, 
   - uses: teamsApp/zipAppPackage
     with:
       manifestPath: ./appPackage/manifest.json # Required. Relative path to this file. This is the path for Teams app manifest file.
-      outputZipPath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
-      outputJsonPath: ./build/appPackage/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to this file. This is the path for built manifest json file.
+      outputZipPath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
+      outputJsonPath: ./appPackage/build/manifest.${{TEAMSFX_ENV}}.json # Required. Relative path to this file. This is the path for built manifest json file.
 ```
 
 ## Output:
@@ -121,7 +121,7 @@ This action will publish built Teams app zip file to tenant app catalog.
 ```
   - uses: teamsApp/publishAppPackage
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to this file. This is the path for built zip file.
     writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
       publishedAppId: TEAMS_APP_PUBLISHED_APP_ID
 ```
@@ -361,7 +361,7 @@ This action will upload your app as M365 title, so it can be viewed on Outlook a
 ```yml
   - uses: teamsApp/extendToM365 # Extend your Teams app to Outlook and the Microsoft 365 app
     with:
-      appPackagePath: ./build/appPackage/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to the built app package.
+      appPackagePath: ./appPackage/build/appPackage.${{TEAMSFX_ENV}}.zip # Required. Relative path to the built app package.
     writeToEnvironmentFile: # Write the information of created resources into environment file for the specified environment variable(s).
       titleId: M365_TITLE_ID # Required. The ID of M365 title.
       appId: M365_APP_ID # Required. The app ID of M365 title.
