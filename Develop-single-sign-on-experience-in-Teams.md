@@ -75,6 +75,13 @@ Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
     name: "YOUR_AAD_APP_NAME"
     generateClientSecret: true
     signInAudience: "AzureADMyOrg"
+  writeToEnvironmentFile:
+      clientId: AAD_APP_CLIENT_ID
+      clientSecret: SECRET_AAD_APP_CLIENT_SECRET
+      objectId: AAD_APP_OBJECT_ID
+      tenantId: AAD_APP_TENANT_ID
+      authority: AAD_APP_OAUTH_AUTHORITY
+      authorityHost: AAD_APP_OAUTH_AUTHORITY_HOST
 ```
 > Note: Replace the value of "name" with your expected Azure Active Directory app name.
 
@@ -102,7 +109,7 @@ env:
 #### `file/createOrUpdateEnvironmentFile`
 Find `file/createOrUpdateEnvironmentFile` action for deploy in `teamsapp.local.yml` and add following env:
 ```yml
-env:
+envs:
   ...
   REACT_APP_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
   REACT_APP_START_LOGIN_PAGE_URL: ${{TAB_ENDPOINT}}/auth-start.html
@@ -204,6 +211,13 @@ Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
     name: "YOUR_AAD_APP_NAME"
     generateClientSecret: true
     signInAudience: "AzureADMyOrg"
+  writeToEnvironmentFile:
+    clientId: AAD_APP_CLIENT_ID
+    clientSecret: SECRET_AAD_APP_CLIENT_SECRET
+    objectId: AAD_APP_OBJECT_ID
+    tenantId: AAD_APP_TENANT_ID
+    authority: AAD_APP_OAUTH_AUTHORITY
+    authorityHost: AAD_APP_OAUTH_AUTHORITY_HOST
 ```
 > Note: Replace the value of "name" with your expected AAD app name.
 
@@ -221,7 +235,7 @@ Add following lines in `provision` in `teamsapp.yml` and `teamsapp.local.yml`:
 #### `file/createOrUpdateEnvironmentFile`
 Find `file/createOrUpdateEnvironmentFile` action in `teamsapp.local.yml` and add following env:
 ```yml
-env:
+envs:
   ...
   M365_CLIENT_ID: ${{AAD_APP_CLIENT_ID}}
   M365_CLIENT_SECRET: ${{SECRET_AAD_APP_CLIENT_SECRET}}
