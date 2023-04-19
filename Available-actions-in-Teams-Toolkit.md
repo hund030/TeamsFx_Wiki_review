@@ -2,9 +2,9 @@
 
 ### The page describes the available actions that can be used in `teamsapp.yml` and `teamsapp.local.yml` in Teams Toolkit.
 
-### For information
+### Links to more information
 
-For more information on Teams Toolkit v5.0 pre-release, visit [Teams Toolkit v5.0 pre-release guide](https://aka.ms/teamsfx-v5.0-guide).
+For information on Teams Toolkit v5.0 pre-release, visit [Teams Toolkit v5.0 pre-release guide](https://aka.ms/teamsfx-v5.0-guide).
 
 For information on lifecycles, visit [Lifecycles](https://aka.ms/teamsfx-v5.0-guide#lifecycles).
 
