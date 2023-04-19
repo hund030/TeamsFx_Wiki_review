@@ -234,6 +234,9 @@ TEAMSFX_API_TENANT_ID =
 TEAMSFX_API_CLIENT_ID =
 TEAMSFX_API_CLIENT_SECRET =
 ```
+
+> You can use `common` as tenant id if necessary.
+
 </details>
 <details>
 <summary><b>API Key
@@ -406,6 +409,9 @@ resource botService 'Microsoft.BotService/botServices@2021-03-01' = {
     ...
   }
 ```
+
+> You can use `common` as tenant id if necessary.
+
 </details>
 <details>
 <summary><b>API Key
