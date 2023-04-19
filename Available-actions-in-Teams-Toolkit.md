@@ -1,6 +1,16 @@
 > The content in this page is under construction and may change in the future.
 
-The page describes the available actions that can be used in `teamsapp.yml` and `teamsapp.local.yml` in Teams Toolkit.
+### The page describes the available actions that can be used in `teamsapp.yml` and `teamsapp.local.yml` in Teams Toolkit.
+
+### For information
+
+For more information on Teams Toolkit v5.0 pre-release, visit [Teams Toolkit v5.0 pre-release guide](https://aka.ms/teamsfx-v5.0-guide).
+
+For information on lifecycles, visit [Lifecycles](https://aka.ms/teamsfx-v5.0-guide#lifecycles).
+
+For information on actions, visit [Actions](https://aka.ms/teamsfx-v5.0-guide#actions).
+
+For information on environments, visit [Environments](https://aka.ms/teamsfx-v5.0-guide#environments).
 
 # aadApp/create
 This action will create a new Azure Active Directory (AAD) app to authenticate users if the environment variable that stores clientId is empty.
