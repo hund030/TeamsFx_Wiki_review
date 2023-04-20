@@ -250,6 +250,9 @@ For `preAuthorizedApplications` property, code lens will show the application na
 
 <p align="right"><a href="#AAD-manifest-introduction">back to top</a></p>
 
+## How to view the AAD app on the Azure portal for V5
+1.  Copy the AAD app client id from "aad.manifest"
+
 ## How to use an existing AAD app
 
 If you want to use existing AAD app for your Teams project, you can refer to this [doc](https://github.com/OfficeDev/TeamsFx/wiki/Customize-provision-behaviors#use-an-existing-aad-app-for-your-teams-app) for more information.
