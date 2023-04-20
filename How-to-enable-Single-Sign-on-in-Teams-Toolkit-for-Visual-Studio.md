@@ -83,13 +83,13 @@ For Teams Tab Application
  
 3. Update `teamsapp.yml` and `teamsapp.local.yml`
   AAD related changes and configs needs to be added into your `yml` files:
-    - add `aadApp/create` under 'registerApp':
+    - add `aadApp/create` under `provision`:
       For creating new AAD apps used for SSO.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-create)
-    - add `aadApp/update` under 'configureApp'
+    - add `aadApp/update` under `provision`
       For updating your AAD app with AAD app manifest in step 1.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-update)
-    - update `file/updateJson`
+    - update `file/createOrUpdateJsonFile`
       For adding following environment variables when local debug:
         a. ClientId: AAD app client id
         b. ClientSecret: AAD app client secret
@@ -100,37 +100,36 @@ For Teams Tab Application
     Example for TeamsFx Tab template
     
     In both `teamsapp.yml` and `teamsapp.local.yml` files:
-    - Add following lines under `registerApp` to create AAD app.
+    - Add following lines under `provision` to create AAD app.
       ```
-      - uses: aadApp/create # Creates a new AAD app to authenticate users if AAD_APP_CLIENT_ID environment variable is empty
+      - uses: aadApp/create
         with:
-          name: "YOUR_AAD_APP_NAME" # Note: when you run configure/aadApp, the AAD app name will be updated based on the definition of manifest. If you don't want to change the name, ensure the name in AAD manifest is same with the name defined here.
-          generateClientSecret: true # If the value is false, the action will not generate client secret for you
-        # Output: following environment variable will be persisted in current environment's .env file.
-        # AAD_APP_CLIENT_ID: the client id of AAD app
-        # AAD_APP_CLIENT_SECRET: the client secret of AAD app
-        # AAD_APP_OBJECT_ID: the object id of AAD app
-        # AAD_APP_TENANT_ID: the tenant id of AAD app
-        # AAD_APP_OAUTH_AUTHORITY_HOST: the host of OAUTH authority of AAD app
-        # AAD_APP_OAUTH_AUTHORITY: the OAUTH authority of AAD app
+          name: "YOUR_AAD_APP_NAME"
+          generateClientSecret: true
+          signInAudience: "AzureADMyOrg"
+        writeToEnvironmentFile:
+          clientId: AAD_APP_CLIENT_ID
+          clientSecret: SECRET_AAD_APP_CLIENT_SECRET
+          objectId: AAD_APP_OBJECT_ID
+          tenantId: AAD_APP_TENANT_ID
+          authority: AAD_APP_OAUTH_AUTHORITY
+          authorityHost: AAD_APP_OAUTH_AUTHORITY_HOST
       ```
       > Note: Replace the value of "name" with your expected AAD app name.
     
-    - Add following lines under `configureApp` to configure AAD app with AAD app template in the step 1.
+    - Add following lines under `provision` to configure AAD app with AAD app template in the step 1.
       ```
-      - uses: aadApp/update # Apply the AAD manifest to an existing AAD app. Will use the object id in manifest file to determine which AAD app to update.
+      - uses: aadApp/update
         with:
-          manifestPath: "YOUR_PATH_TO_AAD_APP_MANIFEST" # Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app
+          manifestPath: "YOUR_PATH_TO_AAD_APP_MANIFEST"
           outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
-      # Output: following environment variable will be persisted in current environment's .env file.
-      # AAD_APP_ACCESS_AS_USER_PERMISSION_ID: the id of access_as_user permission which is used to enable SSO
       ```
       > Note: Replace the value of `manifestPath` with the relative path of AAD app manifest noted in step 1. For example, `./aad.manifest.json`
 
     In `teamsapp.local.yml` only:
-    - Add following lines under `configureApp` to add AAD related configs to local debug service.
+    - Add following lines under `provision` to add AAD related configs to local debug service.
       ```
-      - uses: file/updateJson
+      - uses: file/createOrUpdateJsonFile
         with:
           target: ./appsettings.Development.json
           appsettings:
@@ -364,10 +363,10 @@ For Teams Bot Applications
 
 3. Update `teamsapp.yml` and `teamsapp.local.yml` files:
    AAD related changes and configs needs to be added into your `yml` files:
-    - add `aadApp/create` under 'registerApp':
+    - add `aadApp/create` under `provision`:
       For creating new AAD apps used for SSO.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-create)
-    - add `aadApp/update` under 'configureApp'
+    - add `aadApp/update` under `provision`
       For updating your AAD app with AAD app manifest in step 1.
       [HelpLink](https://aka.ms/teamsfx-actions/aadapp-update)
     - update `file/updateJson`
@@ -380,38 +379,37 @@ For Teams Bot Applications
    Example for TeamsFx Bot template
 
    In both `teamsapp.yml` and `teamsapp.local.yml` files:
-    - Add following lines under `registerApp` to create AAD app.
+    - Add following lines under `provision` to create AAD app.
       ```
-      - uses: aadApp/create # Creates a new AAD app to authenticate users if AAD_APP_CLIENT_ID environment variable is empty
+      - uses: aadApp/create
         with:
-          name: "YOUR_AAD_APP_NAME" # Note: when you run configure/aadApp, the AAD app name will be updated based on the definition of manifest. If you don't want to change the name, ensure the name in AAD manifest is same with the name defined here.
-          generateClientSecret: true # If the value is false, the action will not generate client secret for you
-        # Output: following environment variable will be persisted in current environment's .env file.
-        # AAD_APP_CLIENT_ID: the client id of AAD app
-        # AAD_APP_CLIENT_SECRET: the client secret of AAD app
-        # AAD_APP_OBJECT_ID: the object id of AAD app
-        # AAD_APP_TENANT_ID: the tenant id of AAD app
-        # AAD_APP_OAUTH_AUTHORITY_HOST: the host of OAUTH authority of AAD app
-        # AAD_APP_OAUTH_AUTHORITY: the OAUTH authority of AAD app
+          name: "YOUR_AAD_APP_NAME"
+          generateClientSecret: true
+          signInAudience: "AzureADMyOrg"
+        writeToEnvironmentFile:
+            clientId: AAD_APP_CLIENT_ID
+            clientSecret: SECRET_AAD_APP_CLIENT_SECRET
+            objectId: AAD_APP_OBJECT_ID
+            tenantId: AAD_APP_TENANT_ID
+            authority: AAD_APP_OAUTH_AUTHORITY
+            authorityHost: AAD_APP_OAUTH_AUTHORITY_HOST
       ```
       > Note: Replace the value of "name" with your expected AAD app name.
     
     - Add following lines under `configureApp` to configure AAD app with AAD app template in the step 1.
       ```
-      - uses: aadApp/update # Apply the AAD manifest to an existing AAD app. Will use the object id in manifest file to determine which AAD app to update.
+      - uses: aadApp/update
         with:
-          manifestPath: "YOUR_PATH_TO_AAD_APP_MANIFEST" # Relative path to teamsfx folder. Environment variables in manifest will be replaced before apply to AAD app
+          manifestPath: "./aad.manifest.json"
           outputFilePath : ./build/aad.manifest.${{TEAMSFX_ENV}}.json
-      # Output: following environment variable will be persisted in current environment's .env file.
-      # AAD_APP_ACCESS_AS_USER_PERMISSION_ID: the id of access_as_user permission which is used to enable SSO
       ```
       > Note: Replace the value of "manifestPath" with the relative path of AAD app manifest noted in step 1.
             For example, './aad.manifest.json'
 
    In `teamsapp.local.yml` only:
-    - Update `file/updateJson` under `provision` to add AAD related configs to local debug service.
+    - Update `file/createOrUpdateJsonFile` under `provision` to add AAD related configs to local debug service.
       ```
-      - uses: file/updateJson
+      - uses: file/createOrUpdateJsonFile
         with:
           target: ./appsettings.Development.json
           appsettings:
@@ -630,7 +628,7 @@ For Teams Bot Applications
       ```
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapControllers();
+          endpoints.MapControllers();
         endpoints.MapRazorPages();
       });
       ```
