@@ -16,9 +16,9 @@ Before getting started building Teams app with Codespaces, please make sure:
 ## Getting started from codespaces-enabled sample
 | Sample name | Entry point |
 |-----|-----|
-| Hello World Tab | [![Open hello-world tab in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=standardLinux32gb&devcontainer_path=.devcontainer%2Fhello-world-tab-codespaces%2Fdevcontainer.json&location=WestUs2) |
-| Notification Bot| [![Open notification app in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=dol%2Fcodespaces&repo=348288141&machine=basicLinux32gb&devcontainer_path=.devcontainer%2Fnotification-codespaces%2Fdevcontainer.json&location=WestUs2) |
-| NPM Search Message Extension | Coming soon! |
+| Hello World Tab | [![Open hello-world tab in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=v3&repo=348288141&machine=standardLinux32gb&location=WestUs2&devcontainer_path=.devcontainer%2Fhello-world-tab-codespaces%2Fdevcontainer.json) |
+| Notification Bot| [![Open notification app in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=v3&repo=348288141&machine=basicLinux32gb&location=WestUs2&devcontainer_path=.devcontainer%2Fnotification-codespaces%2Fdevcontainer.json) |
+| NPM Search Message Extension | [![Open notification app in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=v3&repo=348288141&machine=basicLinux32gb&location=WestUs2&devcontainer_path=.devcontainer%2Fnpm-search-message-extension-codespaces%2Fdevcontainer.json) |
 
 Step-by-step guide to getting started with Codespaces:
 
@@ -55,29 +55,35 @@ To set up your repository to use a custom dev container for building apps with T
 {
   "name": "tab-codespaces",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:16",
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     53000
   ],
   "portsAttributes": {
     "53000": {
-      "label": "tab",
+      "label": "app",
       "protocol": "https"
     }
-  },  
+  },
   "remoteUser": "node",
   "customizations": {
     "vscode": {
+      "settings": {
+        "extensions.autoUpdate": false,
+        "extensions.autoCheckUpdates": false
+      },
       "extensions": [
-        "TeamsDevApp.ms-teams-vscode-extension",
+        "TeamsDevApp.ms-teams-vscode-extension@prerelease"
       ]
     }
   },
+  // Install GitHub CLI
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {
       "version": "latest"
     }
-  }
+  },
+  // Install teamsfx CLI
+  "postCreateCommand": "npm install -g @microsoft/teamsfx-cli"
 }
 ```
 
@@ -173,23 +179,39 @@ To set up your repository to use a custom dev container for building apps with T
 {
   "name": "bot-codespaces",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:16",
+
+  // Default workspace folder
+  "workspaceFolder": "/workspaces/TeamsFx-Samples/notification-codespaces/",
+
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
     3978
   ],
+  "portsAttributes": {
+    "3978": {
+      "label": "app"
+    }
+  },
   "remoteUser": "node",
   "customizations": {
     "vscode": {
+      "settings": {
+        "extensions.autoUpdate": false,
+        "extensions.autoCheckUpdates": false
+      },
       "extensions": [
-        "TeamsDevApp.ms-teams-vscode-extension",
+        "TeamsDevApp.ms-teams-vscode-extension@prerelease"
       ]
     }
   },
+  // Install GitHub CLI
   "features": {
     "ghcr.io/devcontainers/features/github-cli:1": {
       "version": "latest"
     }
-  }
+  },
+  // Install teamsfx CLI
+  "postCreateCommand": "npm install -g @microsoft/teamsfx-cli"
 }
 ```
 
