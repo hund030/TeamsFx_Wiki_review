@@ -118,97 +118,6 @@ envs:
 ### Update Source Code
 With all changes above, your environment is ready and can update your code to add SSO to your Teams app.
 
-#### Restify
-
-Suppose you are building a tab app with [restify](https://github.com/restify/node-restify), here is a basic restify tab app for your reference.
-You can follow the steps to add Single Sign On code into the basic tab app.
-
-1. Add routes to handle the auth page.
-
-    ```js
-    server.get("/auth-start", (req, res, next) => {
-      send(req, "src/views/auth-start.html").pipe(res);
-    });
-
-    server.get("/auth-end", (req, res, next) => {
-      send(req, "src/views/auth-end.html").pipe(res);
-    });
-
-    server.get("/blank-auth-end", (req, res, next) => {
-      send(req, "src/views/auth-end.html").pipe(res);
-    });
-    ```
-1. Find and copy the sample [auth pages](https://github.com/OfficeDev/TeamsFx/tree/main/packages/fx-core/templates/plugins/resource/aad/auth/tab/js/public) to `src/views/`.
-
-1. Add a button in the  to trigger the OAuth 2.0 flow.
-
-    ```html
-    <html>
-      <body>
-        <button id="consentBtn"> consent </button>
-      </body>
-      <script src="/static/scripts/authentication.js"></script>
-    </html>
-    ```
-
-1. Add the authentication script as `/static/scripts/authentication.js`.
-The following sample hard code the client id in the script, while we recommend using template engine (such as ejx) to render the script dynamically.
-You can find current client id value from `env/.env` file.
-
-    ```js
-    const clientId = "<hard code the client id>"
-    const scopes = ["User.Read"];
-    microsoftTeams.app.initialize();
-
-    function consent() {
-      return new Promise((resolve, reject) => {
-        microsoftTeams.authentication
-          .authenticate({
-            url:
-              window.location.origin +
-              "/auth-start" +
-              `?clientId=${clientId}&scope=${encodeURI(scopes.join(" "))}`,
-            width: 600,
-            height: 535,
-          })
-          .then((result) => {
-            resolve(result);
-          })
-          .catch((reason) => {
-            reject(reason);
-          });
-      });
-    }
-
-    document.getElementById("consentBtn").addEventListener("click", consent);
-    ```
-
-1. After consenting, user has signed on to your app with Single Sign On. You can now get auth token with Teams JS SDK.
-
-    ```js
-    function getClientSideToken() {
-      return new Promise((resolve, reject) => {
-        microsoftTeams.authentication
-          .getAuthToken()
-          .then((token) => {
-            resolve(token);
-          })
-          .catch((error) => {
-            alert(error);
-            reject("Error getting token: " + error);
-          });
-      });
-    }
-
-    function getBasicUserInfo() {
-      getClientSideToken().then((ssoToken) => {
-        const tokenObj = JSON.parse(window.atob(ssoToken.split(".")[1]));;
-        console.log(`username: ${tokenObj.name}`);
-        console.log(`user email: ${tokenObj.preferred_username}`);
-      });
-    }
-    ```
-
 #### React
 
 Suppose you are building your tab app with React framework. You can find and download sample code for TeamsFx Tab below to `./auth`:
@@ -228,6 +137,33 @@ You can follow the following steps to update your source code:
 
 You can also find sample for SSO enabled Tab [here](https://github.com/OfficeDev/TeamsFx-Samples/tree/dev/hello-world-tab).
 
+#### Vanilla JavaScript
+
+For non-React tab app, following is a basic sample for getting SSO token with vanilla JavaScript.
+
+    ```js
+    function getSSOToken() {
+      return new Promise((resolve, reject) => {
+        microsoftTeams.authentication
+          .getAuthToken()
+          .then((token) => {
+            resolve(token);
+          })
+          .catch((error) => {
+            alert(error);
+            reject("Error getting token: " + error);
+          });
+      });
+    }
+
+    function getBasicUserInfo() {
+      getSSOToken().then((ssoToken) => {
+        const tokenObj = JSON.parse(window.atob(ssoToken.split(".")[1]));;
+        console.log(`username: ${tokenObj.name}`);
+        console.log(`user email: ${tokenObj.preferred_username}`);
+      });
+    }
+    ```
 
 ## Teams Bot/Messaging Extension app
 
